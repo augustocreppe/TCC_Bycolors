@@ -1,21 +1,35 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { createStackNavigator } from '@react-navigation/stack';
+import Calendario from '../pages/Calendario';
+import Mes from '../pages/Mes';
+import Login from '../pages/Login';
+import colors from '../styles/colors';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+const stackRoutes = createStackNavigator();
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+const AppRoutes: React.FC = () => (
+    <stackRoutes.Navigator 
+        headerMode="none" 
+        screenOptions={{
+            cardStyle: {
+                backgroundColor: colors.white
+            },
+    }}>
+        <stackRoutes.Screen
+            name="Calendario"
+            component={Calendario}
+        />
+
+        <stackRoutes.Screen
+            name="Mes"
+            component={Mes}
+        />
+
+        <stackRoutes.Screen
+            name="Login"
+            component={Login}
+        />
+    </stackRoutes.Navigator>
+)
+
+export default AppRoutes;
