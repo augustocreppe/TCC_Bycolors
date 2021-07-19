@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Feather } from '@expo/vector-icons';
 import colors from '../styles/colors';
 
-export function Calendario() {
+export function Comunidade() {
     const navigation = useNavigation();
 
     function handleGoBack() {
@@ -19,7 +19,7 @@ export function Calendario() {
             </TouchableOpacity>
 
             <View style={styles.titleView}>
-                <Text style={styles.title}>Página Calendário</Text>
+                <Text style={styles.title}>Página Comunidade</Text>
             </View>
         </View>
         </SafeAreaView>
