@@ -4,7 +4,7 @@ import { StyleSheet, Text, View } from 'react-native';
 export default function Calendario() {
     return (
         <View style={styles.container}>
-            <Text>Página Calendário</Text>
+            <Text>Página Calendário Mudando Texto</Text>
         </View>
     );
 }

@@ -4,7 +4,7 @@ import { StyleSheet, Text, View } from 'react-native';
 export default function Mes() {
     return (
         <View style={styles.container}>
-            <Text>Página Mês</Text>
+            <Text>Página Mês Mudando Texto</Text>
         </View>
     );
 }
