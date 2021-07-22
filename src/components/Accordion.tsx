@@ -9,18 +9,18 @@ import {
 
 import { Feather } from '@expo/vector-icons';
 
-import colors from '../styles/colors';
-import fonts from '../styles/fonts';
+import { colors } from '../styles/colors';
+//import fonts from '../styles/fonts';
 
 interface ButtonProps extends TouchableOpacityProps{
     title: string;
 }
 
-export function Button({title, ... rest }: ButtonProps){
+export function Accordion(){
     return (
         <TouchableOpacity 
             style = {styles.container}
-            { ... rest}
+            //{ ... rest}
         >
             <View style = {styles.featherIcon}>
                 <Feather
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     text: {
         fontSize: 16,
         color: colors.preto,
-        fontFamily: fonts.heading,
+        //fontFamily: fonts.heading,
         padding: 10
     },
 

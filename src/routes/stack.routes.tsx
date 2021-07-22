@@ -7,7 +7,7 @@ import { Comunidade } from "../pages/Comunidade";
 import { Usuario } from "../pages/Usuario";
 import { MenuLateral } from "../pages/MenuLateral";
 import { Configuracoes } from "../pages/Configuracoes";
-import colors from "../styles/colors";
+import { colors } from "../styles/colors";
 
 const stackRoutes = createStackNavigator();
 

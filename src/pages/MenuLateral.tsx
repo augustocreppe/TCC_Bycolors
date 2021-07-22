@@ -2,7 +2,8 @@ import React from 'react';
 import { StyleSheet, Text, Image, TouchableOpacity, View, SafeAreaView, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Feather } from '@expo/vector-icons';
-import colors from '../styles/colors';
+import fonts from '../styles/fonts';
+import { colors } from '../styles/colors';
 const profile = require('../assets/profile.png');
 
 export function MenuLateral() {
@@ -116,7 +117,6 @@ export function MenuLateral() {
                     <Text style={styles.line}>___________________________________</Text>
                 </View>
             </ScrollView>
-
         </View>
         </SafeAreaView>
     );
@@ -160,8 +160,8 @@ const styles = StyleSheet.create({
     },
     nameText: {
         fontSize: 35,
+        fontFamily: fonts.heading,
         color: colors.body_dark,
-        fontWeight: 'bold',
     },
     placeTextView: {
         flexDirection: 'row',
@@ -177,6 +177,7 @@ const styles = StyleSheet.create({
     },
     placeText: {
         fontSize: 25,
+        fontFamily: fonts.text,
         color: colors.body_dark,
     },
     lineView: {
@@ -209,6 +210,7 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         fontSize: 25,
+        fontFamily: fonts.text,
         color: colors.body_dark,
     }
 });

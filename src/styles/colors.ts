@@ -1,4 +1,4 @@
-export default {
+export const colors = {
   //Aplicativo
   heading: '#202020',
   body_dark: '#303030',
@@ -9,9 +9,14 @@ export default {
   branco: '#FFFFFF',
   cinza_claro: '#D3D3D3',
   cinza: '#CFCFCF',
-  cinza_escuro: '',
-  preto: '000000',
+  cinza_escuro: '#505050',
+  preto: '#000000',
   
+  //Branco (já incluso no gradiente acima)
+  //branco
+  //cinza-claro
+  //cinza
+
   //Laranja
   laranja_claro: '#FFE485',
   laranja: '#FFB457',
@@ -47,3 +52,66 @@ export default {
   vermelho: '#F44E3F',
   vermelho_escuro: '#F40000',
 };
+
+export const cores = [
+  [ //Janeiro Branco
+    '#FFFFFF',
+    '#D3D3D3',
+    '#CFCFCF',
+  ],
+  [ // Fevereiro Roxo
+    '#EE82EE',
+    '#C86DC6',
+    '#995398',
+  ],
+  [ // Março Lilás
+    '#D5BFD8',
+    '#C8A2C8',
+    '#A283A2',
+  ],
+  [ // Abril Azul
+    '#B0E0E6',
+    '#7ABAD4',
+    '#5E8FA3',
+  ],
+  [ // Maio Vermelho
+    '#F4796B',
+    '#F44E3F',
+    '#F40000',
+  ],
+  [ // Junho Laranja
+    '#FFE485',
+    '#FFB457',
+    '#FF7100',
+  ],
+  [ // Julho Amarelo
+    '#FFF97E',
+    '#FFD954',
+    '#FFBC00',
+  ],
+  [ // Agosto Laranja
+    '#FFE485',
+    '#FFB457',
+    '#FF7100',
+  ],
+  [ // Setembro Amarelo
+    '#FFF97E',
+    '#FFD954',
+    '#FFBC00',
+  ],
+  [ // Outubro Rosa
+    '#FFBBCC',
+    '#FF69B4',
+    '#FF008D',
+  ],
+  [ // Novembro Azul
+    '#B0E0E6',
+    '#7ABAD4',
+    '#5E8FA3',
+  ],
+  [ // Dezembro Vermelho
+    '#F4796B',
+    '#F44E3F',
+    '#F40000',
+  ],
+]

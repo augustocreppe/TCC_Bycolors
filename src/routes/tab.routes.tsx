@@ -1,68 +1,77 @@
 import React from 'react';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import { StyleSheet } from 'react-native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { MaterialIcons } from '@expo/vector-icons';
+import { Calendario } from '../pages/Calendario';
+import { Comunidade } from '../pages/Comunidade';
+import { colors } from '../styles/colors';
 
-import {MaterialIcons} from '@expo/vector-icons'; 
+const Tab = createBottomTabNavigator();
 
-const AppTab = createBottomTabNavigator();
-
-const AuthRoutes = () => {
-
+const tabMenu = () => {
     return(
-    <AppTab.Navigator 
+        <Tab.Navigator 
             tabBarOptions={{
             
             activeTintColor: '#FFF',
             labelPosition: 'beside-icon',
             
-            style:{
-                backgroundColor: '#12122',
-                borderTopColor: 'transparent',
-                paddingVertical: 20,
-                height:88
-            },
+            style: styles.navigator,
+        }}>
             
-            }}>
-            
-            <AppTab.Screen
-                    name="Inicio"
-                    component={Inicio}
-                    options={{
-                    
-                        tabBarIcon: (({size,color})) => (
-                            <MaterialIcons
-                            name = "home"
-                            size={size}
-                            color={color}
-                            />
-                            
-                        ))
-                    
-                    }}
-                    
-                    />
-                    
-            <AppTab.Screen
-                    name="Usuario"
-                    component={Usuario}
-                    options={{
-                    
-                        tabBarIcon: (({size,color})) => (
-                            <MaterialIcons
-                            name = "person"
-                            size={size}
-                            color={color}
-                            />
-                            
-                        ))
-                    
-                    }}
-                    
-                />
-                    
-            </AppTab.Navigator>
-            
-            )
-            
-        }
+            <Tab.Screen
+                name="Calendario"
+                component={Calendario}
+            />
+                        
+            <Tab.Screen
+                name="Comunidade"
+                component={Comunidade}
+            />
+                
+        </Tab.Navigator>
         
-export default AuthRoutes;
+    )
+}
+        
+export default tabMenu;
+
+const styles = StyleSheet.create({
+    navigator: {
+        backgroundColor: '#12122',
+        borderTopColor: 'transparent',
+        paddingVertical: 20,
+        height:88
+    },
+});
+
+/*
+<AppTab.Screen
+    name="Calendario"
+    component={Calendario}
+    options={{
+        tabBarIcon: (({size,color})) => (
+            <MaterialIcons
+            name = "home"
+            size={16}
+            color={colors.azul}
+            />
+        ))
+    }}
+/>
+            
+<AppTab.Screen
+    name="Comunidade"
+    component={Comunidade}
+    options={{
+    
+        tabBarIcon: (({size,color})) => (
+            <MaterialIcons
+            name = "person"
+            size={size}
+            color={color}
+            />
+        ))
+    }}
+/>
+*/
