@@ -3,6 +3,7 @@ import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-na
 import { useNavigation } from '@react-navigation/native';
 import { Feather } from '@expo/vector-icons';
 import { colors } from '../styles/colors';
+import TabMenu from '../components/TabMenu';
 
 export function Comunidade() {
     const navigation = useNavigation();
@@ -21,6 +22,8 @@ export function Comunidade() {
             <View style={styles.titleView}>
                 <Text style={styles.title}>Página Comunidade</Text>
             </View>
+
+            <TabMenu/>
         </View>
         </SafeAreaView>
     );
@@ -52,7 +55,7 @@ const styles = StyleSheet.create({
     titleView: {
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: 250
+        height: 630,
     },
     title: {
         fontSize: 30,

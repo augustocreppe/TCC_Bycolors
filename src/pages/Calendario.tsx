@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Feather } from '@expo/vector-icons';
 import { ButtonMes } from '../components/ButtonMes';
 import { colors } from '../styles/colors';
+import TabMenu from '../components/TabMenu';
 
 export function Calendario() {
     const navigation = useNavigation();
@@ -19,6 +20,7 @@ export function Calendario() {
                 <Feather name="menu" style={styles.buttonMenuIcon}/>
             </TouchableOpacity>
 
+            <View style={styles.scrollView}>
             <ScrollView>
                 <ButtonMes idMes={0}/>
                 <ButtonMes idMes={1}/>
@@ -33,7 +35,9 @@ export function Calendario() {
                 <ButtonMes idMes={10}/>
                 <ButtonMes idMes={11}/>
             </ScrollView>
+            </View>
 
+            <TabMenu/>
         </View>
         </SafeAreaView>
     );
@@ -71,4 +75,7 @@ const styles = StyleSheet.create({
         fontSize: 30,
         fontWeight: 'bold',
     },
+    scrollView: {
+        height: 630,
+    }
 });

@@ -1,8 +1,8 @@
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacityProps, View } from 'react-native';
-import fonts from '../styles/fonts';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { cores } from '../styles/colors';
+import fonts from '../styles/fonts';
 
 interface ButtonProps extends TouchableOpacityProps {
     idMes: number;

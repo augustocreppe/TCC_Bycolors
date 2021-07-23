@@ -1,38 +1,22 @@
 import React from 'react';
-import { 
-    TouchableOpacity,
-    Text,
-    StyleSheet,
-    TouchableOpacityProps,
-    View
-} from 'react-native';
-
+import { TouchableOpacity, Text, StyleSheet, TouchableOpacityProps, View } from 'react-native';
 import { Feather } from '@expo/vector-icons';
-
 import { colors } from '../styles/colors';
-//import fonts from '../styles/fonts';
+import fonts from '../styles/fonts';
 
 interface ButtonProps extends TouchableOpacityProps{
-    title: string;
+    idMes: string;
 }
 
-export function Accordion(){
+export function Accordion({ idMes, ...rest }: ButtonProps) {
     return (
-        <TouchableOpacity 
-            style = {styles.container}
-            //{ ... rest}
-        >
+        <TouchableOpacity style = {styles.container} >
             <View style = {styles.featherIcon}>
-                <Feather
-                    name = "chevron-down" 
-                    style = {styles.buttonIcon}
-                />
-
+                <Feather name = "chevron-down" style = {styles.buttonIcon} />
                 <Text style = {styles.text}>
-                     BotãoTexto
+                    BotãoTexto
                 </Text>
             </View>
-
         </TouchableOpacity>
     )
 };
@@ -57,7 +41,7 @@ const styles = StyleSheet.create({
     text: {
         fontSize: 16,
         color: colors.preto,
-        //fontFamily: fonts.heading,
+        fontFamily: fonts.heading,
         padding: 10
     },
 

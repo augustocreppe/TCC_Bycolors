@@ -7,6 +7,7 @@ import { colors } from '../styles/colors';
 
 export function Mes() {
     const navigation = useNavigation();
+    const idMes = 8;
 
     function handleGoBack() {
         navigation.goBack();
@@ -19,7 +20,7 @@ export function Mes() {
                 <Feather name="arrow-left" style={styles.buttonMenuIcon}/>
             </TouchableOpacity>
 
-            <Titulo idMes={8}/>
+            <Titulo idMes={idMes}/>
 
             
         </View>
