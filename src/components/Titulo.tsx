@@ -17,6 +17,7 @@ export function Titulo ({ idMes, ...rest }: ButtonProps) {
             flexDirection: 'row',
             justifyContent: 'flex-end',
             alignSelf: 'center',
+            marginBottom: -20,
         },
         subcont:
         {

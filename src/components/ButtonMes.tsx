@@ -22,7 +22,7 @@ export function ButtonMes ({ idMes, ...rest }: ButtonProps) {
             borderColor: cores[idMes][2],
             flexDirection: 'row',
             justifyContent: 'flex-end',
-            marginBottom: 15,
+            marginBottom: 20,
         },
         text: {
             fontSize: 24,
@@ -40,7 +40,7 @@ export function ButtonMes ({ idMes, ...rest }: ButtonProps) {
         {
             backgroundColor: cores[idMes][0],
             height: '100%',
-            width: '97%',
+            width: '95%',
             borderTopEndRadius: 16,
             borderBottomEndRadius: 16,
             justifyContent: 'center',
@@ -64,7 +64,7 @@ export function ButtonMes ({ idMes, ...rest }: ButtonProps) {
     const navigation = useNavigation();
 
     function handleMes() {
-        navigation.navigate('Mes');
+        navigation.navigate('Mes', {idMes: idMes});
     }
 
     return (
