@@ -75,7 +75,7 @@ export function ButtonMes ({ idMes, ...rest }: ButtonProps) {
                         Mês Cor
                     </Text>
                     <Text style={styles.subtext}>
-                        Prevenção a Doença
+                        Prevenção da Doença
                     </Text>
                 </View>
                 <View>
