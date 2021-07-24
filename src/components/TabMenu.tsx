@@ -61,7 +61,7 @@ export default function TabMenu () {
                         
             <TouchableOpacity style={styles.button} onPress={handleComunidade} >
                 <Feather name="users" style={styles.icon2}/>
-                <Text style={styles.text2}> Comunidade </Text>
+                <Text style={styles.text2}> Comunidada </Text>
             </TouchableOpacity>
         </View>
     )
