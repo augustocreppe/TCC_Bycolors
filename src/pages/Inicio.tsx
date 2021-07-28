@@ -1,8 +1,11 @@
 import React from 'react';
-import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View, ImageBackground, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Feather } from '@expo/vector-icons';
 import { colors } from '../styles/colors';
+
+const fundo = require('../assets/fundo.jpg');
+const logo = require('../assets/logo.png');
 
 export function Inicio() {
     const navigation = useNavigation();
@@ -14,14 +17,15 @@ export function Inicio() {
     return (
         <SafeAreaView style={styles.container}>
         <View style={styles.container}>
-            <View style={styles.space}/>
-
-            <View style={styles.titleView}>
-                <Text style={styles.title}>App - Bycolors</Text>
-            </View>
-
-            <View style={styles.titleView}>
-                <Text style={styles.title}>Página Início</Text>
+        <ImageBackground 
+            source={fundo} 
+            style={styles.fundo}
+            resizeMode="cover"
+        >
+            <View style={styles.viewLogo}>
+                <View style={styles.sizeLogo}>
+                <Image source={logo} style={styles.logo} resizeMode="cover"/>
+                </View>
             </View>
 
             <View style={styles.buttonEntrarView}>
@@ -30,6 +34,7 @@ export function Inicio() {
                 <Text style={styles.buttonEntrarText}>Entrar</Text>
             </TouchableOpacity>
             </View>
+        </ImageBackground>
         </View>
         </SafeAreaView>
     );
@@ -38,10 +43,30 @@ export function Inicio() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        paddingTop: 20,
     },
-    space: {
-        marginTop: 250
+    fundo: {
+        flex: 1,
+    },
+    viewLogo: {
+        width: 180,
+        height: 180,
+        backgroundColor: colors.branco,
+        borderRadius: 100,
+        alignItems: 'center',
+        alignSelf: 'center',
+        borderWidth: 4,
+        borderColor: colors.cinza_claro,
+        paddingTop: '2.5%',
+        marginTop: '15%',
+    },
+    sizeLogo: {
+        width: 137,
+        height: 137,
+        alignItems: 'center',
+    },
+    logo: {
+        width: 120,
+        height: 137,
     },
     titleView: {
         justifyContent: 'center',
