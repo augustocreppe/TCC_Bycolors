@@ -24,6 +24,7 @@ import fonts from '../styles/fonts';
 
 const fundo = require('../assets/fundo.jpg');
 const logo = require('../assets/logo.png');
+const marca = require('../assets/marca.png');
 
 export function Inicio() {
     const [isFocused, setIsFocused] = useState(false);
@@ -80,6 +81,9 @@ export function Inicio() {
                     >
                         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                             <View style={styles.content}>
+                                <View style={styles.sizeMarca}>
+                                    <Image source={marca}  resizeMode="cover"/>
+                                </View>
                                         <Text style={styles.text}>
                                             E-mail:
                                         </Text>
@@ -154,13 +158,15 @@ const styles = StyleSheet.create({
         marginTop: '15%',
     },
     sizeLogo: {
-        width: 137,
-        height: 137,
         alignItems: 'center',
     },
     logo: {
         width: 120,
         height: 137,
+    },
+    sizeMarca: {
+        alignItems: 'center',
+        marginTop: 30
     },
     titleView: {
         justifyContent: 'center',
@@ -205,7 +211,7 @@ const styles = StyleSheet.create({
         fontFamily: fonts.heading,
         fontSize: 20,
         marginHorizontal: 25,
-        marginTop: 30,
+        marginTop: 15
     },
     input: {
         borderWidth: 1,
