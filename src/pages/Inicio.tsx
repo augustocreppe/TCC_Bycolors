@@ -17,7 +17,7 @@ import {
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Feather } from '@expo/vector-icons';
+import { Feather, Entypo, FontAwesome } from '@expo/vector-icons';
 
 import { colors } from '../styles/colors';
 import fonts from '../styles/fonts';
@@ -85,7 +85,11 @@ export function Inicio() {
                                     <Image source={marca}  resizeMode="cover"/>
                                 </View>
                                         <Text style={styles.text}>
-                                            E-mail:
+                                            <Entypo
+                                                name="email"
+                                                style={styles.emailIcon}
+                                            />
+                                            {' '}E-mail:
                                         </Text>
                                         
                                         <TextInput
@@ -102,7 +106,11 @@ export function Inicio() {
                                         />
 
                                         <Text style={styles.text}>
-                                            Senha:
+                                        <FontAwesome
+                                                name="lock"
+                                                style={styles.passwordIcon}
+                                            />
+                                            {' '}Senha:
                                         </Text>
 
                                         <TextInput
@@ -229,5 +237,11 @@ const styles = StyleSheet.create({
         fontSize: 12,
         marginLeft: 220,
         marginTop: 5,
+    },
+    emailIcon: {
+        fontSize: 18,
+    },
+    passwordIcon: {
+        fontSize: 18,
     },
 });
