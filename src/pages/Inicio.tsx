@@ -219,7 +219,7 @@ const styles = StyleSheet.create({
         fontFamily: fonts.heading,
         fontSize: 20,
         marginHorizontal: 25,
-        marginTop: 15
+        marginTop: 25
     },
     input: {
         borderWidth: 1,
