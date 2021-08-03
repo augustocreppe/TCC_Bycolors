@@ -19,7 +19,7 @@ import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Feather, Entypo, FontAwesome } from '@expo/vector-icons';
 
-import { colors } from '../styles/colors';
+import  { colors } from '../styles/colors';
 import fonts from '../styles/fonts';
 
 const fundo = require('../assets/fundo.jpg');
@@ -134,6 +134,18 @@ export function Inicio() {
                                             <Text style={styles.buttonEntrarText}>Entrar</Text>
                                         </TouchableOpacity>
                                     </View>
+
+                                    <Text style={styles.textIntermediario}>
+                                            ou
+                                    </Text>
+
+                                    <View style={styles.buttonEntrarSemLogarView}>
+                                        <TouchableOpacity onPress={handleEnter} style={styles.buttonEntrarSemLogar}>
+                                            <Feather name="alert-circle" style={styles.buttonEntrarSemLogarIcon}/>
+                                            <Text style={styles.buttonEntrarSemLogarText}>Entrar sem Logar</Text>
+                                        </TouchableOpacity>
+                                    </View>
+
                             </View>
                         </TouchableWithoutFeedback>
 
@@ -208,6 +220,40 @@ const styles = StyleSheet.create({
     buttonEntrarText: {
         fontSize: 25,
     },
+
+    buttonEntrarSemLogarView: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 70,
+    },
+
+    buttonEntrarSemLogar: {
+        flexDirection: 'row',
+        backgroundColor: colors.cinza_claro,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 16,
+        marginBottom: 10,
+        height: 65,
+        width: 300,
+    },
+    buttonEntrarSemLogarIcon: {
+        fontSize: 30,
+        color: colors.body_dark,
+        marginRight: 10,
+    },
+
+    buttonEntrarSemLogarText: {
+        fontSize: 25,
+    },
+
+    textIntermediario: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 70,
+        fontFamily: fonts.text,
+    },
+
     content: {
         margin: 30,
         flex: 1,
@@ -219,7 +265,7 @@ const styles = StyleSheet.create({
         fontFamily: fonts.heading,
         fontSize: 20,
         marginHorizontal: 25,
-        marginTop: 25
+        marginTop: 25,
     },
     input: {
         borderWidth: 1,
