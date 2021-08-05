@@ -37,6 +37,10 @@ export function Inicio() {
         navigation.navigate('Calendario');
     }
 
+    function handleEnterNoLogin() {
+        navigation.navigate('Calendario');
+    }
+
     function handleInputBlur(){
         setIsFocused(false);
         setIsFilled(!!email);
@@ -48,6 +52,7 @@ export function Inicio() {
         setIsFilled(!!value);
         setEmail(value);
     }
+    
 
     async function handleSubmit(){
         if(!email)
@@ -119,6 +124,8 @@ export function Inicio() {
                                                 (isFocused || isFilled) &&
                                                 { borderColor: colors.azul_escuro }
                                             ]}
+                                            placeholder="••••••"
+
                                             onBlur={handleInputBlur}
                                             onFocus={handleInputFocus}
                                             onChangeText={handleInputChange}
@@ -133,17 +140,18 @@ export function Inicio() {
                                             <Feather name="log-in" style={styles.buttonEntrarIcon}/>
                                             <Text style={styles.buttonEntrarText}>Entrar</Text>
                                         </TouchableOpacity>
-                                    </View>
 
-                                    <Text style={styles.textIntermediario}>
+                                        <Text style = {styles.textIntermediario}>
                                             ou
-                                    </Text>
+                                        </Text>
 
-                                    <View style={styles.buttonEntrarSemLogarView}>
-                                        <TouchableOpacity onPress={handleEnter} style={styles.buttonEntrarSemLogar}>
+                                    
+                                        <TouchableOpacity onPress={handleEnterNoLogin} style={styles.buttonEntrarSemLogar}>
                                             <Feather name="alert-circle" style={styles.buttonEntrarSemLogarIcon}/>
-                                            <Text style={styles.buttonEntrarSemLogarText}>Entrar sem Logar</Text>
+                                            <Text style={styles.buttonEntrarSemLogarText}>Entrar sem logar</Text>
                                         </TouchableOpacity>
+                                    
+
                                     </View>
 
                             </View>
@@ -200,58 +208,59 @@ const styles = StyleSheet.create({
     buttonEntrarView: {
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: 70
+        marginTop: 10
     },
     buttonEntrar: {
         flexDirection: 'row',
-        backgroundColor: colors.cinza_claro,
+        backgroundColor: colors.azul,
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 16,
-        marginBottom: 10,
-        height: 65,
+        marginTop: 5,
+        marginBottom: 4,
+        height: 48,
         width: 300
     },
     buttonEntrarIcon: {
-        fontSize: 30,
+        fontSize: 28,
         color: colors.body_dark,
         marginRight: 10
     },
     buttonEntrarText: {
         fontSize: 25,
-    },
-
-    buttonEntrarSemLogarView: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginTop: 70,
+        color: colors.body_dark,
+        fontFamily: fonts.heading
     },
 
     buttonEntrarSemLogar: {
         flexDirection: 'row',
-        backgroundColor: colors.cinza_claro,
+        backgroundColor: colors.azul,
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 16,
         marginBottom: 10,
-        height: 65,
+        height: 48,
         width: 300,
     },
     buttonEntrarSemLogarIcon: {
-        fontSize: 30,
+        fontSize: 28,
         color: colors.body_dark,
         marginRight: 10,
     },
 
     buttonEntrarSemLogarText: {
-        fontSize: 25,
+        fontSize: 24,
+        color: colors.body_dark,
+        fontFamily: fonts.heading
     },
 
     textIntermediario: {
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: 70,
-        fontFamily: fonts.text,
+        marginBottom: 4,
+        fontFamily: fonts.heading,
+        fontSize: 21,
+        color: colors.body_dark
     },
 
     content: {
@@ -280,6 +289,7 @@ const styles = StyleSheet.create({
     },
     complement: {
         fontFamily: fonts.heading,
+        color: colors.body_light,
         fontSize: 12,
         marginLeft: 220,
         marginTop: 5,
