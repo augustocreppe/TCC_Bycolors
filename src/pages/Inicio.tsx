@@ -1,24 +1,8 @@
 import React, { useState } from 'react';
-import { 
-    SafeAreaView,
-    StyleSheet,
-    Text,
-    View,
-    TextInput,
-    KeyboardAvoidingView,
-    TouchableWithoutFeedback,
-    Platform,
-    Touchable,
-    Keyboard,
-    Alert,
-    TouchableOpacity,
-    ImageBackground,
-    Image
-} from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View, TextInput, KeyboardAvoidingView, TouchableWithoutFeedback, Platform, Keyboard, Alert, TouchableOpacity, ImageBackground, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Feather, Entypo, FontAwesome } from '@expo/vector-icons';
-
 import  { colors } from '../styles/colors';
 import fonts from '../styles/fonts';
 
@@ -52,16 +36,16 @@ export function Inicio() {
         setIsFilled(!!value);
         setEmail(value);
     }
-    
 
     async function handleSubmit(){
         if(!email)
             return Alert.alert('Por favor, digite seu e-mail.');
 
-        try{
+        try {
             await AsyncStorage.setItem('@TCC_Bycolors:user', email);
             navigation.navigate('Calendario');
-        }catch{
+        }
+        catch {
             Alert.alert('Não foi possível salvar o seu e-mail.')
         }
     }
@@ -69,31 +53,21 @@ export function Inicio() {
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.container}>
-                <ImageBackground 
-                    source={fundo} 
-                    style={styles.fundo}
-                    resizeMode="cover"
-                >
+                <ImageBackground source={fundo} style={styles.fundo} resizeMode="cover">
                     <View style={styles.viewLogo}>
                         <View style={styles.sizeLogo}>
-                            <Image source={logo} style={styles.logo} resizeMode="cover"/>
+                        <Image source={logo} style={styles.logo} resizeMode="cover"/>
                         </View>
                     </View>
 
-                    <KeyboardAvoidingView
-                        style={styles.container}
-                        behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
-                    >
+                    <KeyboardAvoidingView style={styles.container} behavior={Platform.OS == 'ios' ? 'padding' : 'height'}>
                         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                             <View style={styles.content}>
                                 <View style={styles.sizeMarca}>
-                                    <Image source={marca}  resizeMode="cover"/>
+                                    <Image source={marca}  resizeMode="cover" style={styles.imageMarca}/>
                                 </View>
                                         <Text style={styles.text}>
-                                            <Entypo
-                                                name="email"
-                                                style={styles.emailIcon}
-                                            />
+                                            <Entypo name="email" style={styles.emailIcon} />
                                             {' '}E-mail:
                                         </Text>
                                         
@@ -111,10 +85,7 @@ export function Inicio() {
                                         />
 
                                         <Text style={styles.text}>
-                                        <FontAwesome
-                                                name="lock"
-                                                style={styles.passwordIcon}
-                                            />
+                                            <FontAwesome name="lock" style={styles.passwordIcon} />
                                             {' '}Senha:
                                         </Text>
 
@@ -194,7 +165,11 @@ const styles = StyleSheet.create({
     },
     sizeMarca: {
         alignItems: 'center',
-        marginTop: 30
+        marginTop: 30,
+    },
+    imageMarca: {
+        height: 101,
+        width: 300,
     },
     titleView: {
         justifyContent: 'center',
