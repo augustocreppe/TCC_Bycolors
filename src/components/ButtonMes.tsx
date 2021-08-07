@@ -3,7 +3,7 @@ import { StyleSheet, Text, TouchableOpacity, View, TouchableOpacityProps } from 
 import { useNavigation } from '@react-navigation/native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import fonts from '../styles/fonts';
-import { cores } from '../styles/colors';
+import { cores, colors } from '../styles/colors';
 
 interface ButtonProps extends TouchableOpacityProps {
     idMes: number;
@@ -26,14 +26,14 @@ export function ButtonMes ({ idMes, ...rest }: ButtonProps) {
         },
         text: {
             fontSize: 24,
-            color: cores[idMes][2], 
+            color: colors.preto, 
             fontFamily: fonts.heading,
             marginBottom: 5,
         },
         subtext:
         {
             fontSize: 16,
-            color: cores[idMes][2],
+            color: colors.preto,
             fontFamily: fonts.heading,
         },
         subcont:

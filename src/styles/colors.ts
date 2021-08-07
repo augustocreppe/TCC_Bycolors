@@ -4,6 +4,7 @@ export const colors = {
   body_dark: '#303030',
   body_light: '#4C4C4C',
   background: '#FFFFFF',
+  default_blue: '#2D9CF0',
 
   //Gradiente Branco-Preto
   branco: '#FFFFFF',
@@ -18,7 +19,7 @@ export const colors = {
   //cinza
 
   //Laranja
-  laranja_claro: '#FFE485',
+  laranja_claro: '#FFCB85',
   laranja: '#FFB457',
   laranja_escuro: '#FF7100',
 
@@ -50,7 +51,7 @@ export const colors = {
   //Vermelho
   vermelho_claro: '#F4796B',
   vermelho: '#F44E3F',
-  vermelho_escuro: '#F40000',
+  vermelho_escuro: '#D40000',
 };
 
 export const cores = [
@@ -77,10 +78,10 @@ export const cores = [
   [ // Maio Vermelho
     '#F4796B',
     '#F44E3F',
-    '#F40000',
+    '#D40000',
   ],
   [ // Junho Laranja
-    '#FFE485',
+    '#FFCB85',
     '#FFB457',
     '#FF7100',
   ],
@@ -90,7 +91,7 @@ export const cores = [
     '#FFBC00',
   ],
   [ // Agosto Laranja
-    '#FFE485',
+    '#FFCB85',
     '#FFB457',
     '#FF7100',
   ],
@@ -112,6 +113,6 @@ export const cores = [
   [ // Dezembro Vermelho
     '#F4796B',
     '#F44E3F',
-    '#F40000',
+    '#D40000',
   ],
 ]

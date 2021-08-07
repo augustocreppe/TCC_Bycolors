@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { SafeAreaView, StyleSheet, Text, View, TextInput, KeyboardAvoidingView, TouchableWithoutFeedback, Platform, Keyboard, Alert, TouchableOpacity, ImageBackground, Image } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View, TextInput, Alert, TouchableOpacity, ImageBackground, Image, KeyboardAvoidingView, TouchableWithoutFeedback, Platform, Keyboard, } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Feather, Entypo, FontAwesome } from '@expo/vector-icons';
@@ -14,14 +14,9 @@ export function Inicio() {
     const [isFocused, setIsFocused] = useState(false);
     const [isFilled, setIsFilled] = useState(false);
     const [email, setEmail] = useState<string>();
-
     const navigation = useNavigation();
 
     function handleEnter() {
-        navigation.navigate('Calendario');
-    }
-
-    function handleEnterNoLogin() {
         navigation.navigate('Calendario');
     }
 
@@ -29,9 +24,11 @@ export function Inicio() {
         setIsFocused(false);
         setIsFilled(!!email);
     }
+
     function handleInputFocus(){
         setIsFocused(true);
     }
+
     function handleInputChange(value: string){
         setIsFilled(!!value);
         setEmail(value);
@@ -52,87 +49,83 @@ export function Inicio() {
 
     return (
         <SafeAreaView style={styles.container}>
+        <ImageBackground source={fundo} style={styles.fundo} resizeMode="cover">
             <View style={styles.container}>
-                <ImageBackground source={fundo} style={styles.fundo} resizeMode="cover">
-                    <View style={styles.viewLogo}>
-                        <View style={styles.sizeLogo}>
-                        <Image source={logo} style={styles.logo} resizeMode="cover"/>
-                        </View>
+
+                <View style={styles.viewLogo}>
+                    <View style={styles.sizeLogo}>
+                    <Image source={logo} style={styles.logo} resizeMode="cover"/>
                     </View>
+                </View>
 
-                    <KeyboardAvoidingView style={styles.container} behavior={Platform.OS == 'ios' ? 'padding' : 'height'}>
-                        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-                            <View style={styles.content}>
-                                <View style={styles.sizeMarca}>
-                                    <Image source={marca}  resizeMode="cover" style={styles.imageMarca}/>
-                                </View>
-                                        <Text style={styles.text}>
-                                            <Entypo name="email" style={styles.emailIcon} />
-                                            {' '}E-mail:
-                                        </Text>
-                                        
-                                        <TextInput
-                                            style={[
-                                                styles.input, 
-                                                (isFocused || isFilled) &&
-                                                { borderColor: colors.azul_escuro }
-                                            ]}
-                                            placeholder="Ex: joao@gmail.com"
-                                            
-                                            onBlur={handleInputBlur}
-                                            onFocus={handleInputFocus}
-                                            onChangeText={handleInputChange}
-                                        />
+                <View style={styles.container}>
+                    <View style={styles.content}>
 
-                                        <Text style={styles.text}>
-                                            <FontAwesome name="lock" style={styles.passwordIcon} />
-                                            {' '}Senha:
-                                        </Text>
+                        <View style={styles.sizeMarca}>
+                            <Image source={marca}  resizeMode="cover" style={styles.imageMarca}/>
+                        </View>
 
-                                        <TextInput
-                                            style={[
-                                                styles.input, 
-                                                (isFocused || isFilled) &&
-                                                { borderColor: colors.azul_escuro }
-                                            ]}
-                                            placeholder="••••••"
-
-                                            onBlur={handleInputBlur}
-                                            onFocus={handleInputFocus}
-                                            onChangeText={handleInputChange}
-                                        />
-
-                                        <Text style={styles.complement}>
-                                            Esqueci minha senha
-                                        </Text>
-
-                                    <View style={styles.buttonEntrarView}>
-                                        <TouchableOpacity onPress={handleEnter} style={styles.buttonEntrar}>
-                                            <Feather name="log-in" style={styles.buttonEntrarIcon}/>
-                                            <Text style={styles.buttonEntrarText}>Entrar</Text>
-                                        </TouchableOpacity>
-
-                                        <Text style = {styles.textIntermediario}>
-                                            ou
-                                        </Text>
-
+                        <Text style={styles.text}>
+                            <Entypo name="mail" style={styles.icon}/>
+                            {' '}E-mail
+                        </Text>
                                     
-                                        <TouchableOpacity onPress={handleEnterNoLogin} style={styles.buttonEntrarSemLogar}>
-                                            <Feather name="alert-circle" style={styles.buttonEntrarSemLogarIcon}/>
-                                            <Text style={styles.buttonEntrarSemLogarText}>Entrar sem logar</Text>
-                                        </TouchableOpacity>
-                                    
+                        <TextInput
+                            style={[
+                                styles.input, 
+                                (isFocused || isFilled) &&
+                                { borderColor: colors.azul_escuro }
+                            ]}
+                            placeholder="Ex: joao@gmail.com"
+                            
+                            onBlur={handleInputBlur}
+                            onFocus={handleInputFocus}
+                            onChangeText={handleInputChange}
+                        />
 
-                                    </View>
+                        <Text style={styles.text}>
+                            <FontAwesome name="lock" style={styles.icon} />
+                            {' '}Senha
+                        </Text>
 
-                            </View>
-                        </TouchableWithoutFeedback>
+                        <TextInput
+                            style={[
+                                styles.input, 
+                                (isFocused || isFilled) &&
+                                { borderColor: colors.azul_escuro }
+                            ]}
+                            placeholder="••••••"
 
-                    </KeyboardAvoidingView>
+                            onBlur={handleInputBlur}
+                            onFocus={handleInputFocus}
+                            onChangeText={handleInputChange}
+                        />
 
-            
-                </ImageBackground>
+                        <TouchableOpacity>
+                            <Text style={styles.complement}>
+                                Esqueci minha senha
+                            </Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity onPress={handleSubmit} style={styles.button}>
+                            <Feather name="log-in" style={styles.buttonIcon}/>
+                            <Text style={styles.buttonText}>Entrar</Text>
+                        </TouchableOpacity>
+
+                        <View style = {styles.textLine}/>
+
+                        <Text style = {styles.textOu}> ou </Text>
+
+                        <TouchableOpacity onPress={handleEnter} style={styles.button}>
+                            <Feather name="user-x" style={styles.buttonIcon}/>
+                            <Text style={styles.buttonText}>Entrar sem logar</Text>
+                        </TouchableOpacity>
+
+                    </View>
+                </View>
+                
             </View>
+        </ImageBackground>
         </SafeAreaView>
     );
 }
@@ -145,99 +138,54 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     viewLogo: {
-        width: 180,
-        height: 180,
+        width: 160,
+        height: 160,
         backgroundColor: colors.branco,
         borderRadius: 100,
         alignItems: 'center',
         alignSelf: 'center',
         borderWidth: 4,
         borderColor: colors.cinza_claro,
-        paddingTop: '2.5%',
-        marginTop: '15%',
+        paddingTop: '3%',
+        marginTop: '10%',
     },
     sizeLogo: {
         alignItems: 'center',
     },
     logo: {
-        width: 120,
-        height: 137,
+        width: 100,
+        height: 114,
     },
     sizeMarca: {
         alignItems: 'center',
-        marginTop: 30,
+        marginTop: '5%',
+        marginBottom: '1%',
     },
     imageMarca: {
         height: 101,
         width: 300,
     },
-    titleView: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginTop: 20
-    },
-    title: {
-        fontSize: 30,
-        fontWeight: 'bold',
-    },
-    buttonEntrarView: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginTop: 10
-    },
-    buttonEntrar: {
-        flexDirection: 'row',
-        backgroundColor: colors.azul,
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 16,
+    input: {
+        borderWidth: 1,
+        borderRadius: 8,
+        borderColor: colors.cinza_claro,
+        color: colors.heading,
+        height: '9%',
+        width: '86%',
+        fontSize: 18,
         marginTop: 5,
-        marginBottom: 4,
-        height: 48,
-        width: 300
+        marginHorizontal: 25,
+        padding: 10,
+        textAlign: 'justify',
     },
-    buttonEntrarIcon: {
-        fontSize: 28,
-        color: colors.body_dark,
-        marginRight: 10
-    },
-    buttonEntrarText: {
-        fontSize: 25,
-        color: colors.body_dark,
-        fontFamily: fonts.heading
-    },
-
-    buttonEntrarSemLogar: {
-        flexDirection: 'row',
-        backgroundColor: colors.azul,
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 16,
-        marginBottom: 10,
-        height: 48,
-        width: 300,
-    },
-    buttonEntrarSemLogarIcon: {
-        fontSize: 28,
-        color: colors.body_dark,
-        marginRight: 10,
-    },
-
-    buttonEntrarSemLogarText: {
-        fontSize: 24,
-        color: colors.body_dark,
-        fontFamily: fonts.heading
-    },
-
-    textIntermediario: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginBottom: 4,
+    complement: {
         fontFamily: fonts.heading,
-        fontSize: 21,
-        color: colors.body_dark
+        color: colors.body_light,
+        fontSize: 12,
+        marginLeft: 205,
+        marginTop: '1.5%',
+        marginBottom: '4%',
     },
-
     content: {
         margin: 30,
         flex: 1,
@@ -249,30 +197,57 @@ const styles = StyleSheet.create({
         fontFamily: fonts.heading,
         fontSize: 20,
         marginHorizontal: 25,
-        marginTop: 25,
+        marginTop: '5%',
     },
-    input: {
-        borderWidth: 1,
-        borderColor: colors.cinza_claro,
-        color: colors.heading,
-        width: '86%',
+    icon: {
         fontSize: 18,
-        marginTop: 10,
-        marginHorizontal: 25,
-        padding: 10,
-        textAlign: 'justify',
     },
-    complement: {
-        fontFamily: fonts.heading,
-        color: colors.body_light,
-        fontSize: 12,
-        marginLeft: 220,
+    titleView: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 20,
+    },
+    title: {
+        fontSize: 30,
+        fontWeight: 'bold',
+    },
+    button: {
+        flexDirection: 'row',
+        backgroundColor: colors.default_blue,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 8,
         marginTop: 5,
+        marginBottom: 4,
+        marginHorizontal: '7%',
+        height: 50,
+        width: '86%',
     },
-    emailIcon: {
-        fontSize: 18,
+    buttonIcon: {
+        fontSize: 20,
+        color: colors.branco,
+        marginRight: 10
     },
-    passwordIcon: {
-        fontSize: 18,
+    buttonText: {
+        fontSize: 20,
+        color: colors.branco,
+        fontFamily: fonts.heading
+    },
+    textLine: {
+        borderBottomColor: colors.preto,
+        borderBottomWidth: 2,
+        width: '86%',
+        alignSelf: 'center',
+        marginTop: '4%',
+    },
+    textOu: {
+        alignSelf: 'center',
+        marginVertical: '2%',
+        fontFamily: fonts.heading,
+        fontSize: 21,
+        color: colors.body_dark
     },
 });
+
+//<KeyboardAvoidingView style={styles.container} behavior={Platform.OS == 'ios' ? 'padding' : 'height'}>
+//<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
