@@ -3,6 +3,7 @@ import { StyleSheet, TouchableOpacityProps, View } from 'react-native';
 import { cores } from '../styles/colors';
 import fonts from '../styles/fonts';
 import {ExpandableListView} from 'react-native-expandable-listview';
+import { months } from '../styles/info';
 
 interface ButtonProps extends TouchableOpacityProps{
     idMes: number;
@@ -61,6 +62,56 @@ export function Accordion({ idMes, ...rest }: ButtonProps) {
         },
     })
 
+    const Conteudo = [
+        {
+            id: '1',
+            categoryName: 'Definição',
+            subCategory: [{id: '1', name: months[idMes][2]}],
+        },
+        {
+            id: '2',
+            categoryName: 'Estatísticas',
+            subCategory: [{id: '1', name: months[idMes][3]}],
+        },
+        {
+            id: '3',
+            categoryName: 'O que aumenta o Risco',
+            subCategory: [{id: '1', name: months[idMes][4]}],
+        },
+        {
+            id: '4',
+            categoryName: 'Como Prevenir',
+            subCategory: [{id: '1', name: months[idMes][5]}],
+        },
+        {
+            id: '5',
+            categoryName: 'Sinais e Sintomas',
+            subCategory: [{id: '1', name: months[idMes][6]}],
+        },
+        {
+            id: '6',
+            categoryName: 'Detenção Precoce',
+            subCategory: [{id: '1', name: months[idMes][7]}],
+        },
+        {
+            id: '7',
+            categoryName: 'Diagnóstico',
+            subCategory: [{id: '1', name: months[idMes][8]}],
+        },
+
+        {
+            id: '8',
+            categoryName: 'Tratamento',
+            subCategory: [{id: '1', name: months[idMes][9]}],
+        },
+
+        {
+            id: '9',
+            categoryName: 'Contatos',
+            subCategory: [{id: '1', name: 'Sem Contatos 😭'}],
+        },
+    ];
+
     return (
         <View style={styles.container}>
             <ExpandableListView
@@ -78,51 +129,3 @@ export function Accordion({ idMes, ...rest }: ButtonProps) {
         </View>
     )
 };
-
-const Conteudo = [
-    {
-        id: '1',
-        categoryName: 'Definição',
-        subCategory: [{id: '1', name:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer pulvinar, sem id pulvinar laoreet, lacus ligula mattis tortor, vel tincidunt est ante et neque. Vestibulum accumsan diam ac ullamcorper sagittis. Sed at dapibus felis, non facilisis turpis. Aliquam lorem metus, lobortis ut mi id, egestas maximus ex. Mauris scelerisque dictum leo vehicula egestas. Vestibulum eu ipsum id nibh scelerisque vulputate.",}],
-    },
-    {
-        id: '2',
-        categoryName: 'Estatísticas',
-        subCategory: [{id: '1', name:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer pulvinar, sem id pulvinar laoreet, lacus ligula mattis tortor, vel tincidunt est ante et neque. Vestibulum accumsan diam ac ullamcorper sagittis. Sed at dapibus felis, non facilisis turpis. Aliquam lorem metus, lobortis ut mi id, egestas maximus ex. Mauris scelerisque dictum leo vehicula egestas. Vestibulum eu ipsum id nibh scelerisque vulputate.",}],
-    },
-    {
-        id: '3',
-        categoryName: 'O que aumenta o Risco',
-        subCategory: [{id: '1', name:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer pulvinar, sem id pulvinar laoreet, lacus ligula mattis tortor, vel tincidunt est ante et neque. Vestibulum accumsan diam ac ullamcorper sagittis. Sed at dapibus felis, non facilisis turpis. Aliquam lorem metus, lobortis ut mi id, egestas maximus ex. Mauris scelerisque dictum leo vehicula egestas. Vestibulum eu ipsum id nibh scelerisque vulputate.",}],
-    },
-    {
-        id: '4',
-        categoryName: 'Como Prevenir',
-        subCategory: [{id: '1', name:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer pulvinar, sem id pulvinar laoreet, lacus ligula mattis tortor, vel tincidunt est ante et neque. Vestibulum accumsan diam ac ullamcorper sagittis. Sed at dapibus felis, non facilisis turpis. Aliquam lorem metus, lobortis ut mi id, egestas maximus ex. Mauris scelerisque dictum leo vehicula egestas. Vestibulum eu ipsum id nibh scelerisque vulputate.",}],
-    },
-    {
-        id: '5',
-        categoryName: 'Sinais e Sintomas',
-        subCategory: [{id: '1', name:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer pulvinar, sem id pulvinar laoreet, lacus ligula mattis tortor, vel tincidunt est ante et neque. Vestibulum accumsan diam ac ullamcorper sagittis. Sed at dapibus felis, non facilisis turpis. Aliquam lorem metus, lobortis ut mi id, egestas maximus ex. Mauris scelerisque dictum leo vehicula egestas. Vestibulum eu ipsum id nibh scelerisque vulputate.",}],
-    },
-    {
-        id: '6',
-        categoryName: 'Detenção Precoce',
-        subCategory: [{id: '1', name:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer pulvinar, sem id pulvinar laoreet, lacus ligula mattis tortor, vel tincidunt est ante et neque. Vestibulum accumsan diam ac ullamcorper sagittis. Sed at dapibus felis, non facilisis turpis. Aliquam lorem metus, lobortis ut mi id, egestas maximus ex. Mauris scelerisque dictum leo vehicula egestas. Vestibulum eu ipsum id nibh scelerisque vulputate.",}],
-    },
-    {
-        id: '7',
-        categoryName: 'Diagnóstico',
-        subCategory: [{id: '1', name:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer pulvinar, sem id pulvinar laoreet, lacus ligula mattis tortor, vel tincidunt est ante et neque. Vestibulum accumsan diam ac ullamcorper sagittis. Sed at dapibus felis, non facilisis turpis. Aliquam lorem metus, lobortis ut mi id, egestas maximus ex. Mauris scelerisque dictum leo vehicula egestas. Vestibulum eu ipsum id nibh scelerisque vulputate.",}],
-    },
-    {
-        id: '8',
-        categoryName: 'Tratamento',
-        subCategory: [{id: '1', name:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer pulvinar, sem id pulvinar laoreet, lacus ligula mattis tortor, vel tincidunt est ante et neque. Vestibulum accumsan diam ac ullamcorper sagittis. Sed at dapibus felis, non facilisis turpis. Aliquam lorem metus, lobortis ut mi id, egestas maximus ex. Mauris scelerisque dictum leo vehicula egestas. Vestibulum eu ipsum id nibh scelerisque vulputate.",}],
-    },
-    {
-        id: '9',
-        categoryName: 'Contatos',
-        subCategory: [{id: '1', name:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer pulvinar, sem id pulvinar laoreet, lacus ligula mattis tortor, vel tincidunt est ante et neque. Vestibulum accumsan diam ac ullamcorper sagittis. Sed at dapibus felis, non facilisis turpis. Aliquam lorem metus, lobortis ut mi id, egestas maximus ex. Mauris scelerisque dictum leo vehicula egestas. Vestibulum eu ipsum id nibh scelerisque vulputate.",}],
-    },
-];

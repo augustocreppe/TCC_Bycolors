@@ -3,6 +3,7 @@ import { StyleSheet, Text, TouchableOpacityProps, View } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { cores } from '../styles/colors';
 import fonts from '../styles/fonts';
+import { months } from '../styles/info';
 
 interface ButtonProps extends TouchableOpacityProps {
     idMes: number;
@@ -38,14 +39,14 @@ export function Titulo ({ idMes, ...rest }: ButtonProps) {
             marginRight: 20,
         },
         text: {
-            fontSize: 28,
+            fontSize: 26,
             color: cores[idMes][2],
             fontFamily: fonts.heading,
             marginBottom: 5,
         },
         subtext:
         {
-            fontSize: 24,
+            fontSize: 14,
             color: cores[idMes][2],
             fontFamily: fonts.heading,
         },
@@ -67,10 +68,10 @@ export function Titulo ({ idMes, ...rest }: ButtonProps) {
                 </View>
                 <View style={styles.textView}>
                     <Text style={styles.text}>
-                        Doença
+                        { months[idMes][0] }
                     </Text>
                     <Text style={styles.subtext}>
-                        Mês Cor
+                        { months[idMes][1] }
                     </Text>
                 </View>
             </View>

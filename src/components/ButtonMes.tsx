@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import fonts from '../styles/fonts';
 import { cores, colors } from '../styles/colors';
+import { months } from '../styles/info';
 
 interface ButtonProps extends TouchableOpacityProps {
     idMes: number;
@@ -25,7 +26,7 @@ export function ButtonMes ({ idMes, ...rest }: ButtonProps) {
             marginBottom: 20,
         },
         text: {
-            fontSize: 24,
+            fontSize: 22,
             color: colors.preto, 
             fontFamily: fonts.heading,
             marginBottom: 5,
@@ -35,6 +36,8 @@ export function ButtonMes ({ idMes, ...rest }: ButtonProps) {
             fontSize: 16,
             color: colors.preto,
             fontFamily: fonts.heading,
+            alignSelf: 'center',
+            textAlign: 'center',
         },
         subcont:
         {
@@ -72,10 +75,10 @@ export function ButtonMes ({ idMes, ...rest }: ButtonProps) {
             <TouchableOpacity style={styles.subcont} onPress={handleMes}>
                 <View style={styles.viewText}>
                     <Text style={styles.text}>
-                        Mês Cor
+                        { months[idMes][0] }
                     </Text>
                     <Text style={styles.subtext}>
-                        Prevenção da Doença
+                        { months[idMes][1] }
                     </Text>
                 </View>
                 <View>
