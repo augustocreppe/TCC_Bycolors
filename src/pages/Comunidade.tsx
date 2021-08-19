@@ -12,12 +12,22 @@ export function Comunidade() {
         navigation.navigate('MenuLateral');
     }
 
+    function handleAddPost() {
+        navigation.navigate('CriarPost');
+    }
+
     return (
         <SafeAreaView style={styles.container}>
         <View style={styles.container}>
-            <TouchableOpacity onPress={handleGoBack} style={styles.buttonMenu}>
-                <Feather name="menu" style={styles.buttonMenuIcon}/>
-            </TouchableOpacity>
+            <View style={styles.topView}>
+                <TouchableOpacity onPress={handleGoBack} style={styles.buttonMenu}>
+                    <Feather name="menu" style={styles.buttonMenuIcon}/>
+                </TouchableOpacity>
+
+                <TouchableOpacity onPress={handleAddPost} style={styles.buttonAdd}>
+                    <Feather name="plus" style={styles.buttonAddIcon}/>
+                </TouchableOpacity>
+            </View>
 
             <View style={styles.titleView}>
                 <Text style={styles.title}>Página Comunidade</Text>
@@ -40,6 +50,9 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around',
         paddingHorizontal: 20
     },
+    topView: {
+        flexDirection: 'row',
+    },
     buttonMenu: {
         justifyContent: 'center',
         alignItems: 'center',
@@ -49,6 +62,18 @@ const styles = StyleSheet.create({
         width: 56,
     },
     buttonMenuIcon: {
+        fontSize: 40,
+        color: colors.body_dark,
+    },
+    buttonAdd: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 15,
+        marginLeft: '65%',
+        height: 56,
+        width: 56,
+    },
+    buttonAddIcon: {
         fontSize: 40,
         color: colors.body_dark,
     },
