@@ -22,7 +22,6 @@ export function Calendario() {
 
             <View style={styles.scrollView}>
             <ScrollView>
-                <ButtonMes idMes={0}/>
                 <ButtonMes idMes={1}/>
                 <ButtonMes idMes={2}/>
                 <ButtonMes idMes={3}/>
@@ -34,6 +33,7 @@ export function Calendario() {
                 <ButtonMes idMes={9}/>
                 <ButtonMes idMes={10}/>
                 <ButtonMes idMes={11}/>
+                <ButtonMes idMes={12}/>
             </ScrollView>
             </View>
 

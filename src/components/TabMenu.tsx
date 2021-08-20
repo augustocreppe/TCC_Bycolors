@@ -18,11 +18,7 @@ export default function TabMenu () {
 
     const styles = StyleSheet.create({
         container: {
-            backgroundColor: colors.cinza_claro,
-            borderTopColor: colors.heading,
-            borderTopWidth: 1.5,
-            borderBottomColor: colors.heading,
-            borderBottomWidth: 2,
+            backgroundColor: colors.body_dark,
             height:80,
             flexDirection: 'row',
         },
@@ -34,21 +30,21 @@ export default function TabMenu () {
         },
         icon1: {
             fontSize: 25,
-            color: colors.heading,
+            color: colors.background,
         },
         text1: {
             fontFamily: fonts.text,
             fontSize: 15,
-            color: colors.heading,
+            color: colors.background,
         },
         icon2: {
             fontSize: 25,
-            color: colors.heading,
+            color: colors.background,
         },
         text2: {
             fontFamily: fonts.text,
             fontSize: 15,
-            color: colors.heading,
+            color: colors.background,
         }
     });
 

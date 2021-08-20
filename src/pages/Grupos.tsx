@@ -17,9 +17,10 @@ export function Grupos() {
             <TouchableOpacity onPress={handleGoBack} style={styles.buttonMenu}>
                 <Feather name="arrow-left" style={styles.buttonMenuIcon}/>
             </TouchableOpacity>
-            <Text>
-                Tela Grupos
-            </Text>
+
+            <View style={styles.titleView}>
+                <Text style={styles.title}>Página Grupos</Text>
+            </View>
         </View>
         </SafeAreaView>
     );
@@ -41,5 +42,14 @@ const styles = StyleSheet.create({
     buttonMenuIcon: {
         fontSize: 40,
         color: colors.body_dark,
+    },
+    titleView: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: 590,
+    },
+    title: {
+        fontSize: 30,
+        fontWeight: 'bold',
     },
 });

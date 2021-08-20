@@ -1,5 +1,5 @@
 import React from 'react';
-import { SafeAreaView, ScrollView, StyleSheet, TouchableOpacity, TouchableOpacityProps, View } from 'react-native';
+import { SafeAreaView, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Titulo } from '../components/Titulo';
 import { Feather } from '@expo/vector-icons';
@@ -8,12 +8,11 @@ import { Accordion } from '../components/Accordion';
 
 export function Mes({ route }: { route: any }) {
     const navigation = useNavigation();
+    const idMes = route.params.idMes;
 
     function handleGoBack() {
         navigation.goBack();
     }
-
-    const idMes = route.params.idMes;
     
     return (
         <SafeAreaView style={styles.container}>

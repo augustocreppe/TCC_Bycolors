@@ -17,9 +17,10 @@ export function Chats() {
             <TouchableOpacity onPress={handleGoBack} style={styles.buttonMenu}>
                 <Feather name="arrow-left" style={styles.buttonMenuIcon}/>
             </TouchableOpacity>
-            <Text>
-                Tela Chats
-            </Text>
+
+            <View style={styles.titleView}>
+                <Text style={styles.title}>Página Chats</Text>
+            </View>
         </View>
         </SafeAreaView>
     );
@@ -41,5 +42,14 @@ const styles = StyleSheet.create({
     buttonMenuIcon: {
         fontSize: 40,
         color: colors.body_dark,
+    },
+    titleView: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: 590,
+    },
+    title: {
+        fontSize: 30,
+        fontWeight: 'bold',
     },
 });

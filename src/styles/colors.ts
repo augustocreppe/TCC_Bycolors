@@ -1,8 +1,8 @@
 export const colors = {
   //Aplicativo
   heading: '#202020',
-  body_dark: '#303030',
-  body_light: '#4C4C4C',
+  body_dark: '#414BB2',
+  body_light: '#D9DBF0',
   background: '#FFFFFF',
   default_blue: '#2D9CF0',
 
@@ -12,7 +12,7 @@ export const colors = {
   cinza: '#CFCFCF',
   cinza_escuro: '#505050',
   preto: '#000000',
-  
+
   //Branco (já incluso no gradiente acima)
   //branco
   //cinza-claro
@@ -55,6 +55,11 @@ export const colors = {
 };
 
 export const cores = [
+  [ //Padrão Aplicativo
+    '#D9DBF0',
+    '#2D9CF0',
+    '#414BB2',
+  ],
   [ //Janeiro Branco
     '#FFFFFF',
     '#D3D3D3',

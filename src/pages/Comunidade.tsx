@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Feather } from '@expo/vector-icons';
 import { colors } from '../styles/colors';
 import TabMenu from '../components/TabMenu';
+import { AddFile } from '../components/AddFile';
 
 export function Comunidade() {
     const navigation = useNavigation();
@@ -12,8 +13,16 @@ export function Comunidade() {
         navigation.navigate('MenuLateral');
     }
 
-    function handleAddPost() {
-        navigation.navigate('CriarPost');
+    function handleGoGroups() {
+        navigation.navigate('Grupos');
+    }
+
+    function handleGoChats() {
+        navigation.navigate('Chats');
+    }
+
+    function handleGoTimeline() {
+        navigation.navigate('LinhaDoTempo');
     }
 
     return (
@@ -24,8 +33,20 @@ export function Comunidade() {
                     <Feather name="menu" style={styles.buttonMenuIcon}/>
                 </TouchableOpacity>
 
-                <TouchableOpacity onPress={handleAddPost} style={styles.buttonAdd}>
-                    <Feather name="plus" style={styles.buttonAddIcon}/>
+                <AddFile idMes={0}/>
+            </View>
+
+            <View style={styles.buttonsView}>
+                <TouchableOpacity onPress={handleGoGroups} style={styles.buttons}>
+                    <Feather name="users" style={styles.buttonMenuIcon}/>
+                </TouchableOpacity>
+
+                <TouchableOpacity onPress={handleGoChats} style={styles.buttons}>
+                    <Feather name="message-circle" style={styles.buttonMenuIcon}/>
+                </TouchableOpacity>
+
+                <TouchableOpacity onPress={handleGoTimeline} style={styles.buttons}>
+                    <Feather name="clock" style={styles.buttonMenuIcon}/>
                 </TouchableOpacity>
             </View>
 
@@ -80,10 +101,16 @@ const styles = StyleSheet.create({
     titleView: {
         justifyContent: 'center',
         alignItems: 'center',
-        height: 630,
+        height: 590,
     },
     title: {
         fontSize: 30,
         fontWeight: 'bold',
     },
+    buttonsView: {
+        flexDirection: 'row',
+    },
+    buttons: {
+        marginLeft: 25,
+    }
 });
