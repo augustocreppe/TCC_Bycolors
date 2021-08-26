@@ -213,7 +213,7 @@ const styles = StyleSheet.create({
     },
     button: {
         flexDirection: 'row',
-        backgroundColor: colors.default_blue,
+        backgroundColor: colors.body_dark,
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 8,
