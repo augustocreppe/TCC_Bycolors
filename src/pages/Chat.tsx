@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
     },
 
     buttonIcon: {
-        fontSize: 30,
+        fontSize: 25,
         alignSelf: 'center',
         color: colors.rosa
     },
