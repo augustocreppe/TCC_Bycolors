@@ -65,7 +65,7 @@ export function MenuLateral() {
                 <View style={styles.buttonMenuView}>
                 <TouchableOpacity style={styles.buttonMenu} onPress={handleUser}>
                     <Feather name="user" style={styles.buttonIcon}/>
-                    <Text style={styles.buttonText}>Alterar Usuário</Text>
+                    <Text style={styles.buttonText}>Alterar os Dados do Usuário</Text>
                 </TouchableOpacity>
                 </View>
 
