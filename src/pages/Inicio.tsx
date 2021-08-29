@@ -211,6 +211,7 @@ const styles = StyleSheet.create({
         fontSize: 30,
         fontWeight: 'bold',
     },
+    
     button: {
         flexDirection: 'row',
         backgroundColor: colors.body_dark,
