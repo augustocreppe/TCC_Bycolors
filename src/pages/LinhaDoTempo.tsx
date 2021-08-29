@@ -1,9 +1,13 @@
 import React from 'react';
-import { SafeAreaView, StyleSheet, View, Text, TouchableOpacity, Image } from 'react-native';
+import { SafeAreaView, StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { colors } from '../styles/colors';
-import fonts from '../styles/fonts';
 import { Feather } from '@expo/vector-icons';
+import { TituloComunidade } from '../components/TituloComunidade';
+import { ScrollView } from 'react-native-gesture-handler';
+import { Post } from '../components/Post';
+import fonts from '../styles/fonts';
+
 const profile = require('../assets/profile.png');
 
 export function LinhaDoTempo() {
@@ -20,37 +24,40 @@ export function LinhaDoTempo() {
                 <Feather name="arrow-left" style={styles.buttonMenuIcon}/>
             </TouchableOpacity>
 
-            <View style={styles.doubleView}>
-                <View style={styles.imageView}>
-                    <Image 
-                        source={profile} 
-                        style={styles.image}
-                        resizeMode="contain"
-                    />
+            <View style={styles.scrollView}> 
+            <ScrollView>
+
+                <View style={styles.profileView}>
+                <View style={styles.notBioView}>
+                        <View style={styles.imageView}>
+                            <Image source={profile} style={styles.image}/>
+                        </View>
+
+                        <View style={styles.infoView}>
+                            <View style={styles.nameView}>
+                                <Text style={styles.name}>Fulana da Silva</Text>
+                            </View>
+
+                            <View style={styles.placeView}>
+                                <Feather name="map-pin" style={styles.placeIcon}/>
+                                <Text style={styles.place}>Bauru - SP</Text>
+                            </View>
+                        </View>
+                </View>
                 </View>
 
-                <View style={styles.nameTextView}>
-                    <Text style={styles.nameText}>Fulana da Silva</Text>
-
-                    <Text style={styles.bioText}>Estou aqui para saber mais {"\n"}
-                    sobre o câncer de mama e {"\n"}
-                    participar dos grupos.</Text>
+                <View style={styles.bioView}>
+                    <Text style={styles.bio}>Estou aqui para contar mais sobre minha trajetória com o câncer de mama. Texto de exemplo para preencher o espaço.</Text>
                 </View>
 
+                <TituloComunidade idMes={0} text={"Minhas Publicações"}/>
+                
+                <View style={styles.postView}>
+                    <Post idMes={5}/>
+                    <Post idMes={7}/>
+                </View>
+            </ScrollView>
             </View>
-
-
-            <TouchableOpacity>
-                <Text style={styles.complement}>
-                     Editar perfil
-                </Text>
-            </TouchableOpacity>
-
-            <View style={styles.placeTextView}>
-                <Feather name="map-pin" style={styles.placeIcon}/>
-                <Text style={styles.placeText}>Bauru - SP</Text>
-            </View>
-
         </View>
         </SafeAreaView>
     );
@@ -61,79 +68,87 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingTop: 20,
     },
-
+    scrollView: {
+        width: '100%',
+        height: 724,
+    },
+    postView: {
+        alignItems: 'center',
+    },
+    profileView: {
+        width: '88%',
+        alignSelf: 'center',
+        height: 200,
+    },
+    notBioView: {
+        width: '100%',
+        height: '70%',
+        flexDirection: 'row',
+    },
+    imageView: {
+        justifyContent: 'center',
+        width: '38%',
+        height: '100%',
+    },
+    image: {
+        width: '100%',
+        height: '100%',
+    },
+    infoView: {
+        width: '62%',
+        height: '100%',
+        paddingLeft: '3%',
+    },
+    nameView: {
+        width: '100%',
+        height: '50%',
+        flexDirection: 'row',
+    },
+    name: {
+        textAlignVertical: 'center',
+        fontFamily: fonts.heading,
+        color: colors.body_dark,
+        fontSize: 25,
+    },
+    placeView: {
+        width: '100%',
+        height: '50%',
+        flexDirection: 'row',
+    },
+    placeIcon: {
+        fontSize: 20,
+        textAlignVertical: 'center',
+        color: colors.body_dark,
+        marginRight: '2%',
+    },
+    place: {
+        fontFamily: fonts.text,
+        color: colors.body_dark,
+        fontSize: 25,
+        textAlignVertical: 'center',
+    },
+    bioView: {
+        width: '88%',
+        alignSelf: 'center',
+        height: 'auto',
+        marginTop: '-12%'
+    },
+    bio: {
+        fontFamily: fonts.text,
+        color: colors.cinza_escuro,
+        fontSize: 20,
+        textAlignVertical: 'center',
+        textAlign: 'justify',
+    },  
     buttonMenu: {
         justifyContent: 'center',
         alignItems: 'center',
         marginLeft: 15,
-        marginBottom: 8,
         height: 56,
         width: 56,
     },
-
-    imageView: {
-        justifyContent: 'center',
-        marginLeft: 45,
-        marginTop: 30
-    },
-
-    image: {
-        width: 100,
-        height: 100,
-    },
-
-    nameTextView: {
-        marginTop: 10,
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginLeft: 30,
-    },
-
-    nameText: {
-        fontSize: 25,
-        fontFamily: fonts.heading,
-        color: colors.body_dark,
-    },
-
-    bioText: {
-        fontSize: 14,
-        fontFamily: fonts.text,
-        color: colors.preto
-    },
-
-    complement: {
-        textDecorationLine: 'underline',
-        color: colors.body_dark,
-        marginLeft: 178,
-        fontSize: 14
-    },
-
-    doubleView: {
-        flexDirection: 'row'
-    },
-
     buttonMenuIcon: {
         fontSize: 40,
         color: colors.body_dark,
     },
-
-    placeTextView: {
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginTop: 55,
-        marginBottom: 30,
-    },
-
-    placeIcon: {
-        fontSize: 20,
-        color: colors.body_dark,
-        marginRight: 10
-    },
-    placeText: {
-        fontSize: 20,
-        fontFamily: fonts.text,
-        color: colors.body_dark,
-    },
-
 });

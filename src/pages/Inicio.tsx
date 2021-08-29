@@ -180,7 +180,7 @@ const styles = StyleSheet.create({
     },
     complement: {
         fontFamily: fonts.heading,
-        color: colors.body_light,
+        color: colors.body_dark,
         fontSize: 12,
         marginLeft: 205,
         marginTop: '1.5%',
@@ -211,7 +211,6 @@ const styles = StyleSheet.create({
         fontSize: 30,
         fontWeight: 'bold',
     },
-    
     button: {
         flexDirection: 'row',
         backgroundColor: colors.body_dark,

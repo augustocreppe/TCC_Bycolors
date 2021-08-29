@@ -58,5 +58,5 @@ const styles = StyleSheet.create({
     contentView: {
         height: '100%',
         marginBottom: 20
-    },
+    }
 });

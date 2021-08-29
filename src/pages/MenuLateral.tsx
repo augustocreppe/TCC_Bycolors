@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Feather } from '@expo/vector-icons';
 import fonts from '../styles/fonts';
 import { colors } from '../styles/colors';
+
 const profile = require('../assets/profile.png');
 
 export function MenuLateral() {
@@ -65,7 +66,7 @@ export function MenuLateral() {
                 <View style={styles.buttonMenuView}>
                 <TouchableOpacity style={styles.buttonMenu} onPress={handleUser}>
                     <Feather name="user" style={styles.buttonIcon}/>
-                    <Text style={styles.buttonText}>Alterar os Dados do Usuário</Text>
+                    <Text style={styles.buttonText}>Alterar Usuário</Text>
                 </TouchableOpacity>
                 </View>
 

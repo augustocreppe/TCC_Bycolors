@@ -1,28 +1,20 @@
 import React from 'react';
-import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Feather } from '@expo/vector-icons';
 import { colors } from '../styles/colors';
-import TabMenu from '../components/TabMenu';
 import { AddFile } from '../components/AddFile';
+import { ScrollView } from 'react-native-gesture-handler';
+import { Post } from '../components/Post';
+import { TituloComunidade } from '../components/TituloComunidade';
+import TabMenu from '../components/TabMenu';
+import { ButtonComunidade } from '../components/ButtonComunidade';
 
 export function Comunidade() {
     const navigation = useNavigation();
 
     function handleGoBack() {
         navigation.navigate('MenuLateral');
-    }
-
-    function handleGoGroups() {
-        navigation.navigate('Grupos');
-    }
-
-    function handleGoChats() {
-        navigation.navigate('Chats');
-    }
-
-    function handleGoTimeline() {
-        navigation.navigate('LinhaDoTempo');
     }
 
     return (
@@ -36,25 +28,29 @@ export function Comunidade() {
                 <AddFile idMes={0}/>
             </View>
 
-            <View style={styles.buttonsView}>
-                <TouchableOpacity onPress={handleGoGroups} style={styles.buttons}>
-                    <Feather name="users" style={styles.buttonMenuIcon}/>
-                </TouchableOpacity>
+            <View style={styles.feedView}>
+            <ScrollView>
+                <View style={styles.buttonsView}>
+                    <ButtonComunidade title={"Grupos"} icone={'users'}/>
+                    <View style={styles.buttonCenterView}>
+                        <ButtonComunidade title={"Conversas"} icone={'comments'}/>
+                    </View>
+                    <ButtonComunidade title={"Meu Perfil"} icone={'id-card'}/>
+                </View>
 
-                <TouchableOpacity onPress={handleGoChats} style={styles.buttons}>
-                    <Feather name="message-circle" style={styles.buttonMenuIcon}/>
-                </TouchableOpacity>
+                <View style={styles.tituloView}>
+                    <TituloComunidade idMes={0} text={"Principais Publicações"}/>
+                </View>
 
-                <TouchableOpacity onPress={handleGoTimeline} style={styles.buttons}>
-                    <Feather name="clock" style={styles.buttonMenuIcon}/>
-                </TouchableOpacity>
+                <View style={styles.postsView}>
+                    <Post idMes={9}/>
+                    <Post idMes={10}/>
+                    <Post idMes={3}/>
+                </View>
+            </ScrollView>
             </View>
 
-            <View style={styles.titleView}>
-                <Text style={styles.title}>Página Comunidade</Text>
-            </View>
-
-            <TabMenu/>
+            <TabMenu/>    
         </View>
         </SafeAreaView>
     );
@@ -98,19 +94,31 @@ const styles = StyleSheet.create({
         fontSize: 40,
         color: colors.body_dark,
     },
-    titleView: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: 590,
+    feedView: {
+        width: '100%',
+        alignContent: 'center',
+        height: 630,
     },
     title: {
         fontSize: 30,
         fontWeight: 'bold',
     },
     buttonsView: {
+        width: '88%',
         flexDirection: 'row',
+        alignSelf: 'center',
     },
     buttons: {
-        marginLeft: 25,
-    }
+        marginRight: 25,
+    },
+    tituloView: {
+        width: '100%',
+    },
+    postsView: {
+        width: '100%',
+        alignItems: 'center',
+    },
+    buttonCenterView: {
+        marginHorizontal: '8.6%',  
+    },
 });

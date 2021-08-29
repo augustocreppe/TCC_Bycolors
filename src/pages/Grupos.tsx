@@ -1,8 +1,10 @@
 import React from 'react';
-import { SafeAreaView, StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { SafeAreaView, StyleSheet, View, TouchableOpacity, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { colors } from '../styles/colors';
 import { Feather } from '@expo/vector-icons';
+import { ButtonGrupos } from '../components/ButtonGrupos';
+import { TituloComunidade } from '../components/TituloComunidade';
 
 export function Grupos() {
     const navigation = useNavigation();
@@ -18,8 +20,23 @@ export function Grupos() {
                 <Feather name="arrow-left" style={styles.buttonMenuIcon}/>
             </TouchableOpacity>
 
-            <View style={styles.titleView}>
-                <Text style={styles.title}>Página Grupos</Text>
+            <TituloComunidade idMes={0} text={"Grupos Específicos"}/>
+
+            <View style={styles.scrollView}>
+            <ScrollView>
+                <ButtonGrupos idMes={1}/>
+                <ButtonGrupos idMes={2}/>
+                <ButtonGrupos idMes={3}/>
+                <ButtonGrupos idMes={4}/>
+                <ButtonGrupos idMes={5}/>
+                <ButtonGrupos idMes={6}/>
+                <ButtonGrupos idMes={7}/>
+                <ButtonGrupos idMes={8}/>
+                <ButtonGrupos idMes={9}/>
+                <ButtonGrupos idMes={10}/>
+                <ButtonGrupos idMes={11}/>
+                <ButtonGrupos idMes={12}/>
+            </ScrollView>
             </View>
         </View>
         </SafeAreaView>
@@ -34,7 +51,6 @@ const styles = StyleSheet.create({
     buttonMenu: {
         justifyContent: 'center',
         alignItems: 'center',
-        marginBottom: 15,
         marginLeft: 15,
         height: 56,
         width: 56,
@@ -51,5 +67,8 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 30,
         fontWeight: 'bold',
+    },
+    scrollView: {
+        height: 652,
     },
 });

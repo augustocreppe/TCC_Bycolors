@@ -1,18 +1,16 @@
 import React from 'react';
-import { SafeAreaView, StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { SafeAreaView, StyleSheet, View, TouchableOpacity, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { colors } from '../styles/colors';
 import { Feather } from '@expo/vector-icons';
+import { ButtonChats } from '../components/ButtonChats';
+import { TituloComunidade } from '../components/TituloComunidade';
 
 export function Chats() {
     const navigation = useNavigation();
 
     function handleGoBack() {
         navigation.goBack();
-    }
-
-    function handleEnter() {
-        navigation.navigate('Chat');
     }
 
     return (
@@ -22,14 +20,24 @@ export function Chats() {
                 <Feather name="arrow-left" style={styles.buttonMenuIcon}/>
             </TouchableOpacity>
 
-            <View style={styles.titleView}>
-                <Text style={styles.title}>Página Chats</Text>
+            <TituloComunidade idMes={0} text={"Chats Específicos"}/>
+
+            <View style={styles.scrollView}>
+            <ScrollView>
+                <ButtonChats idMes={1}/>
+                <ButtonChats idMes={2}/>
+                <ButtonChats idMes={3}/>
+                <ButtonChats idMes={4}/>
+                <ButtonChats idMes={5}/>
+                <ButtonChats idMes={6}/>
+                <ButtonChats idMes={7}/>
+                <ButtonChats idMes={8}/>
+                <ButtonChats idMes={9}/>
+                <ButtonChats idMes={10}/>
+                <ButtonChats idMes={11}/>
+                <ButtonChats idMes={12}/>
+            </ScrollView>
             </View>
-
-            <TouchableOpacity onPress={handleEnter} style={styles.button}>
-                <Text>Tela Chat</Text>
-            </TouchableOpacity>
-
         </View>
         </SafeAreaView>
     );
@@ -43,7 +51,6 @@ const styles = StyleSheet.create({
     buttonMenu: {
         justifyContent: 'center',
         alignItems: 'center',
-        marginBottom: 15,
         marginLeft: 15,
         height: 56,
         width: 56,
@@ -61,17 +68,7 @@ const styles = StyleSheet.create({
         fontSize: 30,
         fontWeight: 'bold',
     },
-
-    button: {
-        flexDirection: 'row',
-        backgroundColor: colors.body_dark,
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 8,
-        marginTop: 5,
-        marginBottom: 4,
-        marginHorizontal: '7%',
-        height: 50,
-        width: '86%',
+    scrollView: {
+        height: 652,
     },
 });

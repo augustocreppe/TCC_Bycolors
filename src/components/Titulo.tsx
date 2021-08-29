@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacityProps, View } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
-import { cores } from '../styles/colors';
+import { colors, cores } from '../styles/colors';
 import fonts from '../styles/fonts';
 import { months } from '../styles/info';
 
@@ -40,15 +40,16 @@ export function Titulo ({ idMes, ...rest }: ButtonProps) {
         },
         text: {
             fontSize: 26,
-            color: cores[idMes][2],
+            color: colors.preto,
             fontFamily: fonts.heading,
             marginBottom: 5,
         },
         subtext:
         {
-            fontSize: 14,
-            color: cores[idMes][2],
+            fontSize: 16,
+            color: colors.preto,
             fontFamily: fonts.heading,
+            textAlign: 'center',
         },
         ribbonView: {
             marginHorizontal: 20,
