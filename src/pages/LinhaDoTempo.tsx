@@ -47,14 +47,15 @@ export function LinhaDoTempo() {
                 </View>
 
                 <View style={styles.bioView}>
-                    <Text style={styles.bio}>Estou aqui para contar mais sobre minha trajetória com o câncer de mama. Texto de exemplo para preencher o espaço.</Text>
+                    <Text style={styles.bio}>Estou aqui para contar mais sobre minha luta contra o câncer de mama. Encorajo aquelas que precisam de ajuda, mostrando que é possível vencer!</Text>
                 </View>
 
                 <TituloComunidade idMes={0} text={"Minhas Publicações"}/>
                 
                 <View style={styles.postView}>
-                    <Post idMes={5}/>
+                    <Post idMes={2}/>
                     <Post idMes={7}/>
+                    <Post idMes={5}/>
                 </View>
             </ScrollView>
             </View>

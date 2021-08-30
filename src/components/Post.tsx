@@ -6,8 +6,6 @@ import { cores } from '../styles/colors';
 import { months } from '../styles/info';
 import fonts from '../styles/fonts';
 
-const postIimage = require('../assets/exemplo.jpg');
-
 interface PostProps extends TouchableOpacityProps {
     idMes: number;
 }
@@ -156,7 +154,14 @@ export function Post ({ idMes, ...rest }: PostProps) {
         }
     });
 
+    const postImage = require('../assets/outubro.jpg');
     const navigation = useNavigation();
+    const nome = "nome";
+    const hora = "10:30";
+    const data = "30/08/2021";
+    const imagem = "../assets/outubro.jpg"
+    const texto = "O câncer de mama é algo muito sério! Devemos todos tomar muito cuidado e nos prevenirmos! Por isso, a Prefeitura de Bauru realizará uma palestra na próxima terça, e contamos com a presença de todos!"
+    const curtidas = 123;
 
     function handleMes() {
         navigation.navigate('Mes', {idMes: idMes});
@@ -170,10 +175,10 @@ export function Post ({ idMes, ...rest }: PostProps) {
                 </View>
                 <View style={styles.profileTextsView}>
                     <View style={styles.nameTextView}>
-                        <Text style={styles.nameText}> Fulano da Silva </Text>
+                        <Text style={styles.nameText}> {nome} </Text>
                     </View>
                     <View style={styles.dateTextView}>
-                        <Text style={styles.dateText}> 11:14 - 14/08/2021 </Text>
+                        <Text style={styles.dateText}> {hora} - {data} </Text>
                     </View>
                 </View>
                 <View style={styles.ellipsisView}>
@@ -190,9 +195,12 @@ export function Post ({ idMes, ...rest }: PostProps) {
             </View>
 
             <View style={styles.textView}>
-                <Image source={postIimage} style={styles.postImage} resizeMode="cover"/>
+                {
+                    (imagem.length > 0) &&
+                    <Image source={postImage} style={styles.postImage} resizeMode="cover"/>
+                }
                 <Text style={styles.textText}>
-                    Isso é um exemplo de texto que podemos colocar para uma publicação. Ele fica desse jeito, e eu prefiro que ele esteja justificado.
+                    {texto}
                 </Text>
             </View>
 
@@ -203,7 +211,7 @@ export function Post ({ idMes, ...rest }: PostProps) {
                     <Text style={styles.likeText}>Curtir</Text>
                 </View>
                 <View style={styles.likesView}>
-                    <Text style={styles.likesText}>333</Text>
+                    <Text style={styles.likesText}>{curtidas}</Text>
                 </View>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.shareView}>

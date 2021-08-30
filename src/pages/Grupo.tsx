@@ -39,7 +39,6 @@ export function Grupo({ route }: { route: any }) {
                 <Post idMes={idMes}/>
                 <Post idMes={idMes}/>
                 <Post idMes={idMes}/>
-                <Post idMes={idMes}/>
             </ScrollView>
             </View>
         </View>

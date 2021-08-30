@@ -43,9 +43,9 @@ export function Comunidade() {
                 </View>
 
                 <View style={styles.postsView}>
-                    <Post idMes={9}/>
                     <Post idMes={10}/>
-                    <Post idMes={3}/>
+                    <Post idMes={9}/>
+                    <Post idMes={11}/>
                 </View>
             </ScrollView>
             </View>
