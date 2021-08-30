@@ -156,7 +156,7 @@ export function Post ({ idMes, ...rest }: PostProps) {
 
     const postImage = require('../assets/outubro.jpg');
     const navigation = useNavigation();
-    const nome = "nome";
+    const nome = "Fulana da Silva";
     const hora = "10:30";
     const data = "30/08/2021";
     const imagem = "../assets/outubro.jpg"

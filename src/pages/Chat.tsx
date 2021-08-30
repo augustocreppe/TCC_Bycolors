@@ -6,6 +6,8 @@ import { Feather } from '@expo/vector-icons';
 import { ScrollView } from 'react-native-gesture-handler';
 import { TituloComunidade } from '../components/TituloComunidade';
 import { months } from '../styles/info';
+import { Message } from '../components/Message';
+import { MyMessage } from '../components/MyMessage';
 
 export function Chat({ route }: { route: any }) {
     const navigation = useNavigation();
@@ -26,7 +28,7 @@ export function Chat({ route }: { route: any }) {
             backgroundColor: colors.background,
         },
         scrollView: {
-            marginBottom: -20,
+            height: '75.5%',
         },
         buttonMenu: {
             justifyContent: 'center',
@@ -35,9 +37,10 @@ export function Chat({ route }: { route: any }) {
             height: 56,
             width: 56,
         },
-        doubleView: {
+        sendView: {
+            height: '8%',
+            width: '100%',
             flexDirection: 'row',
-            marginBottom: '2%',
         },
         input: {
             borderWidth: 1,
@@ -45,23 +48,23 @@ export function Chat({ route }: { route: any }) {
             borderColor: colors.cinza_claro,
             backgroundColor: colors.branco,
             color: colors.heading,
-            height: '8%',
+            height: '80%',
             width: '87%',
             fontSize: 15,
-            marginTop: 602,
+            marginVertical: '1.5%',
             marginLeft: '1.5%',
             padding: 10,
             textAlign: 'justify',
         },
         buttonSend: {
-            marginTop: 607,
             backgroundColor: cores[idMes][0],
             borderRadius: 20,
             width: 40,
             height: 40,
             marginLeft: 3,
             justifyContent: 'center',
-            alignItems: 'center'
+            alignItems: 'center',
+            marginVertical: '2.5%',
         },
         buttonIcon: {
             fontSize: 25,
@@ -83,11 +86,14 @@ export function Chat({ route }: { route: any }) {
 
             <TituloComunidade idMes={idMes} text={months[idMes][0]}/>
 
-            <ScrollView style={styles.scrollView}>
-
+            <View style={styles.scrollView}>
+            <ScrollView>
+                <Message idMes={idMes}/>
+                <MyMessage idMes={idMes}/>
             </ScrollView>
+            </View>
             
-            <View style={styles.doubleView}>
+            <View style={styles.sendView}>
                 <TextInput style={styles.input} placeholder="Digite sua mensagem" />
                 <TouchableOpacity onPress={handleSend} style={styles.buttonSend}>
                     <Feather name="send" style={styles.buttonIcon}/>
