@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { SafeAreaView, StyleSheet, Text, View, TextInput, Alert, TouchableOpacity, ImageBackground, Image, KeyboardAvoidingView, TouchableWithoutFeedback, Platform, Keyboard, } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Feather, Entypo, FontAwesome } from '@expo/vector-icons';
-import  { colors } from '../styles/colors';
 import fonts from '../styles/fonts';
+import { StyleSheet, Text, View, TextInput, Alert, TouchableOpacity, ImageBackground, Image, KeyboardAvoidingView, Platform, ScrollView, } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { Feather, Entypo, FontAwesome } from '@expo/vector-icons';
+import { colors } from '../styles/colors';
 
 const fundo = require('../assets/fundo.jpg');
 const logo = require('../assets/logo.png');
@@ -18,6 +18,10 @@ export function Inicio() {
 
     function handleEnter() {
         navigation.navigate('Calendario');
+    }
+
+    function handleRegister() {
+        //
     }
 
     function handleInputBlur(){
@@ -48,7 +52,8 @@ export function Inicio() {
     }
 
     return (
-        <SafeAreaView style={styles.container}>
+        <KeyboardAvoidingView style={styles.container} behavior={Platform.OS == 'ios' ? 'padding' : 'height'}>
+        <ScrollView>
         <ImageBackground source={fundo} style={styles.fundo} resizeMode="cover">
             <View style={styles.container}>
 
@@ -116,7 +121,12 @@ export function Inicio() {
 
                         <Text style = {styles.textOu}> ou </Text>
 
-                        <TouchableOpacity onPress={handleEnter} style={styles.button}>
+                        <TouchableOpacity onPress={handleRegister} style={styles.button2}>
+                            <Feather name="user-plus" style={styles.buttonIcon}/>
+                            <Text style={styles.buttonText}>Cadastrar-se</Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity onPress={handleEnter} style={styles.button3}>
                             <Feather name="user-x" style={styles.buttonIcon}/>
                             <Text style={styles.buttonText}>Entrar sem logar</Text>
                         </TouchableOpacity>
@@ -126,16 +136,20 @@ export function Inicio() {
                 
             </View>
         </ImageBackground>
-        </SafeAreaView>
+        </ScrollView>
+        </KeyboardAvoidingView>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        height: '100%',
     },
     fundo: {
         flex: 1,
+        height: '100%',
+
     },
     viewLogo: {
         width: 160,
@@ -218,7 +232,31 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderRadius: 8,
         marginTop: 5,
-        marginBottom: 4,
+        marginBottom: 6,
+        marginHorizontal: '7%',
+        height: 50,
+        width: '86%',
+    },
+    button2: {
+        flexDirection: 'row',
+        backgroundColor: colors.body_dark,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 8,
+        marginTop: 5,
+        marginBottom: '5%',
+        marginHorizontal: '7%',
+        height: 50,
+        width: '86%',
+    },
+    button3: {
+        flexDirection: 'row',
+        backgroundColor: colors.body_dark,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 8,
+        marginTop: 5,
+        marginBottom: '10%',
         marginHorizontal: '7%',
         height: 50,
         width: '86%',
@@ -245,7 +283,7 @@ const styles = StyleSheet.create({
         marginVertical: '2%',
         fontFamily: fonts.heading,
         fontSize: 21,
-        color: colors.body_dark
+        color: colors.preto
     },
 });
 
