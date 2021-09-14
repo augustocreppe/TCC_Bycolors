@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import fonts from '../styles/fonts';
 import { StyleSheet, Text, View, TextInput, Alert, TouchableOpacity, ImageBackground, Image, KeyboardAvoidingView, Platform, ScrollView, } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -30,24 +29,23 @@ export function CadastroComunidade() {
                     </View>
 
                     <Text style={styles.title}>
-                        Faça parte da comunidade
+                        Faça parte da comunidade!
                     </Text>
 
                     <TouchableOpacity onPress={handleLogin} style={styles.button2}>
-                            <Feather name="log-in" style={styles.buttonIcon}/>
-                            <Text style={styles.buttonText}>Fazer log-in</Text>
-                        </TouchableOpacity>
+                        <Feather name="log-in" style={styles.buttonIcon}/>
+                        <Text style={styles.buttonText}>Fazer log-in</Text>
+                    </TouchableOpacity>
 
-                        <View style = {styles.textLine}/>
+                    <View style = {styles.textLine}/>
 
-                        <Text style = {styles.textComplement}> Não possui uma conta? </Text>
+                    <Text style = {styles.textComplement}> Não possui uma conta? </Text>
 
                     <TouchableOpacity onPress={handleRegister} style={styles.button}>
-                            <Feather name="user-plus" style={styles.buttonIcon}/>
-                            <Text style={styles.buttonText}>Cadastrar-se</Text>
-                        </TouchableOpacity>
-
-                        
+                        <Feather name="user-plus" style={styles.buttonIcon}/>
+                        <Text style={styles.buttonText}>Cadastrar-se</Text>
+                    </TouchableOpacity>
+ 
                 </View>
             </View>
         </ImageBackground>
@@ -95,7 +93,7 @@ const styles = StyleSheet.create({
 
     button: {
         flexDirection: 'row',
-        backgroundColor: colors.body_dark,
+        backgroundColor: colors.laranja,
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 8,
@@ -112,7 +110,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderRadius: 8,
         marginTop: 4,
-        marginBottom: '3%',
+        marginBottom: '2%',
         marginHorizontal: '7%',
         height: 50,
         width: '86%',
