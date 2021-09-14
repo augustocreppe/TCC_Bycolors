@@ -21,7 +21,7 @@ export function Inicio() {
     }
 
     function handleRegister() {
-        //
+        navigation.navigate('CadastroComunidade');
     }
 
     function handleInputBlur(){
