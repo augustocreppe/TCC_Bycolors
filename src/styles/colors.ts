@@ -13,6 +13,10 @@ export const colors = {
   cinza_escuro: '#505050',
   preto: '#000000',
 
+  //Certo e Errado
+  _verde: '#00C850',
+  _vermelho: '#C80000',
+
   //Branco (já incluso no gradiente acima)
   //branco
   //cinza-claro

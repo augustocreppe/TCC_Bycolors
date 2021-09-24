@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import fonts from '../styles/fonts';
-import { StyleSheet, Text, View, TextInput, Alert, TouchableOpacity, ImageBackground, Image, KeyboardAvoidingView, Platform, ScrollView, } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Alert, TouchableOpacity, ImageBackground, Image, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Feather, Entypo, FontAwesome } from '@expo/vector-icons';
 import { colors } from '../styles/colors';
@@ -11,43 +10,77 @@ const logo = require('../assets/logo.png');
 const marca = require('../assets/marca.png');
 
 export function Inicio() {
-    const [isFocused, setIsFocused] = useState(false);
-    const [isFilled, setIsFilled] = useState(false);
+    const [continueIsPressed, setcontinueIsPressed] = useState(false);
+    const [emailIsFocused, setEmailIsFocused] = useState(false);
+    const [emailIsFilled, setEmailIsFilled] = useState(false);
+    const [passwordIsFocused, setPasswordIsFocused] = useState(false);
+    const [passwordIsFilled, setPasswordIsFilled] = useState(false);
     const [email, setEmail] = useState<string>();
+    const [password, setPassword] = useState<string>();
     const navigation = useNavigation();
 
+    //Continuar
+    function handleContinue() {
+        if(!email)
+            return Alert.alert('Por favor, digite seu e-mail.');
+        else if(!email.includes('@') || !email.includes('.com'))
+            return Alert.alert('Por favor, digite um e-mail válido.');
+
+        setPassword(undefined);
+        setcontinueIsPressed(!continueIsPressed);
+    }
+
+    //Cadastrar
+    function handleRegister() {
+        navigation.navigate('CadastroUsuario');
+    }
+
+    //Entrar sem logar
     function handleEnter() {
         navigation.navigate('Calendario');
     }
 
-    function handleRegister() {
-        //navigation.navigate('');
+    function handleEmailBlur(){
+        setEmailIsFocused(false);
+        setEmailIsFilled(!!email);
     }
 
-    function handleInputBlur(){
-        setIsFocused(false);
-        setIsFilled(!!email);
+    function handleEmailFocus(){
+        setEmailIsFocused(true);
     }
 
-    function handleInputFocus(){
-        setIsFocused(true);
-    }
-
-    function handleInputChange(value: string){
-        setIsFilled(!!value);
+    function handleEmailChange(value: string){
+        setEmailIsFilled(!!value);
         setEmail(value);
     }
 
+    function handlePasswordBlur(){
+        setPasswordIsFocused(false);
+        setPasswordIsFilled(!!password);
+    }
+
+    function handlePasswordFocus(){
+        setPasswordIsFocused(true);
+    }
+
+    function handlePasswordChange(value: string){
+        setPasswordIsFilled(!!value);
+        setPassword(value);
+    }
+
+    //Entrar
     async function handleSubmit(){
-        if(!email)
-            return Alert.alert('Por favor, digite seu e-mail.');
+        if(!password)
+            return Alert.alert('Por favor, digite sua senha.');
 
         try {
-            await AsyncStorage.setItem('@TCC_Bycolors:user', email);
-            navigation.navigate('Calendario');
+            console.log("email: ", email, " senha: ", password);
+            
+            //LOGAR
+            //navigation.navigate('Calendario');
         }
         catch {
-            Alert.alert('Não foi possível salvar o seu e-mail.')
+            Alert.alert('Não foi possível logar!')
         }
     }
 
@@ -70,56 +103,80 @@ export function Inicio() {
                             <Image source={marca}  resizeMode="cover" style={styles.imageMarca}/>
                         </View>
 
-                        <Text style={styles.text}>
-                            <Entypo name="mail" style={styles.icon}/>
-                            {' '}E-mail
-                        </Text>
+                        { // SE NÃO TIVER NADA DIGITADO
+                            (!continueIsPressed) &&
+
+                            <>
+                                <Text style={styles.text}>
+                                    <Entypo name="mail" style={styles.icon}/>
+                                    {' '}E-mail
+                                </Text>
+                                            
+                                <TextInput
+                                    style={[
+                                        styles.input1, 
+                                        (emailIsFocused || emailIsFilled) &&
+                                        { borderColor: colors.body_dark }
+                                    ]}
+                                    placeholder="Ex: joao@gmail.com"
                                     
-                        <TextInput
-                            style={[
-                                styles.input, 
-                                (isFocused || isFilled) &&
-                                { borderColor: colors.azul_escuro }
-                            ]}
-                            placeholder="Ex: joao@gmail.com"
-                            
-                            onBlur={handleInputBlur}
-                            onFocus={handleInputFocus}
-                            onChangeText={handleInputChange}
-                        />
+                                    onBlur={handleEmailBlur}
+                                    onFocus={handleEmailFocus}
+                                    onChangeText={handleEmailChange}
+                                />
 
-                        <Text style={styles.text}>
-                            <FontAwesome name="lock" style={styles.icon} />
-                            {' '}Senha
-                        </Text>
+                                <TouchableOpacity onPress={handleContinue} style={styles.buttonA}>     
+                                    <Feather name="arrow-right" style={styles.buttonIcon}/>
+                                    <Text style={styles.buttonText}>Seguir</Text>
+                                </TouchableOpacity>
+                            </>
+                        }
 
-                        <TextInput
-                            style={[
-                                styles.input, 
-                                (isFocused || isFilled) &&
-                                { borderColor: colors.azul_escuro }
-                            ]}
-                            placeholder="••••••"
+                        { // SE DIGITAR O EMAIL E EXISTIR
+                            (continueIsPressed) &&
 
-                            onBlur={handleInputBlur}
-                            onFocus={handleInputFocus}
-                            onChangeText={handleInputChange}
-                        />
+                            <> 
+                                <Text style={styles.text}>
+                                    <FontAwesome name="lock" style={styles.icon} />
+                                    {' '}Senha
+                                </Text>
 
-                        <TouchableOpacity>
-                            <Text style={styles.complement}>
-                                Esqueci minha senha
-                            </Text>
-                        </TouchableOpacity>
+                                <TextInput
+                                    style={[
+                                        styles.input,
+                                        (passwordIsFocused || passwordIsFilled) &&
+                                        { borderColor: colors.body_dark }
+                                    ]}
+                                    placeholder="••••••"
+                                    secureTextEntry={true}
 
-                        <TouchableOpacity onPress={handleSubmit} style={styles.button}>
-                            <Feather name="log-in" style={styles.buttonIcon}/>
-                            <Text style={styles.buttonText}>Entrar</Text>
-                        </TouchableOpacity>
+                                    onBlur={handlePasswordBlur}
+                                    onFocus={handlePasswordFocus}
+                                    onChangeText={handlePasswordChange}
+                                />
+
+                                <View style={styles.warningsView}>
+                                <TouchableOpacity onPress={handleContinue}>
+                                    <Text style={styles.complement1}>
+                                        Voltar
+                                    </Text>
+                                </TouchableOpacity>       
+
+                                <TouchableOpacity>
+                                    <Text style={styles.complement2}>
+                                        Esqueci minha senha
+                                    </Text>
+                                </TouchableOpacity>
+                                </View>
+
+                                <TouchableOpacity onPress={handleSubmit} style={styles.buttonB}>
+                                    <Feather name="log-in" style={styles.buttonIcon}/>
+                                    <Text style={styles.buttonText}>Entrar</Text>
+                                </TouchableOpacity>
+                            </>
+                        }
 
                         <View style = {styles.textLine}/>
-
-                        <Text style = {styles.textOu}> ou </Text>
 
                         <TouchableOpacity onPress={handleRegister} style={styles.button2}>
                             <Feather name="user-plus" style={styles.buttonIcon}/>
@@ -149,7 +206,6 @@ const styles = StyleSheet.create({
     fundo: {
         flex: 1,
         height: '100%',
-
     },
     viewLogo: {
         width: 160,
@@ -161,7 +217,8 @@ const styles = StyleSheet.create({
         borderWidth: 4,
         borderColor: colors.cinza_claro,
         paddingTop: '3%',
-        marginTop: '10%',
+        marginTop: '12%',
+        marginBottom: '4%',
     },
     sizeLogo: {
         alignItems: 'center',
@@ -191,14 +248,37 @@ const styles = StyleSheet.create({
         marginHorizontal: 25,
         padding: 10,
         textAlign: 'justify',
+        marginBottom: '4%',
     },
-    complement: {
+    input1: {
+        borderWidth: 1,
+        borderRadius: 8,
+        borderColor: colors.cinza_claro,
+        color: colors.heading,
+        height: '9%',
+        width: '86%',
+        fontSize: 18,
+        marginTop: 5,
+        marginHorizontal: 25,
+        padding: 10,
+        textAlign: 'justify',
+        marginBottom: '7%',
+    },
+    complement1: {
         fontFamily: fonts.heading,
         color: colors.body_dark,
         fontSize: 12,
-        marginLeft: 205,
-        marginTop: '1.5%',
-        marginBottom: '4%',
+        marginLeft: 26,
+        marginBottom: '1%',
+        marginTop: -10,
+    },
+    complement2: {
+        fontFamily: fonts.heading,
+        color: colors.body_dark,
+        fontSize: 12,
+        marginLeft: 144,
+        marginBottom: '1%',
+        marginTop: -10,
     },
     content: {
         margin: 30,
@@ -206,6 +286,7 @@ const styles = StyleSheet.create({
         borderColor: colors.branco,
         borderRadius: 20,
         backgroundColor: colors.branco,
+        marginBottom: 35,
     },
     text: {
         fontFamily: fonts.heading,
@@ -225,14 +306,26 @@ const styles = StyleSheet.create({
         fontSize: 30,
         fontWeight: 'bold',
     },
-    button: {
+    buttonA: {
         flexDirection: 'row',
         backgroundColor: colors.body_dark,
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 8,
-        marginTop: 5,
-        marginBottom: 6,
+        marginTop: 29,
+        marginBottom: 10,
+        marginHorizontal: '7%',
+        height: 50,
+        width: '86%',
+    },
+    buttonB: {
+        flexDirection: 'row',
+        backgroundColor: colors.body_dark,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 8,
+        marginTop: 29,
+        marginBottom: 10,
         marginHorizontal: '7%',
         height: 50,
         width: '86%',
@@ -256,7 +349,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderRadius: 8,
         marginTop: 5,
-        marginBottom: '10%',
+        marginBottom: '6%',
         marginHorizontal: '7%',
         height: 50,
         width: '86%',
@@ -276,15 +369,11 @@ const styles = StyleSheet.create({
         borderBottomWidth: 2,
         width: '86%',
         alignSelf: 'center',
-        marginTop: '4%',
+        marginVertical: '6%',
     },
-    textOu: {
-        alignSelf: 'center',
-        marginVertical: '2%',
-        fontFamily: fonts.heading,
-        fontSize: 21,
-        color: colors.preto
-    },
+    warningsView: {
+        flexDirection: 'row',
+    }
 });
 
 //<KeyboardAvoidingView style={styles.container} behavior={Platform.OS == 'ios' ? 'padding' : 'height'}>

@@ -14,18 +14,14 @@ import { Chats } from "../pages/Chats";
 import { Chat } from "../pages/Chat";
 import { LinhaDoTempo } from "../pages/LinhaDoTempo";
 import { CriarPost } from "../pages/CriarPost";
-import { CadastroComunidade } from "../pages/CadastroComunidade";
+import { CadastroUsuario } from "../pages/CadastroUsuario";
 
 const stackRoutes = createStackNavigator();
 
 const AppRoutes: React.FC = () => (
     <stackRoutes.Navigator
         headerMode="none"
-        screenOptions={{
-            cardStyle: {
-                backgroundColor: colors.background
-            },
-        }}
+        screenOptions={{ cardStyle: { backgroundColor: colors.background }, }}
     > 
     	<stackRoutes.Screen
             name="Inicio"
@@ -93,8 +89,8 @@ const AppRoutes: React.FC = () => (
         />
 
         <stackRoutes.Screen
-            name="CadastroComunidade"
-            component={CadastroComunidade}
+            name="CadastroUsuario"
+            component={CadastroUsuario}
         />
     </stackRoutes.Navigator>
 )
