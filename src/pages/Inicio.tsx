@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import fonts from '../styles/fonts';
 import { StyleSheet, Text, View, TextInput, Alert, TouchableOpacity, ImageBackground, Image, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import { Feather, Entypo, FontAwesome } from '@expo/vector-icons';
 import { colors } from '../styles/colors';
@@ -11,24 +12,25 @@ const logo = require('../assets/logo.png');
 const marca = require('../assets/marca.png');
 
 export function Inicio() {
-    const [continueIsPressed, setcontinueIsPressed] = useState(false);
     const [emailIsFocused, setEmailIsFocused] = useState(false);
     const [emailIsFilled, setEmailIsFilled] = useState(false);
     const [passwordIsFocused, setPasswordIsFocused] = useState(false);
     const [passwordIsFilled, setPasswordIsFilled] = useState(false);
     const [email, setEmail] = useState<string>();
     const [password, setPassword] = useState<string>();
+    const [existeEmail, setExisteEmail] = useState(false);
+    const [senhaCerta, setSenhaCerta] = useState<string>();
     const navigation = useNavigation();
 
     //Continuar
     function handleContinue() {
         if(!email)
             return Alert.alert('Por favor, digite seu e-mail.');
-        else if(!email.includes('@') || !email.includes('.com'))
+        else if(!email.includes('@'))
             return Alert.alert('Por favor, digite um e-mail válido.');
 
         setPassword(undefined);
-        setcontinueIsPressed(!continueIsPressed);
+        setSenhaCerta(undefined);
 
         fetch(`${constants.API_URL}/usuarios/email=${email}`, {
             method: 'GET',
@@ -42,22 +44,72 @@ export function Inicio() {
         })
         .then((json) => {
             console.log(json);
-            Alert.alert('Pesquisa feita5 com sucesso!');
-            //navigation.navigate('Calendario');
+            
+            if(json.length != 0)
+                setExisteEmail(true);
+                salvaAsync(json);
         })
         .catch((error) => {
             Alert.alert('Erro ao salvar os dados!', error);
         });
     }
 
-    //Cadastrar
+    //Salvar Dados Login
+    async function salvaAsync(dados: any) {
+        try {
+            const id_logado = ""+dados[0].id_usuario;
+            await AsyncStorage.setItem('@TCC_Bycolors:loggedId', id_logado);
+
+            setSenhaCerta(dados[0].senha);
+            console.log("SENHA CERTA:", senhaCerta);
+        } 
+        catch {
+            setExisteEmail(false);
+            return Alert.alert('Erro ao encontrar email!');
+        }
+
+        const value = await AsyncStorage.getItem('@TCC_Bycolors:loggedId');
+        console.log("Logged User: ",value);
+    }
+
+    //Cadastrar-se
     function handleRegister() {
         navigation.navigate('CadastroUsuario');
     }
 
     //Entrar sem logar
     function handleEnter() {
-        //navigation.navigate('Calendario');
+        navigation.navigate('Calendario');
+    }
+
+    //Voltar
+    function handleVoltar() {
+        setExisteEmail(false);
+        setEmail(undefined);
+        setPassword(undefined);
+    }
+
+    //Entrar
+    async function handleSubmit(){
+        if(!password)
+            return Alert.alert('Por favor, digite sua senha.');
+
+        try {
+
+            if(password == senhaCerta) {
+                setEmail(undefined);
+                setPassword(undefined);
+                setSenhaCerta(undefined);
+                setExisteEmail(false);
+                navigation.navigate('Calendario');
+            }
+            else {
+                Alert.alert('Senha incorreta!')
+            }
+        }
+        catch {
+            Alert.alert('Não foi possível logar!')
+        }
     }
 
     function handleEmailBlur(){
@@ -88,22 +140,6 @@ export function Inicio() {
         setPassword(value);
     }
 
-    //Entrar
-    async function handleSubmit(){
-        if(!password)
-            return Alert.alert('Por favor, digite sua senha.');
-
-        try {
-            console.log("email: ", email, " senha: ", password);
-            
-            //LOGAR
-            //navigation.navigate('Calendario');
-        }
-        catch {
-            Alert.alert('Não foi possível logar!')
-        }
-    }
-
     return (
         <KeyboardAvoidingView style={styles.container} behavior={Platform.OS == 'ios' ? 'padding' : 'height'}>
         <ScrollView>
@@ -124,7 +160,7 @@ export function Inicio() {
                         </View>
 
                         { // SE NÃO TIVER NADA DIGITADO
-                            (!continueIsPressed) &&
+                            (!existeEmail) &&
 
                             <>
                                 <Text style={styles.text}>
@@ -153,7 +189,7 @@ export function Inicio() {
                         }
 
                         { // SE DIGITAR O EMAIL E EXISTIR
-                            (continueIsPressed) &&
+                            (existeEmail) &&
 
                             <> 
                                 <Text style={styles.text}>
@@ -176,7 +212,7 @@ export function Inicio() {
                                 />
 
                                 <View style={styles.warningsView}>
-                                <TouchableOpacity onPress={handleContinue}>
+                                <TouchableOpacity onPress={handleVoltar}>
                                     <Text style={styles.complement1}>
                                         Voltar
                                     </Text>

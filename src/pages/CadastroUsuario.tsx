@@ -66,36 +66,39 @@ export function CadastroUsuario() {
     }
 
     function handleSubmit() {
-        setAvatar(2);
+        if( nameGreen && emailGreen && telGreen && cityGreen && ufGreen && avatarGreen && bioGreen && passwordGreen && password2Green){
+            setAvatar(2);
 
-        const nome_usuario = name;
-        const telefone = tel;
-        const cidade = city;
-        const estado = uf;
-        const senha = password;
+            const nome_usuario = name;
+            const telefone = tel;
+            const cidade = city;
+            const estado = uf;
+            const senha = password;
 
-        const user = { adm:false, nome_usuario, email, telefone, cidade, estado, bio, avatar, senha }
+            const user = { adm:false, nome_usuario, email, telefone, cidade, estado, bio, avatar, senha }
 
-        console.log(user);
-
-        fetch(`${constants.API_URL}/usuarios`, {
-            method: 'POST',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(user)
-        })
-        .then((response) => {
-            return response.json()
-        })
-        .then((json) => {
-            Alert.alert('Usuário cadastrado com sucesso!');
-            navigation.navigate('Calendario');
-        })
-        .catch((error) => {
-            Alert.alert('Erro ao salvar os dados!', error);
-        });
+            fetch(`${constants.API_URL}/usuarios`, {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(user)
+            })
+            .then((response) => {
+                return response.json()
+            })
+            .then((json) => {
+                Alert.alert('Usuário cadastrado com sucesso!');
+                navigation.navigate('Calendario');
+            })
+            .catch((error) => {
+                Alert.alert('Erro ao salvar os dados!', error);
+            });
+        }
+        else {
+            Alert.alert('Preencha os campos corretamente!');
+        }
     }
 
     function handleNameBlur(){
@@ -124,7 +127,7 @@ export function CadastroUsuario() {
 
         if(email != undefined)
         {
-            if(email.includes('@') && email.includes('.com'))
+            if(email.includes('@'))
             {
                 setEmailGreen(true);
                 setEmailRed(false);
