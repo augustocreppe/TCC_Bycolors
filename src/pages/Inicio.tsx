@@ -4,6 +4,7 @@ import { StyleSheet, Text, View, TextInput, Alert, TouchableOpacity, ImageBackgr
 import { useNavigation } from '@react-navigation/native';
 import { Feather, Entypo, FontAwesome } from '@expo/vector-icons';
 import { colors } from '../styles/colors';
+import { constants } from '../config/app.config';
 
 const fundo = require('../assets/fundo.jpg');
 const logo = require('../assets/logo.png');
@@ -28,6 +29,25 @@ export function Inicio() {
 
         setPassword(undefined);
         setcontinueIsPressed(!continueIsPressed);
+
+        fetch(`${constants.API_URL}/usuarios/email=${email}`, {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+        })
+        .then((response) => {
+            return response.json()
+        })
+        .then((json) => {
+            console.log(json);
+            Alert.alert('Pesquisa feita5 com sucesso!');
+            //navigation.navigate('Calendario');
+        })
+        .catch((error) => {
+            Alert.alert('Erro ao salvar os dados!', error);
+        });
     }
 
     //Cadastrar
@@ -37,7 +57,7 @@ export function Inicio() {
 
     //Entrar sem logar
     function handleEnter() {
-        navigation.navigate('Calendario');
+        //navigation.navigate('Calendario');
     }
 
     function handleEmailBlur(){

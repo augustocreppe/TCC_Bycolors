@@ -1,12 +1,13 @@
 import React, { useState }  from 'react';
 import fonts from '../styles/fonts';
-import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View, TextInput } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View, TextInput, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Entypo, Feather } from '@expo/vector-icons';
 import { colors } from '../styles/colors';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Picker } from '@react-native-picker/picker';
 import { TextInputMask } from 'react-native-masked-text';
+import { constants } from '../config/app.config';
 
 export function CadastroUsuario() {
     const navigation = useNavigation();
@@ -21,6 +22,8 @@ export function CadastroUsuario() {
     const [cityRed, setCityRed] = useState(false);
     const [ufGreen, setUfGreen] = useState(false);
     const [ufRed, setUfRed] = useState(false);
+    const [avatarGreen, setAvatarGreen] = useState(false);
+    const [avatarRed, setAvatarRed] = useState(false);
     const [bioGreen, setBioGreen] = useState(false);
     const [bioRed, setBioRed] = useState(false);
     const [passwordGreen, setPasswordGreen] = useState(false);
@@ -34,6 +37,7 @@ export function CadastroUsuario() {
     const [city, setCity] = useState<string>();
     const [uf, setUf] = useState<string>('AC');
     const [bio, setBio] = useState<string>();
+    const [avatar, setAvatar] = useState<number>();
     const [password, setPassword] = useState<string>();
     const [password2, setPassword2] = useState<string>();
 
@@ -42,6 +46,7 @@ export function CadastroUsuario() {
     const [telIsFocused, setTelIsFocused] = useState(false);
     const [cityIsFocused, setCityIsFocused] = useState(false);
     const [ufIsFocused, setUfIsFocused] = useState(false);
+    const [avatarIsFocused, setAvatarIsFocused] = useState(false);
     const [bioIsFocused, setBioIsFocused] = useState(false);
     const [passwordIsFocused, setPasswordIsFocused] = useState(false);
     const [password2IsFocused, setPassword2IsFocused] = useState(false);
@@ -51,6 +56,7 @@ export function CadastroUsuario() {
     const [telIsFilled, setTelIsFilled] = useState(false);
     const [cityIsFilled, setCityIsFilled] = useState(false);
     const [ufIsFilled, setUfIsFilled] = useState(false);
+    const [avatarIsFilled, setAvatarIsFilled] = useState(false);
     const [bioIsFilled, setBioIsFilled] = useState(false);
     const [passwordIsFilled, setPasswordIsFilled] = useState(false);
     const [password2IsFilled, setPassword2IsFilled] = useState(false);
@@ -58,17 +64,38 @@ export function CadastroUsuario() {
     function handleGoBack() {
         navigation.navigate('Inicio');
     }
+
     function handleSubmit() {
-        //FAZER CADASTRO
-        console.log("\nnome: ", name);
-        console.log("email: ", email);
-        console.log("tel: ", tel);
-        console.log("cidade: ", city);
-        console.log("estado: ", uf);
-        console.log("bio: ", bio);
-        console.log("senha: ", password);
-        console.log("senha2: ", password2);
-        //navigation.navigate('Calendario');
+        setAvatar(2);
+
+        const nome_usuario = name;
+        const telefone = tel;
+        const cidade = city;
+        const estado = uf;
+        const senha = password;
+
+        const user = { adm:false, nome_usuario, email, telefone, cidade, estado, bio, avatar, senha }
+
+        console.log(user);
+
+        fetch(`${constants.API_URL}/usuarios`, {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(user)
+        })
+        .then((response) => {
+            return response.json()
+        })
+        .then((json) => {
+            Alert.alert('Usuário cadastrado com sucesso!');
+            navigation.navigate('Calendario');
+        })
+        .catch((error) => {
+            Alert.alert('Erro ao salvar os dados!', error);
+        });
     }
 
     function handleNameBlur(){

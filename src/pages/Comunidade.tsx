@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import TabMenu from '../components/TabMenu';
 import fonts from '../styles/fonts';
-import { ImageBackground, SafeAreaView, StyleSheet, TouchableOpacity, View, Text, Image } from 'react-native';
+import { ImageBackground, SafeAreaView, StyleSheet, TouchableOpacity, View, Text, Image, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Feather } from '@expo/vector-icons';
 import { colors } from '../styles/colors';
@@ -10,12 +10,25 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { Post } from '../components/Post';
 import { TituloComunidade } from '../components/TituloComunidade';
 import { ButtonComunidade } from '../components/ButtonComunidade';
+import { constants } from '../config/app.config';
 
 const fundo = require('../assets/fundo-comunidade.jpg');
 const marca = require('../assets/marca.png');
 
 export function Comunidade() {
     const navigation = useNavigation();
+    const [ dados, setDados ] = useState<any>([]);
+
+    function carregaApi() {
+        fetch(`${constants.API_URL}/usuarios`)
+        .then( res => res.json )
+        .then( res => {
+            setDados(res);
+        })
+        .catch(error => {
+            Alert.alert('Erro ao salvar os dados!', error);
+        });
+    }
 
     function handleGoBack() {
         navigation.navigate('MenuLateral');
@@ -96,6 +109,14 @@ export function Comunidade() {
                             </View>
 
                             <View style={styles.postsView}>
+
+                                {/* {
+                                    dados.forEach(dado => {
+                                        <Post nome={dado.id} idMes={10}/>
+                                    })
+
+                                } */}
+
                                 <Post idMes={10}/>
                                 <Post idMes={9}/>
                                 <Post idMes={11}/>
