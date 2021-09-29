@@ -27,35 +27,51 @@ export const colors = {
   laranja: '#FFB457',
   laranja_escuro: '#FF7100',
 
+  laranja_claro2: '#FFBB3D',
+  laranja2: '#E69500',
+  laranja_escuro2: '#B57704',
+
   //Rosa
   rosa_claro: '#FFBBCC',
   rosa: '#FF69B4',
   rosa_escuro: '#FF008D',
 
   //Roxo
-  roxo_claro: '#EE82EE',
-  roxo: '#C86DC6',
-  roxo_escuro: '#995398',
+  roxo_claro: '#DBA8FF',
+  roxo: '#9500FF',
+  roxo_escuro:'#6700B0',
 
   //Lilás
-  lilas_claro: '#D5BFD8',
-  lilas: '#C8A2C8',
-  lilas_escuro: '#A283A2',
+  lilas_claro: '#B994F7',
+  lilas: '#904FFF',
+  lilas_escuro: '#6B1BF5',
 
   //Amarelo
   amarelo_claro: '#FFF97E',
   amarelo: '#FFD954',
   amarelo_escuro: '#FFBC00',
 
+  amarelo_claro2: '#FAFA91',
+  amarelo2: '#FFFF00',
+  amarelo_escuro2: '#E3E300',
+
   //Azul
   azul_claro: '#B0E0E6',
   azul: '#7ABAD4',
   azul_escuro: '#5E8FA3',
 
+  azul_claro2: '#A3C3FF',
+  azul2: '#0059FF',
+  azul_escuro2: '#0243BD',
+
   //Vermelho
   vermelho_claro: '#F4796B',
   vermelho: '#F44E3F',
   vermelho_escuro: '#D40000',
+
+  vermelho_claro2: '#FFADB0',
+  vermelho2: '#FC1E26',
+  vermelho_escuro2: '#D40209',
 };
 
 export const cores = [
@@ -67,17 +83,17 @@ export const cores = [
   [ //Janeiro Branco
     '#FFFFFF',
     '#D3D3D3',
-    '#CFCFCF',
+    '#8C8C8C',
   ],
   [ // Fevereiro Roxo
-    '#EE82EE',
-    '#C86DC6',
-    '#995398',
+    '#DBA8FF',
+    '#9500FF',
+    '#6100A6',
   ],
   [ // Março Lilás
-    '#D5BFD8',
-    '#C8A2C8',
-    '#A283A2',
+    '#B994F7',
+    '#904FFF',
+    '#6B1BF5',
   ],
   [ // Abril Azul
     '#B0E0E6',
@@ -95,14 +111,14 @@ export const cores = [
     '#FF7100',
   ],
   [ // Julho Amarelo
-    '#FFF97E',
-    '#FFD954',
-    '#FFBC00',
+    '#FAFA91',
+    '#FFFF00',
+    '#E3E300',
   ],
   [ // Agosto Laranja
-    '#FFCB85',
-    '#FFB457',
-    '#FF7100',
+    '#FFBB3D',
+    '#E69500',
+    '#B57704',
   ],
   [ // Setembro Amarelo
     '#FFF97E',
@@ -115,13 +131,13 @@ export const cores = [
     '#FF008D',
   ],
   [ // Novembro Azul
-    '#B0E0E6',
-    '#7ABAD4',
-    '#5E8FA3',
+    '#A3C3FF',
+    '#0059FF',
+    '#0243BD',
   ],
   [ // Dezembro Vermelho
-    '#F4796B',
-    '#F44E3F',
-    '#D40000',
+    '#FFADB0',
+    '#FC1E26',
+    '#D40209',
   ],
 ]
