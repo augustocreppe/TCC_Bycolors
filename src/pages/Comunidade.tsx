@@ -26,7 +26,7 @@ export function Comunidade() {
             setDados(res);
         })
         .catch(error => {
-            Alert.alert('Erro ao salvar os dados!', error);
+            Alert.alert('Erro ao carregar dados!', error);
         });
     }
 
@@ -42,7 +42,7 @@ export function Comunidade() {
        navigation.navigate('CadastroUsuario');
     }
 
-    let cadastrado = 0;
+    let cadastrado = 1;
 
     return (
         <>

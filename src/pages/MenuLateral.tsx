@@ -1,14 +1,24 @@
-import React from 'react';
-import { StyleSheet, Text, Image, TouchableOpacity, View, SafeAreaView, ScrollView } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import fonts from '../styles/fonts';
+import { StyleSheet, Text, Image, TouchableOpacity, View, SafeAreaView, ScrollView, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Feather } from '@expo/vector-icons';
-import fonts from '../styles/fonts';
 import { colors } from '../styles/colors';
+import { loadLogado, logoutLogado } from '../libs/storage';
 
 const profile = require('../assets/profile.png');
 
 export function MenuLateral() {
     const navigation = useNavigation();
+    const [dados, setDados] = useState<any>();
+
+    useEffect(() => {
+        async function getData() {
+            setDados(await loadLogado());
+        }
+        
+        getData();
+    },[]);
 
     function handleGoBack() {
         navigation.goBack();
@@ -31,7 +41,22 @@ export function MenuLateral() {
     }
 
     function handleInicio() {
-        navigation.navigate('Inicio');
+        Alert.alert(
+            "Confirmar Logout",
+            "Você deseja realmente sair do aplicativo?",
+            [
+              {
+                text: "Sim",
+                onPress: () => {
+                    logoutLogado();
+                    navigation.navigate('Inicio');
+                },
+              },
+              {
+                text: "Não",
+              },
+            ]
+        );
     }
 
     return (
@@ -40,7 +65,7 @@ export function MenuLateral() {
             <TouchableOpacity onPress={handleGoBack} style={styles.buttonBack}>
                 <Feather name="x" style={styles.buttonBackIcon}/>
             </TouchableOpacity>
-            
+        
             <View style={styles.imageView}>
                 <Image 
                     source={profile} 
@@ -50,12 +75,12 @@ export function MenuLateral() {
             </View>
 
             <View style={styles.nameTextView}>
-                <Text style={styles.nameText}>Fulana da Silva</Text>
+                <Text style={styles.nameText}>{ dados[1] }</Text>
             </View>
 
             <View style={styles.placeTextView}>
                 <Feather name="map-pin" style={styles.placeIcon}/>
-                <Text style={styles.placeText}>Bauru - SP</Text>
+                <Text style={styles.placeText}>{ dados[5] } - { dados[6] }</Text>
             </View>
 
             <ScrollView>
@@ -213,5 +238,5 @@ const styles = StyleSheet.create({
         fontSize: 25,
         fontFamily: fonts.text,
         color: colors.body_dark,
-    }
+    },
 });

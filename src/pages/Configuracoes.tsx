@@ -15,7 +15,7 @@ export function Configuracoes() {
         <SafeAreaView style={styles.container}>
         <View style={styles.container}>
             <TouchableOpacity onPress={handleGoBack} style={styles.buttonMenu}>
-                <Feather name="menu" style={styles.buttonMenuIcon}/>
+                <Feather name="arrow-left" style={styles.buttonMenuIcon}/>
             </TouchableOpacity>
 
             <View style={styles.titleView}>
