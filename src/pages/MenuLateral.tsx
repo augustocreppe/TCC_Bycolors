@@ -10,11 +10,14 @@ const profile = require('../assets/profile.png');
 
 export function MenuLateral() {
     const navigation = useNavigation();
+    const [ready, setReady] = useState(false);
     const [dados, setDados] = useState<any>();
 
     useEffect(() => {
         async function getData() {
             setDados(await loadLogado());
+
+            setReady(true);
         }
         
         getData();
@@ -60,91 +63,97 @@ export function MenuLateral() {
     }
 
     return (
-        <SafeAreaView style={styles.container}>
-        <View style={styles.container}>
-            <TouchableOpacity onPress={handleGoBack} style={styles.buttonBack}>
-                <Feather name="x" style={styles.buttonBackIcon}/>
-            </TouchableOpacity>
+        <>
+            {
+                (ready == true) &&
+
+                <SafeAreaView style={styles.container}>
+                <View style={styles.container}>
+                    <TouchableOpacity onPress={handleGoBack} style={styles.buttonBack}>
+                        <Feather name="x" style={styles.buttonBackIcon}/>
+                    </TouchableOpacity>
+                
+                    <View style={styles.imageView}>
+                        <Image 
+                            source={profile} 
+                            style={styles.image}
+                            resizeMode="contain"
+                        />
+                    </View>
         
-            <View style={styles.imageView}>
-                <Image 
-                    source={profile} 
-                    style={styles.image}
-                    resizeMode="contain"
-                />
-            </View>
-
-            <View style={styles.nameTextView}>
-                <Text style={styles.nameText}>{ dados[1] }</Text>
-            </View>
-
-            <View style={styles.placeTextView}>
-                <Feather name="map-pin" style={styles.placeIcon}/>
-                <Text style={styles.placeText}>{ dados[5] } - { dados[6] }</Text>
-            </View>
-
-            <ScrollView>
-                <View style={styles.lineView}>
-                    <Text style={styles.line}>___________________________________</Text>
+                    <View style={styles.nameTextView}>
+                        <Text style={styles.nameText}>{ dados[1] }</Text>
+                    </View>
+        
+                    <View style={styles.placeTextView}>
+                        <Feather name="map-pin" style={styles.placeIcon}/>
+                        <Text style={styles.placeText}>{ dados[5] } - { dados[6] }</Text>
+                    </View>
+        
+                    <ScrollView>
+                        <View style={styles.lineView}>
+                            <Text style={styles.line}>___________________________________</Text>
+                        </View>
+        
+                        <View style={styles.buttonMenuView}>
+                        <TouchableOpacity style={styles.buttonMenu} onPress={handleUser}>
+                            <Feather name="user" style={styles.buttonIcon}/>
+                            <Text style={styles.buttonText}>Alterar Usuário</Text>
+                        </TouchableOpacity>
+                        </View>
+        
+                        <View style={styles.lineView}>
+                            <Text style={styles.line}>___________________________________</Text>
+                        </View>
+        
+                        <View style={styles.buttonMenuView}>
+                        <TouchableOpacity style={styles.buttonMenu} onPress={handleCalendario}>
+                            <Feather name="calendar" style={styles.buttonIcon}/>
+                            <Text style={styles.buttonText}>Calendário</Text>
+                        </TouchableOpacity>
+                        </View>
+        
+                        <View style={styles.lineView}>
+                            <Text style={styles.line}>___________________________________</Text>
+                        </View>
+        
+                        <View style={styles.buttonMenuView}>
+                        <TouchableOpacity style={styles.buttonMenu} onPress={handleComunidade}>
+                            <Feather name="users" style={styles.buttonIcon}/>
+                            <Text style={styles.buttonText}>Comunidade</Text>
+                        </TouchableOpacity>
+                        </View>
+        
+                        <View style={styles.lineView}>
+                            <Text style={styles.line}>___________________________________</Text>
+                        </View>
+        
+                        <View style={styles.buttonMenuView}>
+                        <TouchableOpacity style={styles.buttonMenu} onPress={handleConfiguracoes}>
+                            <Feather name="settings" style={styles.buttonIcon}/>
+                            <Text style={styles.buttonText}>Configurações</Text>
+                        </TouchableOpacity>
+                        </View>
+        
+                        <View style={styles.lineView}>
+                            <Text style={styles.line}>___________________________________</Text>
+                        </View>
+        
+                        <View style={styles.buttonMenuView}>
+                        <TouchableOpacity style={styles.buttonMenu} onPress={handleInicio}>
+                            <Feather name="log-out" style={styles.buttonIcon}/>
+                            <Text style={styles.buttonText}>Sair</Text>
+                        </TouchableOpacity>
+                        </View>
+        
+                        <View style={styles.lineView}>
+                            <Text style={styles.line}>___________________________________</Text>
+                        </View>
+                    </ScrollView>
                 </View>
-
-                <View style={styles.buttonMenuView}>
-                <TouchableOpacity style={styles.buttonMenu} onPress={handleUser}>
-                    <Feather name="user" style={styles.buttonIcon}/>
-                    <Text style={styles.buttonText}>Alterar Usuário</Text>
-                </TouchableOpacity>
-                </View>
-
-                <View style={styles.lineView}>
-                    <Text style={styles.line}>___________________________________</Text>
-                </View>
-
-                <View style={styles.buttonMenuView}>
-                <TouchableOpacity style={styles.buttonMenu} onPress={handleCalendario}>
-                    <Feather name="calendar" style={styles.buttonIcon}/>
-                    <Text style={styles.buttonText}>Calendário</Text>
-                </TouchableOpacity>
-                </View>
-
-                <View style={styles.lineView}>
-                    <Text style={styles.line}>___________________________________</Text>
-                </View>
-
-                <View style={styles.buttonMenuView}>
-                <TouchableOpacity style={styles.buttonMenu} onPress={handleComunidade}>
-                    <Feather name="users" style={styles.buttonIcon}/>
-                    <Text style={styles.buttonText}>Comunidade</Text>
-                </TouchableOpacity>
-                </View>
-
-                <View style={styles.lineView}>
-                    <Text style={styles.line}>___________________________________</Text>
-                </View>
-
-                <View style={styles.buttonMenuView}>
-                <TouchableOpacity style={styles.buttonMenu} onPress={handleConfiguracoes}>
-                    <Feather name="settings" style={styles.buttonIcon}/>
-                    <Text style={styles.buttonText}>Configurações</Text>
-                </TouchableOpacity>
-                </View>
-
-                <View style={styles.lineView}>
-                    <Text style={styles.line}>___________________________________</Text>
-                </View>
-
-                <View style={styles.buttonMenuView}>
-                <TouchableOpacity style={styles.buttonMenu} onPress={handleInicio}>
-                    <Feather name="log-out" style={styles.buttonIcon}/>
-                    <Text style={styles.buttonText}>Sair</Text>
-                </TouchableOpacity>
-                </View>
-
-                <View style={styles.lineView}>
-                    <Text style={styles.line}>___________________________________</Text>
-                </View>
-            </ScrollView>
-        </View>
-        </SafeAreaView>
+                </SafeAreaView>
+            }
+        </>
     );
 }
 

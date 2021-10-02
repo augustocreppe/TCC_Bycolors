@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Feather, Entypo, FontAwesome } from '@expo/vector-icons';
 import { colors } from '../styles/colors';
 import { constants } from '../config/app.config';
-import { saveLogado } from '../libs/storage';
+import { logoutLogado, saveLogado } from '../libs/storage';
 
 const fundo = require('../assets/fundo.jpg');
 const logo = require('../assets/logo.png');
@@ -82,10 +82,11 @@ export function Inicio() {
     }
 
     //Voltar
-    function handleVoltar() {
+    async function handleVoltar() {
         setExisteEmail(false);
         setEmail(undefined);
         setPassword(undefined);
+        await logoutLogado();
     }
 
     //Entrar

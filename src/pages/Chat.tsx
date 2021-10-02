@@ -1,5 +1,5 @@
-import React from 'react';
-import { SafeAreaView, StyleSheet, View, TouchableOpacity, TextInput } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { SafeAreaView, StyleSheet, View, TouchableOpacity, TextInput, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { colors, cores } from '../styles/colors';
 import { Feather } from '@expo/vector-icons';
@@ -8,10 +8,38 @@ import { TituloComunidade } from '../components/TituloComunidade';
 import { months } from '../styles/info';
 import { Message } from '../components/Message';
 import { MyMessage } from '../components/MyMessage';
+import { constants } from '../config/app.config';
 
 export function Chat({ route }: { route: any }) {
     const navigation = useNavigation();
+    const [ready, setReady] = useState(false);
     const idMes = route.params.idMes;
+    const [mensagens, setMensagens] = useState<any>();
+
+    useEffect(() => {
+        carregaMensagens();
+        setReady(true);
+    },[]);
+
+    function carregaMensagens() {
+        fetch(`${constants.API_URL}/mensagem/id_doenca=${idMes}`, {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+        })
+        .then((response) => {
+            return response.json()
+        })
+        .then((json) => {
+            setMensagens(json);
+            console.log("Dados:", mensagens);
+        })
+        .catch((error) => {
+            Alert.alert('Erro ao carregar mensagens!', error);
+        });
+    }
 
     function handleGoBack() {
         navigation.goBack();
@@ -75,31 +103,45 @@ export function Chat({ route }: { route: any }) {
             fontSize: 40,
             color: colors.body_dark,
         },
-    });    
+    });
 
     return (
-        <SafeAreaView style={styles.container}>
-        <View style={styles.container}>
-            <TouchableOpacity onPress={handleGoBack} style={styles.buttonMenu}>
-                <Feather name="arrow-left" style={styles.buttonMenuIcon}/>
-            </TouchableOpacity>
 
-            <TituloComunidade idMes={idMes} text={months[idMes][0]}/>
+        <>
+            {
+                (ready == true) &&
 
-            <View style={styles.scrollView}>
-            <ScrollView>
-                <Message idMes={idMes}/>
-                <MyMessage idMes={idMes}/>
-            </ScrollView>
-            </View>
-            
-            <View style={styles.sendView}>
-                <TextInput style={styles.input} placeholder="Digite sua mensagem" />
-                <TouchableOpacity onPress={handleSend} style={styles.buttonSend}>
-                    <Feather name="send" style={styles.buttonIcon}/>
-                </TouchableOpacity>
-            </View>
-        </View>
-        </SafeAreaView>
+                <SafeAreaView style={styles.container}>
+                <View style={styles.container}>
+                    <TouchableOpacity onPress={handleGoBack} style={styles.buttonMenu}>
+                        <Feather name="arrow-left" style={styles.buttonMenuIcon}/>
+                    </TouchableOpacity>
+
+                    <TituloComunidade idMes={idMes} text={months[idMes][0]}/>
+
+                    <View style={styles.scrollView}>
+                    <ScrollView>
+
+                        {
+                            mensagens.forEach((dado: any) => {
+                                <Message idMes={idMes} nome={"Augusto"} conteudo={dado.conteudo_msg} data={"10:30"}/>
+                            })
+                        }
+
+                        <Message idMes={idMes} nome={"Augusto"} conteudo={"Exemplo de texto"} data={"10:30"}/>
+                        <MyMessage idMes={idMes} conteudo={"Exemplo de texto"} data={"10:35"}/>
+                    </ScrollView>
+                    </View>
+                    
+                    <View style={styles.sendView}>
+                        <TextInput style={styles.input} placeholder="Digite sua mensagem" />
+                        <TouchableOpacity onPress={carregaMensagens} style={styles.buttonSend}>
+                            <Feather name="send" style={styles.buttonIcon}/>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+                </SafeAreaView>
+            }
+        </>
     );
 }

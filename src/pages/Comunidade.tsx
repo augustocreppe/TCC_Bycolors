@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import TabMenu from '../components/TabMenu';
 import fonts from '../styles/fonts';
 import { ImageBackground, SafeAreaView, StyleSheet, TouchableOpacity, View, Text, Image, Alert } from 'react-native';
@@ -11,13 +11,24 @@ import { Post } from '../components/Post';
 import { TituloComunidade } from '../components/TituloComunidade';
 import { ButtonComunidade } from '../components/ButtonComunidade';
 import { constants } from '../config/app.config';
+import { isLogado } from '../libs/storage';
 
 const fundo = require('../assets/fundo-comunidade.jpg');
 const marca = require('../assets/marca.png');
 
 export function Comunidade() {
     const navigation = useNavigation();
+    const [isLogged, setIsLogged] = useState<any>();
+
     const [ dados, setDados ] = useState<any>([]);
+
+    useEffect(() => {
+        async function getData() {
+            setIsLogged(await isLogado());
+        }
+        
+        getData();
+    },[]);
 
     function carregaApi() {
         fetch(`${constants.API_URL}/usuarios`)
@@ -42,12 +53,10 @@ export function Comunidade() {
        navigation.navigate('CadastroUsuario');
     }
 
-    let cadastrado = 1;
-
     return (
         <>
             {
-                (cadastrado == 0) &&
+                (isLogged == 'false') &&
 
                 <ImageBackground source={fundo} style={styles.telaFundo} resizeMode="cover">
                     <View style={styles.container}>
@@ -82,7 +91,7 @@ export function Comunidade() {
                 </ImageBackground>
             }
             {
-                (cadastrado == 1) &&
+                (isLogged == 'true') &&
 
                 <SafeAreaView style={styles.container}>
                     <View style={styles.container}>

@@ -90,7 +90,17 @@ export function CadastroUsuario() {
             })
             .then((json) => {
                 Alert.alert('Usuário cadastrado com sucesso!');
-                saveLogado(json[0]);
+                saveLogado(
+                    json[0].id_usuario, 
+                    json[0].nome_usuario, 
+                    json[0].telefone, 
+                    json[0].email, 
+                    json[0].senha,
+                    json[0].cidade,
+                    json[0].estado,
+                    json[0].avatar,
+                    json[0].bio,
+                );
                 navigation.navigate('Calendario');
             })
             .catch((error) => {
