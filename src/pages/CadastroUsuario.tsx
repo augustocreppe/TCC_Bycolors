@@ -75,8 +75,6 @@ export function CadastroUsuario() {
 
             const user = { adm:false, nome_usuario, email, telefone, cidade, estado, bio, avatar, senha }
 
-            console.log("Dados: ",user);
-
             fetch(`${constants.API_URL}/usuarios`, {
                 method: 'POST',
                 headers: {

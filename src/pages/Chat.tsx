@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { SafeAreaView, StyleSheet, View, TouchableOpacity, TextInput, Alert } from 'react-native';
+import { SafeAreaView, StyleSheet, View, TouchableOpacity, TextInput, Text, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { colors, cores } from '../styles/colors';
 import { Feather } from '@expo/vector-icons';
@@ -9,19 +9,30 @@ import { months } from '../styles/info';
 import { Message } from '../components/Message';
 import { MyMessage } from '../components/MyMessage';
 import { constants } from '../config/app.config';
+import { loadLogado } from '../libs/storage';
 
 export function Chat({ route }: { route: any }) {
     const navigation = useNavigation();
     const [ready, setReady] = useState(false);
     const idMes = route.params.idMes;
     const [mensagens, setMensagens] = useState<any>();
+    const [name, setName] = useState<any>();
+    const [dadosUser, setDadosUser] = useState<any>();
 
     useEffect(() => {
-        carregaMensagens();
-        setReady(true);
+        async function loadData() {
+            await carregaMensagens();
+            setDadosUser(await loadLogado());
+
+            console.log("Dados:", mensagens);
+
+            setReady(true);
+        }
+
+        loadData();
     },[]);
 
-    function carregaMensagens() {
+    async function carregaMensagens() {
         fetch(`${constants.API_URL}/mensagem/id_doenca=${idMes}`, {
             method: 'GET',
             headers: {
@@ -33,12 +44,57 @@ export function Chat({ route }: { route: any }) {
             return response.json()
         })
         .then((json) => {
-            setMensagens(json);
-            console.log("Dados:", mensagens);
+            //const data:any = [];
+
+            json.map( (dado: any) => {
+                fetch(`${constants.API_URL}/usuarios/id_usuario=${dado.user_id}`, {
+                    method: 'GET',
+                    headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                })
+                .then((response) => {
+                    return response.json()
+                })
+                .then((user) => {
+                    setMensagens([dado.user_id, user[0].nome_usuario, dado.conteudo_msg, dado.data]);
+                })
+                .catch((error) => {
+                    Alert.alert('Erro ao carregar mensagens!', error);
+                });
+            });
+
+            //console.log("ARRAY MEU:", data);
+            //setMensagens(undefined);
         })
         .catch((error) => {
             Alert.alert('Erro ao carregar mensagens!', error);
         });
+    }
+
+    async function carregaNome() {
+        mensagens.map(async (dado: any) =>
+            fetch(`${constants.API_URL}/usuarios/id_usuario=${dado.user_id}`, {
+                method: 'GET',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json'
+                },
+            })
+            .then((response) => {
+                return response.json()
+            })
+            .then((user) => {
+                console.log("DADO: ", dado);
+                console.log("NOME: ", user[0].nome_usuario);
+                
+                // <Message idMes={idMes} nome={user[0].nome_usuario} conteudo={dado.conteudo_msg} data={"10:30"}/>
+            })
+            .catch((error) => {
+                Alert.alert('Erro ao carregar mensagens!', error);
+            })
+        )
     }
 
     function handleGoBack() {
@@ -106,7 +162,6 @@ export function Chat({ route }: { route: any }) {
     });
 
     return (
-
         <>
             {
                 (ready == true) &&
@@ -122,20 +177,48 @@ export function Chat({ route }: { route: any }) {
                     <View style={styles.scrollView}>
                     <ScrollView>
 
-                        {
-                            mensagens.forEach((dado: any) => {
-                                <Message idMes={idMes} nome={"Augusto"} conteudo={dado.conteudo_msg} data={"10:30"}/>
-                            })
-                        }
+                        {/* {
+                            mensagens.map(async (dado: any) =>
+                                fetch(`${constants.API_URL}/usuarios/id_usuario=${dado.user_id}`, {
+                                    method: 'GET',
+                                    headers: {
+                                        Accept: 'application/json',
+                                        'Content-Type': 'application/json'
+                                    },
+                                })
+                                .then((response) => {
+                                    return response.json()
+                                })
+                                .then((user) => {
+                                    console.log("DADO: ", dado);
+                                    console.log("NOME: ", user[0].nome_usuario);
+                                    
+                                    // <Message idMes={idMes} nome={user[0].nome_usuario} conteudo={dado.conteudo_msg} data={"10:30"}/>
+                                })
+                                .catch((error) => {
+                                    Alert.alert('Erro ao carregar mensagens!', error);
+                                })
+                            )
+                        } */}
 
-                        <Message idMes={idMes} nome={"Augusto"} conteudo={"Exemplo de texto"} data={"10:30"}/>
-                        <MyMessage idMes={idMes} conteudo={"Exemplo de texto"} data={"10:35"}/>
+                        {/* {
+                            mensagens.map( (dado: any) => 
+                                //console.log(dado)
+                                <Text> { dado } </Text>
+                                // <Message idMes={idMes} nome={dado[1]} conteudo={dado[2]} data={dado[3]}/>
+                            )
+                        } */}
+
+                        {/* <Message idMes={idMes} nome={"Augusto"} conteudo={"Exemplo de texto"} data={"10:30"}/>
+                        <MyMessage idMes={idMes} conteudo={"Exemplo de texto"} data={"10:35"}/> */}
                     </ScrollView>
                     </View>
                     
                     <View style={styles.sendView}>
                         <TextInput style={styles.input} placeholder="Digite sua mensagem" />
-                        <TouchableOpacity onPress={carregaMensagens} style={styles.buttonSend}>
+                        <TouchableOpacity 
+                            onPress={carregaNome} 
+                            style={styles.buttonSend}>
                             <Feather name="send" style={styles.buttonIcon}/>
                         </TouchableOpacity>
                     </View>

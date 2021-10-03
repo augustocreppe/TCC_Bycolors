@@ -3,6 +3,7 @@ import AppLoading from 'expo-app-loading';
 import Routes from './src/routes/index.';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFonts, SourceSansPro_600SemiBold, SourceSansPro_400Regular, SourceSansPro_300Light } from '@expo-google-fonts/source-sans-pro';
+import { MenuProvider } from 'react-native-popup-menu';
 
 export default function App() {
   const [ fontsLoaded ] = useFonts({
@@ -23,6 +24,8 @@ export default function App() {
     return <AppLoading/>
 
   return (
-    <Routes/>
+    <MenuProvider>
+      <Routes/>
+    </MenuProvider>
   );
 }

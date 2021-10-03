@@ -45,8 +45,12 @@ export function Inicio() {
         .then((json) => {
             if(json.length != 0)
             {
-                setExisteEmail(true);
-                salvaAsync(json);
+                if(json[0].excluido == false) {
+                    setExisteEmail(true);
+                    salvaAsync(json);
+                }
+                else
+                    Alert.alert('Email inexistente!');
             }
             else
             {

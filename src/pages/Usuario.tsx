@@ -1,13 +1,13 @@
 import React, { useEffect, useState }  from 'react';
 import fonts from '../styles/fonts';
-import Swiper from 'react-native-swiper';
 import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View, Image, TextInput, Alert, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Feather } from '@expo/vector-icons';
 import { colors } from '../styles/colors';
 import { Picker } from '@react-native-picker/picker';
-import { loadLogado } from '../libs/storage';
+import { atualizaLogado, loadLogado, logoutLogado } from '../libs/storage';
 import { TextInputMask } from 'react-native-masked-text';
+import { constants } from '../config/app.config';
 
 const profile = require('../assets/profile.png');
 
@@ -72,6 +72,8 @@ export function Usuario() {
             setUf(dados[6]);
             setBio(dados[8]);
 
+            console.log(dados);
+
             setReady(true);
         }
         
@@ -87,9 +89,43 @@ export function Usuario() {
     function handleUpdate() {
         if((name != undefined) && (email != undefined) && (email != undefined) && (tel != undefined) && (city != undefined) && (uf != undefined) && (avatar != undefined) && (bio != undefined) && (password != undefined)) {
             if((name.length >= 3) && (email.includes('@')) && (tel.length >= 13) && (city.length >= 3) && (uf != '0') && (bio.length >= 3) && (password.length >= 8)) {
-                Alert.alert('Tudo certo!');
-
                 
+                const nome_usuario = name;
+                const telefone = tel;
+                const cidade = city;
+                const estado = uf;
+                const senha = password;
+
+                const user = { nome_usuario, email, telefone, cidade, estado, bio, avatar, senha }
+                
+                fetch(`${constants.API_URL}/usuarios/${dados[0]}`, {
+                    method: 'PUT',
+                    headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(user)
+                })
+                .then((response) => {
+                    return response.json()
+                })
+                .then((json) => {
+                    Alert.alert('Usuário alterado com sucesso!');
+                    atualizaLogado(
+                        nome_usuario,
+                        telefone, 
+                        email, 
+                        senha,
+                        cidade,
+                        estado,
+                        avatar,
+                        bio,
+                    );
+                    navigation.navigate('Calendario');
+                })
+                .catch((error) => {
+                    Alert.alert('Erro ao salvar os dados!', error);
+                });
             }
             else {
                 Alert.alert('Preencha todos os campos corretamente!');
@@ -102,7 +138,42 @@ export function Usuario() {
 
     //Deletar
     function handleDelete() {
+        const excluido = true;
+        const user = { excluido }
 
+        Alert.alert(
+            "Confirmar Exclusão",
+            "Você deseja realmente excluir sua conta?",
+            [
+              {
+                text: "Sim",
+                onPress: () => {
+                    fetch(`${constants.API_URL}/usuarios/excluir/${dados[0]}`, {
+                        method: 'PUT',
+                        headers: {
+                            Accept: 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(user)
+                    })
+                    .then((response) => {
+                        return response.json()
+                    })
+                    .then((json) => {
+                        Alert.alert('Usuário excluído com sucesso!');
+                        logoutLogado();
+                        navigation.navigate('Inicio');
+                    })
+                    .catch((error) => {
+                        Alert.alert('Erro ao salvar os dados!', error);
+                    });
+                },
+              },
+              {
+                text: "Não",
+              },
+            ]
+        );
     }
 
     //Desfoque do Campo

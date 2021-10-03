@@ -56,6 +56,23 @@ export async function loadLogado() {
     }
 }
 
+//Atualiza Logado
+export async function atualizaLogado(nome_usuario:string, telefone:string, email:string, senha:string, cidade:string, estado:string, avatar:number, bio:string,) {
+    try {
+        await AsyncStorage.setItem('@TCC_Bycolors:nome', nome_usuario);
+        await AsyncStorage.setItem('@TCC_Bycolors:telefone', telefone);
+        await AsyncStorage.setItem('@TCC_Bycolors:email', email);
+        await AsyncStorage.setItem('@TCC_Bycolors:senha', senha);
+        await AsyncStorage.setItem('@TCC_Bycolors:cidade', cidade);
+        await AsyncStorage.setItem('@TCC_Bycolors:estado', estado);
+        await AsyncStorage.setItem('@TCC_Bycolors:avatar', ""+avatar);
+        await AsyncStorage.setItem('@TCC_Bycolors:bio', bio);
+    }
+    catch(error) {
+        throw new Error();
+    }
+}
+
 //Logout
 export async function logoutLogado() {
     try {

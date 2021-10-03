@@ -16,7 +16,7 @@ export function MenuLateral() {
     useEffect(() => {
         async function getData() {
             setDados(await loadLogado());
-
+            
             setReady(true);
         }
         
@@ -43,7 +43,7 @@ export function MenuLateral() {
         navigation.navigate('Configuracoes');
     }
 
-    function handleInicio() {
+    function handleLogout() {
         Alert.alert(
             "Confirmar Logout",
             "Você deseja realmente sair do aplicativo?",
@@ -140,7 +140,7 @@ export function MenuLateral() {
                         </View>
         
                         <View style={styles.buttonMenuView}>
-                        <TouchableOpacity style={styles.buttonMenu} onPress={handleInicio}>
+                        <TouchableOpacity style={styles.buttonMenu} onPress={handleLogout}>
                             <Feather name="log-out" style={styles.buttonIcon}/>
                             <Text style={styles.buttonText}>Sair</Text>
                         </TouchableOpacity>
