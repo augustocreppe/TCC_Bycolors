@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { SafeAreaView, StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { colors } from '../styles/colors';
@@ -7,60 +7,94 @@ import { TituloComunidade } from '../components/TituloComunidade';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Post } from '../components/Post';
 import fonts from '../styles/fonts';
+import { loadLogado } from '../libs/storage';
 
 const profile = require('../assets/profile.png');
 
-export function LinhaDoTempo() {
+export function LinhaDoTempo({ route }: { route: any }) {
     const navigation = useNavigation();
+    const idUser = route.params.idMes;
+
+    const [ready, setReady] = useState(false);
+    const [dados, setDados] = useState<any>();
+
+    useEffect(() => {
+        async function getData() {
+            await getUser();
+            
+            setReady(true);
+        }
+        
+        getData();
+    },[]);
+
+    async function getUser() {
+        if(idUser == 0)
+        {
+            setDados(await loadLogado());
+        }
+        else
+        {
+            //Pesquisar Usuário por Id
+            
+            //Pesquisar publicações por Id
+        }
+    }
 
     function handleGoBack() {
         navigation.goBack();
     }
 
     return (
-        <SafeAreaView style={styles.container}>
-        <View style={styles.container}>
-            <TouchableOpacity onPress={handleGoBack} style={styles.buttonMenu}>
-                <Feather name="arrow-left" style={styles.buttonMenuIcon}/>
-            </TouchableOpacity>
+        <>
+            {
+                (ready == true) &&
 
-            <View style={styles.scrollView}> 
-            <ScrollView>
+                <SafeAreaView style={styles.container}>
+                <View style={styles.container}>
+                    <TouchableOpacity onPress={handleGoBack} style={styles.buttonMenu}>
+                        <Feather name="arrow-left" style={styles.buttonMenuIcon}/>
+                    </TouchableOpacity>
 
-                <View style={styles.profileView}>
-                <View style={styles.notBioView}>
-                        <View style={styles.imageView}>
-                            <Image source={profile} style={styles.image}/>
+                    <View style={styles.scrollView}> 
+                    <ScrollView>
+
+                        <View style={styles.profileView}>
+                        <View style={styles.notBioView}>
+                                <View style={styles.imageView}>
+                                    <Image source={profile} style={styles.image}/>
+                                </View>
+
+                                <View style={styles.infoView}>
+                                    <View style={styles.nameView}>
+                                        <Text style={styles.name}>{ dados[1] }</Text>
+                                    </View>
+
+                                    <View style={styles.placeView}>
+                                        <Feather name="map-pin" style={styles.placeIcon}/>
+                                        <Text style={styles.place}>{ dados[5] } - { dados[6] }</Text>
+                                    </View>
+                                </View>
+                        </View>
                         </View>
 
-                        <View style={styles.infoView}>
-                            <View style={styles.nameView}>
-                                <Text style={styles.name}>Fulana da Silva</Text>
-                            </View>
-
-                            <View style={styles.placeView}>
-                                <Feather name="map-pin" style={styles.placeIcon}/>
-                                <Text style={styles.place}>Bauru - SP</Text>
-                            </View>
+                        <View style={styles.bioView}>
+                            <Text style={styles.bio}>{ dados[8] }</Text>
                         </View>
-                </View>
-                </View>
 
-                <View style={styles.bioView}>
-                    <Text style={styles.bio}>Estou aqui para contar mais sobre minha luta contra o câncer de mama. Encorajo aquelas que precisam de ajuda, mostrando que é possível vencer!</Text>
+                        <TituloComunidade idMes={0} text={"Minhas Publicações"}/>
+                        
+                        <View style={styles.postView}>
+                            <Post idMes={2}/>
+                            <Post idMes={7}/>
+                            <Post idMes={5}/>
+                        </View>
+                    </ScrollView>
+                    </View>
                 </View>
-
-                <TituloComunidade idMes={0} text={"Minhas Publicações"}/>
-                
-                <View style={styles.postView}>
-                    <Post idMes={2}/>
-                    <Post idMes={7}/>
-                    <Post idMes={5}/>
-                </View>
-            </ScrollView>
-            </View>
-        </View>
-        </SafeAreaView>
+                </SafeAreaView>
+            }
+        </>
     );
 }
 

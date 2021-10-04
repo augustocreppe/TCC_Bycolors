@@ -7,7 +7,7 @@ import { colors } from '../styles/colors';
 import { constants } from '../config/app.config';
 import { logoutLogado, saveLogado } from '../libs/storage';
 
-const fundo = require('../assets/fundo.jpg');
+const fundo = require('../assets/fundo.png');
 const logo = require('../assets/logo.png');
 const marca = require('../assets/marca.png');
 
@@ -284,10 +284,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         alignSelf: 'center',
         borderWidth: 4,
-        borderColor: colors.cinza_claro,
+        borderColor: colors.branco,
         paddingTop: '3%',
-        marginTop: '12%',
-        marginBottom: '4%',
+        marginTop: '15%',
+        marginBottom: '1%',
     },
     sizeLogo: {
         alignItems: 'center',

@@ -10,7 +10,6 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { Post } from '../components/Post';
 import { TituloComunidade } from '../components/TituloComunidade';
 import { ButtonComunidade } from '../components/ButtonComunidade';
-import { constants } from '../config/app.config';
 import { isLogado } from '../libs/storage';
 
 const fundo = require('../assets/fundo-comunidade.jpg');
@@ -20,8 +19,6 @@ export function Comunidade() {
     const navigation = useNavigation();
     const [isLogged, setIsLogged] = useState<any>();
 
-    const [ dados, setDados ] = useState<any>([]);
-
     useEffect(() => {
         async function getData() {
             setIsLogged(await isLogado());
@@ -29,17 +26,6 @@ export function Comunidade() {
         
         getData();
     },[]);
-
-    function carregaApi() {
-        fetch(`${constants.API_URL}/usuarios`)
-        .then( res => res.json )
-        .then( res => {
-            setDados(res);
-        })
-        .catch(error => {
-            Alert.alert('Erro ao carregar dados!', error);
-        });
-    }
 
     function handleGoBack() {
         navigation.navigate('MenuLateral');
@@ -118,14 +104,6 @@ export function Comunidade() {
                             </View>
 
                             <View style={styles.postsView}>
-
-                                {/* {
-                                    dados.forEach(dado => {
-                                        <Post nome={dado.id} idMes={10}/>
-                                    })
-
-                                } */}
-
                                 <Post idMes={10}/>
                                 <Post idMes={9}/>
                                 <Post idMes={11}/>
