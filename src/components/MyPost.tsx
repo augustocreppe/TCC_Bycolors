@@ -11,7 +11,7 @@ interface PostProps extends TouchableOpacityProps {
     idMes: number;
 }
 
-export function Post ({ idMes, ...rest }: PostProps) {
+export function MyPost ({ idMes, ...rest }: PostProps) {
     const styles = StyleSheet.create({
         container: {
             backgroundColor: cores[idMes][1],
@@ -177,10 +177,10 @@ export function Post ({ idMes, ...rest }: PostProps) {
         navigation.navigate('Mes', {idMes: idMes});
     }
 
-    function handleDenunciar() {
+    function handleExcluir() {
         Alert.alert(
-            "Confirmar Denúncia",
-            "Você deseja realmente denunciar esta publicação?",
+            "Confirmar Exclusão",
+            "Você deseja realmente excluir esta publicação?",
             [
               {
                 text: "Sim",
@@ -216,9 +216,9 @@ export function Post ({ idMes, ...rest }: PostProps) {
                     </View>
                 </MenuTrigger>
                 <MenuOptions>
-                    <MenuOption onSelect={handleDenunciar} style={styles.menuOption}>
+                    <MenuOption onSelect={handleExcluir} style={styles.menuOption}>
                         <Text style={styles.menuOptionText}>
-                            Denunciar
+                            Excluir
                         </Text>
                     </MenuOption>
                 </MenuOptions>

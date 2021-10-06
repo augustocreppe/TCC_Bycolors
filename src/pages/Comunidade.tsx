@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import TabMenu from '../components/TabMenu';
 import fonts from '../styles/fonts';
 import { ImageBackground, SafeAreaView, StyleSheet, TouchableOpacity, View, Text, Image, Alert } from 'react-native';
@@ -10,25 +10,22 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { Post } from '../components/Post';
 import { TituloComunidade } from '../components/TituloComunidade';
 import { ButtonComunidade } from '../components/ButtonComunidade';
-import { constants } from '../config/app.config';
+import { isLogado } from '../libs/storage';
 
 const fundo = require('../assets/fundo-comunidade.jpg');
 const marca = require('../assets/marca.png');
 
 export function Comunidade() {
     const navigation = useNavigation();
-    const [ dados, setDados ] = useState<any>([]);
+    const [isLogged, setIsLogged] = useState<any>();
 
-    function carregaApi() {
-        fetch(`${constants.API_URL}/usuarios`)
-        .then( res => res.json )
-        .then( res => {
-            setDados(res);
-        })
-        .catch(error => {
-            Alert.alert('Erro ao salvar os dados!', error);
-        });
-    }
+    useEffect(() => {
+        async function getData() {
+            setIsLogged(await isLogado());
+        }
+        
+        getData();
+    },[]);
 
     function handleGoBack() {
         navigation.navigate('MenuLateral');
@@ -42,12 +39,10 @@ export function Comunidade() {
        navigation.navigate('CadastroUsuario');
     }
 
-    let cadastrado = 0;
-
     return (
         <>
             {
-                (cadastrado == 0) &&
+                (isLogged == 'false') &&
 
                 <ImageBackground source={fundo} style={styles.telaFundo} resizeMode="cover">
                     <View style={styles.container}>
@@ -82,7 +77,7 @@ export function Comunidade() {
                 </ImageBackground>
             }
             {
-                (cadastrado == 1) &&
+                (isLogged == 'true') &&
 
                 <SafeAreaView style={styles.container}>
                     <View style={styles.container}>
@@ -109,14 +104,6 @@ export function Comunidade() {
                             </View>
 
                             <View style={styles.postsView}>
-
-                                {/* {
-                                    dados.forEach(dado => {
-                                        <Post nome={dado.id} idMes={10}/>
-                                    })
-
-                                } */}
-
                                 <Post idMes={10}/>
                                 <Post idMes={9}/>
                                 <Post idMes={11}/>

@@ -8,6 +8,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { Picker } from '@react-native-picker/picker';
 import { TextInputMask } from 'react-native-masked-text';
 import { constants } from '../config/app.config';
+import { saveLogado } from '../libs/storage';
 
 export function CadastroUsuario() {
     const navigation = useNavigation();
@@ -31,25 +32,22 @@ export function CadastroUsuario() {
     const [password2Green, setPassword2Green] = useState(false);
     const [password2Red, setPassword2Red] = useState(false);
 
+    const [B1Pressed, setB1Pressed] = useState(false);
+    const [B2Pressed, setB2Pressed] = useState(false);
+    const [B3Pressed, setB3Pressed] = useState(false);
+    const [B4Pressed, setB4Pressed] = useState(false);
+    const [B5Pressed, setB5Pressed] = useState(false);
+    const [B6Pressed, setB6Pressed] = useState(false);
+
     const [name, setName] = useState<string>();
     const [email, setEmail] = useState<string>();
     const [tel, setTel] = useState<string>();
     const [city, setCity] = useState<string>();
-    const [uf, setUf] = useState<string>('AC');
+    const [uf, setUf] = useState<string>('s');
     const [bio, setBio] = useState<string>();
     const [avatar, setAvatar] = useState<number>();
     const [password, setPassword] = useState<string>();
     const [password2, setPassword2] = useState<string>();
-
-    const [nameIsFocused, setNameIsFocused] = useState(false);
-    const [emailIsFocused, setEmailIsFocused] = useState(false);
-    const [telIsFocused, setTelIsFocused] = useState(false);
-    const [cityIsFocused, setCityIsFocused] = useState(false);
-    const [ufIsFocused, setUfIsFocused] = useState(false);
-    const [avatarIsFocused, setAvatarIsFocused] = useState(false);
-    const [bioIsFocused, setBioIsFocused] = useState(false);
-    const [passwordIsFocused, setPasswordIsFocused] = useState(false);
-    const [password2IsFocused, setPassword2IsFocused] = useState(false);
 
     const [nameIsFilled, setNameIsFilled] = useState(false);
     const [emailIsFilled, setEmailIsFilled] = useState(false);
@@ -61,14 +59,14 @@ export function CadastroUsuario() {
     const [passwordIsFilled, setPasswordIsFilled] = useState(false);
     const [password2IsFilled, setPassword2IsFilled] = useState(false);
 
+    //Voltar
     function handleGoBack() {
         navigation.navigate('Inicio');
     }
 
+    //Cadastrar
     function handleSubmit() {
-        if( nameGreen && emailGreen && telGreen && cityGreen && ufGreen && avatarGreen && bioGreen && passwordGreen && password2Green){
-            setAvatar(2);
-
+        if(nameIsFilled && emailIsFilled && telIsFilled && cityIsFilled && ufIsFilled && avatarIsFilled && bioIsFilled && passwordIsFilled && password2IsFilled){
             const nome_usuario = name;
             const telefone = tel;
             const cidade = city;
@@ -90,6 +88,17 @@ export function CadastroUsuario() {
             })
             .then((json) => {
                 Alert.alert('Usuário cadastrado com sucesso!');
+                saveLogado(
+                    json[0].id_usuario, 
+                    json[0].nome_usuario, 
+                    json[0].telefone, 
+                    json[0].email, 
+                    json[0].senha,
+                    json[0].cidade,
+                    json[0].estado,
+                    json[0].avatar,
+                    json[0].bio,
+                );
                 navigation.navigate('Calendario');
             })
             .catch((error) => {
@@ -97,12 +106,12 @@ export function CadastroUsuario() {
             });
         }
         else {
-            Alert.alert('Preencha os campos corretamente!');
+            Alert.alert('Preencha todos os campos corretamente!');
         }
     }
 
+    //Desfoque do Campo
     function handleNameBlur(){
-        setNameIsFocused(false);
         setNameIsFilled(!!name);
 
         if(name != undefined)
@@ -122,7 +131,6 @@ export function CadastroUsuario() {
             setNameRed(true);
     }
     function handleEmailBlur(){
-        setEmailIsFocused(false);
         setEmailIsFilled(!!email);
 
         if(email != undefined)
@@ -142,7 +150,6 @@ export function CadastroUsuario() {
             setEmailRed(true);
     }
     function handleTelBlur(){
-        setTelIsFocused(false);
         setTelIsFilled(!!tel);
 
         if(tel != undefined)
@@ -162,7 +169,6 @@ export function CadastroUsuario() {
             setTelRed(true);
     }
     function handleCityBlur(){
-        setCityIsFocused(false);
         setCityIsFilled(!!city);
 
         if(city != undefined)
@@ -181,12 +187,7 @@ export function CadastroUsuario() {
         else
             setCityRed(true);
     }
-    function handleUfBlur(){
-        setUfIsFocused(false);
-        setUfIsFilled(!!uf);
-    }
     function handleBioBlur(){
-        setBioIsFocused(false);
         setBioIsFilled(!!bio);
 
         if(bio != undefined)
@@ -206,7 +207,6 @@ export function CadastroUsuario() {
             setBioRed(true);
     }
     function handlePasswordBlur(){
-        setPasswordIsFocused(false);
         setPasswordIsFilled(!!password);
 
         if(password != undefined)
@@ -226,7 +226,6 @@ export function CadastroUsuario() {
             setPasswordRed(true);
     }
     function handlePassword2Blur(){
-        setPassword2IsFocused(false);
         setPassword2IsFilled(!!password2);
 
         if(password2 != undefined)
@@ -250,31 +249,7 @@ export function CadastroUsuario() {
             setPassword2Red(true);
     }
 
-    function handleNameFocus() {
-
-    }
-    function handleEmailFocus() {
-
-    }
-    function handleTelFocus() {
-
-    }
-    function handleCityFocus() {
-
-    }
-    function handleUfFocus() {
-
-    }
-    function handleBioFocus() {
-
-    }
-    function handlePasswordFocus() {
-
-    }
-    function handlePassword2Focus() {
-
-    }
-
+    //Mudança de Valor
     function handleNameChange(value: string){
         setNameIsFilled(!!value);
         setName(value);
@@ -308,6 +283,128 @@ export function CadastroUsuario() {
         setPassword2(value);
     }
 
+    //Escolha do Avatar
+    function handleB1() {
+        if(B1Pressed==false)
+        {
+            setB1Pressed(true);
+            setB2Pressed(false);
+            setB3Pressed(false);
+            setB4Pressed(false);
+            setB5Pressed(false);
+            setB6Pressed(false);
+
+            setAvatarIsFilled(true);
+            setAvatar(1);
+        }
+        else
+        {
+            setAvatarIsFilled(false);
+            setB1Pressed(false);
+            setAvatar(0);
+        }
+    }
+    function handleB2() {
+        if(B2Pressed==false)
+        {
+            setB1Pressed(false);
+            setB2Pressed(true);
+            setB3Pressed(false);
+            setB4Pressed(false);
+            setB5Pressed(false);
+            setB6Pressed(false);
+
+            setAvatarIsFilled(true);
+            setAvatar(2);
+        }
+        else
+        {
+            setAvatarIsFilled(false);
+            setB2Pressed(false);
+            setAvatar(0);
+        }
+    }
+    function handleB3() {
+        if(B3Pressed==false)
+        {
+            setB1Pressed(false);
+            setB2Pressed(false);
+            setB3Pressed(true);
+            setB4Pressed(false);
+            setB5Pressed(false);
+            setB6Pressed(false);
+
+            setAvatarIsFilled(true);
+            setAvatar(3);
+        }
+        else
+        {
+            setAvatarIsFilled(false);
+            setB3Pressed(false);
+            setAvatar(0);
+        }
+    }
+    function handleB4() {
+        if(B4Pressed==false)
+        {
+            setB1Pressed(false);
+            setB2Pressed(false);
+            setB3Pressed(false);
+            setB4Pressed(true);
+            setB5Pressed(false);
+            setB6Pressed(false);
+
+            setAvatarIsFilled(true);
+            setAvatar(4);
+        }
+        else
+        {
+            setAvatarIsFilled(false);
+            setB4Pressed(false);
+            setAvatar(0);
+        }
+    }
+    function handleB5() {
+        if(B5Pressed==false)
+        {
+            setB1Pressed(false);
+            setB2Pressed(false);
+            setB3Pressed(false);
+            setB4Pressed(false);
+            setB5Pressed(true);
+            setB6Pressed(false);
+
+            setAvatarIsFilled(true);
+            setAvatar(5);
+        }
+        else
+        {
+            setAvatarIsFilled(false);
+            setB5Pressed(false);
+            setAvatar(0);
+        }
+    }
+    function handleB6() {
+        if(B6Pressed==false)
+        {
+            setB1Pressed(false);
+            setB2Pressed(false);
+            setB3Pressed(false);
+            setB4Pressed(false);
+            setB5Pressed(false);
+            setB6Pressed(true);
+
+            setAvatarIsFilled(true);
+            setAvatar(6);
+        }
+        else
+        {
+            setAvatarIsFilled(false);
+            setB6Pressed(false);
+            setAvatar(0);
+        }
+    }
+
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.container}>
@@ -329,9 +426,6 @@ export function CadastroUsuario() {
                         style={[
                             styles.inputHolder,
 
-                            (nameIsFocused || nameIsFilled) &&
-                            { borderColor: colors.body_dark },
-
                             (nameGreen) &&
                             { borderColor: colors._verde },
 
@@ -341,7 +435,6 @@ export function CadastroUsuario() {
                         placeholder="Ex: Fulana da Silva"
                         
                         onBlur={handleNameBlur}
-                        onFocus={handleNameFocus}
                         onChangeText={handleNameChange}
                     />
 
@@ -351,10 +444,7 @@ export function CadastroUsuario() {
                     </Text>  
                     <TextInput
                         style={[
-                            styles.inputHolder, 
-
-                            (emailIsFocused || emailIsFilled) &&
-                            { borderColor: colors.body_dark },
+                            styles.inputHolder,
 
                             (emailGreen) &&
                             { borderColor: colors._verde },
@@ -365,7 +455,6 @@ export function CadastroUsuario() {
                         placeholder="Ex: joao@gmail.com"
                         
                         onBlur={handleEmailBlur}
-                        onFocus={handleEmailFocus}
                         onChangeText={handleEmailChange}
                     />
 
@@ -375,10 +464,7 @@ export function CadastroUsuario() {
                     </Text>
                     <TextInputMask
                         style={[
-                            styles.inputHolder, 
-
-                            (telIsFocused || telIsFilled) &&
-                            { borderColor: colors.body_dark },
+                            styles.inputHolder,
 
                             (telGreen) &&
                             { borderColor: colors._verde },
@@ -396,7 +482,6 @@ export function CadastroUsuario() {
                         placeholder="Ex: (14)99123-4567"
                         
                         onBlur={handleTelBlur}
-                        onFocus={handleTelFocus}
                         onChangeText={handleTelChange}
                     />
 
@@ -406,10 +491,7 @@ export function CadastroUsuario() {
                     </Text>      
                     <TextInput
                         style={[
-                            styles.inputHolder, 
-
-                            (cityIsFocused || cityIsFilled) &&
-                            { borderColor: colors.body_dark },
+                            styles.inputHolder,
 
                             (cityGreen) &&
                             { borderColor: colors._verde },
@@ -420,7 +502,6 @@ export function CadastroUsuario() {
                         placeholder="Ex: Bauru"
                         
                         onBlur={handleCityBlur}
-                        onFocus={handleCityFocus}
                         onChangeText={handleCityChange}
                     />
 
@@ -428,18 +509,15 @@ export function CadastroUsuario() {
                         <Entypo name="map" style={styles.iconHolder}/>
                         {' '}Estado
                     </Text>
-                    <View style={styles.pickerView}>
+                    <View style={[styles.pickerView, (uf == '0') && { borderColor: colors._vermelho}, (uf != '0' && uf != 's') && { borderColor: colors._verde} ]}>
                     <Picker
                         style={[
-                            styles.inputHolder, 
-
-                            (ufIsFocused || ufIsFilled) &&
-                            { borderColor: colors.body_dark },
+                            styles.inputHolder2,
                         ]}
-                        itemStyle={styles.pickerItem}
                         selectedValue={uf}
                         onValueChange={handleUfChange}
                     >
+                        <Picker.Item label="Selecione o Estado" value="0" />
                         <Picker.Item label="Acre" value="AC" />
                         <Picker.Item label="Alagoas" value="AL" />
                         <Picker.Item label="Amapá" value="AP" />
@@ -471,15 +549,54 @@ export function CadastroUsuario() {
                     </View>
 
                     <Text style={styles.textHolder}>
+                        <Entypo name="emoji-happy" style={styles.iconHolder}/>
+                        {' '}Avatar
+                    </Text>
+                    <View style={[styles.avatarView, (avatarGreen) && { borderColor: colors._verde },  (avatarRed) && { borderColor: colors._vermelho }, (avatar == 0) && { borderColor: colors._vermelho }]}>
+                        <View style={styles.avatarViewUp}> 
+                            <View style={styles.avatarViewButton}>
+                                <TouchableOpacity style={[styles.avatarButton, (B1Pressed) && { borderColor: colors._verde, borderWidth: 2 }]} onPress={handleB1}>
+                                    {/* 1 */}
+                                </TouchableOpacity>
+                            </View>
+                            <View style={styles.avatarViewButton}>
+                                <TouchableOpacity style={[styles.avatarButton, (B2Pressed) && { borderColor: colors._verde, borderWidth: 2 }]} onPress={handleB2}> 
+                                    {/* 2 */}
+                                </TouchableOpacity>
+                            </View>
+                            <View style={styles.avatarViewButton}>
+                                <TouchableOpacity style={[styles.avatarButton, (B3Pressed) && { borderColor: colors._verde, borderWidth: 2 }]} onPress={handleB3}> 
+                                    {/* 3 */}
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+
+                        <View style={styles.avatarViewDown}> 
+                            <View style={styles.avatarViewButton}>
+                                <TouchableOpacity style={[styles.avatarButton, (B4Pressed) && { borderColor: colors._verde, borderWidth: 2 }]} onPress={handleB4}> 
+                                    {/* 4 */}
+                                </TouchableOpacity>
+                            </View>
+                            <View style={styles.avatarViewButton}>
+                                <TouchableOpacity style={[styles.avatarButton, (B5Pressed) && { borderColor: colors._verde, borderWidth: 2 }]} onPress={handleB5}> 
+                                    {/* 5 */}
+                                </TouchableOpacity>
+                            </View>
+                            <View style={styles.avatarViewButton}>
+                                <TouchableOpacity style={[styles.avatarButton, (B6Pressed) && { borderColor: colors._verde, borderWidth: 2 }]} onPress={handleB6}> 
+                                    {/* 6 */}
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    </View>
+
+                    <Text style={styles.textHolder}>
                         <Entypo name="new-message" style={styles.iconHolder}/>
                         {' '}Biografia
                     </Text>    
                     <TextInput
                         style={[
-                            styles.inputHolder, 
-
-                            (bioIsFocused || bioIsFilled) &&
-                            { borderColor: colors.body_dark },
+                            styles.inputHolder,
 
                             (bioGreen) &&
                             { borderColor: colors._verde },
@@ -490,7 +607,6 @@ export function CadastroUsuario() {
                         placeholder="Conte-nos um pouco sobre você!"
                         
                         onBlur={handleBioBlur}
-                        onFocus={handleBioFocus}
                         onChangeText={handleBioChange}
                     />
 
@@ -500,10 +616,7 @@ export function CadastroUsuario() {
                     </Text>    
                     <TextInput
                         style={[
-                            styles.inputHolder, 
-
-                            (passwordIsFocused || passwordIsFilled) &&
-                            { borderColor: colors.body_dark },
+                            styles.inputHolder,
 
                             (passwordGreen) &&
                             { borderColor: colors._verde },
@@ -515,7 +628,6 @@ export function CadastroUsuario() {
                         secureTextEntry={true}
                         
                         onBlur={handlePasswordBlur}
-                        onFocus={handlePasswordFocus}
                         onChangeText={handlePasswordChange}
                     />
 
@@ -525,10 +637,7 @@ export function CadastroUsuario() {
                     </Text>    
                     <TextInput
                         style={[
-                            styles.inputHolder, 
-
-                            (password2IsFocused || password2IsFilled) &&
-                            { borderColor: colors.body_dark },
+                            styles.inputHolder,
 
                             (password2Green) &&
                             { borderColor: colors._verde },
@@ -540,7 +649,6 @@ export function CadastroUsuario() {
                         secureTextEntry={true}
                         
                         onBlur={handlePassword2Blur}
-                        onFocus={handlePassword2Focus}
                         onChangeText={handlePassword2Change}
                     />
                 </View>
@@ -702,6 +810,14 @@ const styles = StyleSheet.create({
         padding: 10,
         textAlign: 'justify',
     },
+    inputHolder2: {
+        color: colors.heading,
+        height: 50,
+        width: '100%',
+        fontSize: 18,
+        textAlign: 'justify',
+        fontFamily: fonts.heading,
+    },
     pickerView: {
         borderWidth: 1,
         borderRadius: 8,
@@ -709,8 +825,7 @@ const styles = StyleSheet.create({
         marginTop: 4,
         marginBottom: 6,
         padding: 4,
-        height: 60,
-        paddingTop: -20,
+        height: 'auto',
     },
     picker: {
         fontSize: 18,
@@ -721,5 +836,38 @@ const styles = StyleSheet.create({
         fontSize: 18,
         color: colors.heading,
         textAlignVertical: 'center',
-    }
+    },
+    avatarView: {
+        borderWidth: 1,
+        borderRadius: 8,
+        borderColor: colors.cinza_claro,
+        color: colors.heading,
+        height: 234,
+        width: '100%',
+        fontSize: 18,
+        marginTop: 4,
+        marginBottom: 6,
+        flexDirection: 'column',
+    },
+    avatarViewUp: {
+        height: '50%',
+        width: 351,
+        flexDirection: 'row',
+    },
+    avatarViewDown: {
+        height: '50%',
+        width: 351,
+        flexDirection: 'row',
+    },
+    avatarViewButton: {
+        height: '100%',
+        width: '33.333%',
+        padding: 10,
+    },
+    avatarButton: {
+        width: '100%',
+        height: '100%',
+        borderRadius: 50,
+        backgroundColor: colors.azul,
+    },
 });

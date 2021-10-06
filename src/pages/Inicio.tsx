@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import fonts from '../styles/fonts';
 import { StyleSheet, Text, View, TextInput, Alert, TouchableOpacity, ImageBackground, Image, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import { Feather, Entypo, FontAwesome } from '@expo/vector-icons';
 import { colors } from '../styles/colors';
 import { constants } from '../config/app.config';
+import { logoutLogado, saveLogado } from '../libs/storage';
 
-const fundo = require('../assets/fundo.jpg');
+const fundo = require('../assets/fundo.png');
 const logo = require('../assets/logo.png');
 const marca = require('../assets/marca.png');
 
@@ -43,33 +43,76 @@ export function Inicio() {
             return response.json()
         })
         .then((json) => {
-            console.log(json);
-            
             if(json.length != 0)
-                setExisteEmail(true);
-                salvaAsync(json);
+            {
+                if(json[0].excluido == false) {
+                    setExisteEmail(true);
+                    salvaAsync(json);
+                }
+                else
+                    Alert.alert('Email inexistente!');
+            }
+            else
+            {
+                Alert.alert('Email inexistente!');
+            }
         })
         .catch((error) => {
-            Alert.alert('Erro ao salvar os dados!', error);
+            Alert.alert('Erro ao encontrar email!', error);
         });
     }
 
     //Salvar Dados Login
     async function salvaAsync(dados: any) {
         try {
-            const id_logado = ""+dados[0].id_usuario;
-            await AsyncStorage.setItem('@TCC_Bycolors:loggedId', id_logado);
+            saveLogado(
+                dados[0].id_usuario, 
+                dados[0].nome_usuario, 
+                dados[0].telefone, 
+                dados[0].email, 
+                dados[0].senha,
+                dados[0].cidade,
+                dados[0].estado,
+                dados[0].avatar,
+                dados[0].bio,
+            );
 
             setSenhaCerta(dados[0].senha);
-            console.log("SENHA CERTA:", senhaCerta);
         } 
         catch {
             setExisteEmail(false);
             return Alert.alert('Erro ao encontrar email!');
         }
+    }
 
-        const value = await AsyncStorage.getItem('@TCC_Bycolors:loggedId');
-        console.log("Logged User: ",value);
+    //Voltar
+    async function handleVoltar() {
+        setExisteEmail(false);
+        setEmail(undefined);
+        setPassword(undefined);
+        await logoutLogado();
+    }
+
+    //Entrar
+    async function handleSubmit(){
+        if(!password)
+            return Alert.alert('Por favor, digite sua senha.');
+
+        try {
+            if(password == senhaCerta) {
+                setEmail(undefined);
+                setPassword(undefined);
+                setSenhaCerta(undefined);
+                setExisteEmail(false);
+                navigation.navigate('Calendario');
+            }
+            else {
+                Alert.alert('Senha incorreta!');
+            }
+        }
+        catch {
+            Alert.alert('Não foi possível logar!');
+        }
     }
 
     //Cadastrar-se
@@ -80,36 +123,6 @@ export function Inicio() {
     //Entrar sem logar
     function handleEnter() {
         navigation.navigate('Calendario');
-    }
-
-    //Voltar
-    function handleVoltar() {
-        setExisteEmail(false);
-        setEmail(undefined);
-        setPassword(undefined);
-    }
-
-    //Entrar
-    async function handleSubmit(){
-        if(!password)
-            return Alert.alert('Por favor, digite sua senha.');
-
-        try {
-
-            if(password == senhaCerta) {
-                setEmail(undefined);
-                setPassword(undefined);
-                setSenhaCerta(undefined);
-                setExisteEmail(false);
-                navigation.navigate('Calendario');
-            }
-            else {
-                Alert.alert('Senha incorreta!')
-            }
-        }
-        catch {
-            Alert.alert('Não foi possível logar!')
-        }
     }
 
     function handleEmailBlur(){
@@ -271,10 +284,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         alignSelf: 'center',
         borderWidth: 4,
-        borderColor: colors.cinza_claro,
+        borderColor: colors.branco,
         paddingTop: '3%',
-        marginTop: '12%',
-        marginBottom: '4%',
+        marginTop: '15%',
+        marginBottom: '1%',
     },
     sizeLogo: {
         alignItems: 'center',

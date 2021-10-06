@@ -24,7 +24,7 @@ export function ButtonComunidade ({title, icone, ...rest}: ButtonProps){
         }
         else if(icone == 'id-card')
         {
-            navigation.navigate('LinhaDoTempo');
+            navigation.navigate('LinhaDoTempo', {idUser: 0});
         }
     }
 

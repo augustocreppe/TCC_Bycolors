@@ -1,24 +1,56 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { SafeAreaView, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Feather } from '@expo/vector-icons';
 import { ButtonMes } from '../components/ButtonMes';
 import { colors } from '../styles/colors';
 import TabMenu from '../components/TabMenu';
+import { isLogado } from '../libs/storage';
 
 export function Calendario() {
     const navigation = useNavigation();
+    const [isLogged, setIsLogged] = useState<any>();
+
+    useEffect(() => {
+        async function getData() {
+            setIsLogged(await isLogado());
+        }
+        
+        getData();
+    },[]);
+
+
+    function handleMenu() {
+        navigation.navigate('MenuLateral');
+    }
 
     function handleGoBack() {
-        navigation.navigate('MenuLateral');
+        navigation.navigate('Inicio');
     }
 
     return (
         <SafeAreaView style={styles.container}>
         <View style={styles.container}>
-            <TouchableOpacity onPress={handleGoBack} style={styles.buttonMenu}>
-                <Feather name="menu" style={styles.buttonMenuIcon}/>
-            </TouchableOpacity>
+
+            {
+                (isLogged == 'false') &&
+
+                <>
+                    <TouchableOpacity onPress={handleGoBack} style={styles.buttonMenu}>
+                        <Feather name="arrow-left" style={styles.buttonMenuIcon}/>
+                    </TouchableOpacity>
+                </>
+            }
+
+            {
+                (isLogged == 'true') &&
+
+                <>
+                    <TouchableOpacity onPress={handleMenu} style={styles.buttonMenu}>
+                        <Feather name="menu" style={styles.buttonMenuIcon}/>
+                    </TouchableOpacity>
+                </>
+            }
 
             <View style={styles.scrollView}>
             <ScrollView>

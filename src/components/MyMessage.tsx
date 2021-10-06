@@ -5,9 +5,11 @@ import fonts from '../styles/fonts';
 
 interface PostProps extends TouchableOpacityProps {
     idMes: number;
+    conteudo: string;
+    data: string;
 }
 
-export function MyMessage ({ idMes, ...rest }: PostProps) {
+export function MyMessage ({ idMes, conteudo, data, ...rest }: PostProps) {
     const styles = StyleSheet.create({
         container: {
             backgroundColor: cores[idMes][1],
@@ -55,9 +57,6 @@ export function MyMessage ({ idMes, ...rest }: PostProps) {
         },
     });
 
-    const hora = "10:30";
-    const text = "Olá! Sou a Fulana, e eu fui diagnosticada com depressão faz dois meses.";
-
     return (
         <View style={styles.container}>
             <View style={styles.infoView}>
@@ -65,11 +64,11 @@ export function MyMessage ({ idMes, ...rest }: PostProps) {
                     <Text style={styles.name}>Você</Text>
                 </View>
                 <View style={styles.timeView}>
-                    <Text style={styles.time}>{hora}</Text>
+                    <Text style={styles.time}>{data}</Text>
                 </View>
             </View>
             <View style={styles.textView}>
-                <Text style={styles.text}>{text}</Text>
+                <Text style={styles.text}>{conteudo}</Text>
             </View>
         </View>
     )

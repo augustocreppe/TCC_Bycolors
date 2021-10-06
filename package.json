@@ -31,7 +31,9 @@
     "react-native-gesture-handler": "^1.10.3",
     "react-native-masked-text": "^1.13.0",
     "react-native-material-design": "^0.3.7",
+    "react-native-popup-menu": "^0.15.11",
     "react-native-screens": "^3.4.0",
+    "react-native-swiper": "^1.6.0",
     "react-native-web": "~0.13.12"
   },
   "devDependencies": {
