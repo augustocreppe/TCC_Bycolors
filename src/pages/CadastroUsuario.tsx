@@ -433,7 +433,7 @@ export function CadastroUsuario() {
                             { borderColor: colors._vermelho },
                         ]}
                         placeholder="Ex: Fulana da Silva"
-                        
+                        maxLength={50}
                         onBlur={handleNameBlur}
                         onChangeText={handleNameChange}
                     />
@@ -453,7 +453,7 @@ export function CadastroUsuario() {
                             { borderColor: colors._vermelho },
                         ]}
                         placeholder="Ex: joao@gmail.com"
-                        
+                        maxLength={50}
                         onBlur={handleEmailBlur}
                         onChangeText={handleEmailChange}
                     />
@@ -480,7 +480,6 @@ export function CadastroUsuario() {
                         }}
                         value={tel}
                         placeholder="Ex: (14)99123-4567"
-                        
                         onBlur={handleTelBlur}
                         onChangeText={handleTelChange}
                     />
@@ -500,7 +499,7 @@ export function CadastroUsuario() {
                             { borderColor: colors._vermelho },
                         ]}
                         placeholder="Ex: Bauru"
-                        
+                        maxLength={50}
                         onBlur={handleCityBlur}
                         onChangeText={handleCityChange}
                     />
@@ -605,7 +604,7 @@ export function CadastroUsuario() {
                             { borderColor: colors._vermelho },
                         ]}
                         placeholder="Conte-nos um pouco sobre você!"
-                        
+                        maxLength={100}
                         onBlur={handleBioBlur}
                         onChangeText={handleBioChange}
                     />
@@ -626,7 +625,7 @@ export function CadastroUsuario() {
                         ]}
                         placeholder="Ex: •••••••••••••••"
                         secureTextEntry={true}
-                        
+                        maxLength={50}
                         onBlur={handlePasswordBlur}
                         onChangeText={handlePasswordChange}
                     />
@@ -647,7 +646,7 @@ export function CadastroUsuario() {
                         ]}
                         placeholder="Ex: •••••••••••••••"
                         secureTextEntry={true}
-                        
+                        maxLength={50}
                         onBlur={handlePassword2Blur}
                         onChangeText={handlePassword2Change}
                     />

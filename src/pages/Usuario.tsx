@@ -151,9 +151,6 @@ export function Usuario() {
                         },
                         body: JSON.stringify(user)
                     })
-                    .then((response) => {
-                        return response.json()
-                    })
                     .then((json) => {
                         Alert.alert('Usuário excluído com sucesso!');
                         logoutLogado();
@@ -525,6 +522,7 @@ export function Usuario() {
                                 ]}
                                 placeholder="Ex: Fulana da Silva"
                                 value={name}
+                                maxLength={50}
                                 onBlur={handleNameBlur}
                                 onChangeText={handleNameChange}
                             />
@@ -546,6 +544,7 @@ export function Usuario() {
                                 ]}
                                 placeholder="Ex: ••••••••"
                                 value={password}
+                                maxLength={50}
                                 secureTextEntry={true}
                                 onBlur={handlePasswordBlur}
                                 onChangeText={handlePasswordChange}
@@ -568,6 +567,7 @@ export function Usuario() {
                                 ]}
                                 placeholder="Ex: fulanasilva@gmail.com"
                                 value={email}
+                                maxLength={50}
                                 onBlur={handleEmailBlur}
                                 onChangeText={handleEmailChange}
                             />
@@ -616,6 +616,7 @@ export function Usuario() {
                                     ]}
                                     placeholder="Ex: Bauru"
                                     value={city}
+                                    maxLength={50}
                                     onBlur={handleCityBlur}
                                     onChangeText={handleCityChange}
                                 />
@@ -679,6 +680,7 @@ export function Usuario() {
                                     ]}
                                     placeholder="Conte mais sobre você!"
                                     value={bio}
+                                    maxLength={100}
                                     onBlur={handleBioBlur}
                                     onChangeText={handleBioChange}
                                 />

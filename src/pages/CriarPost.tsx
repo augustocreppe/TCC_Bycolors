@@ -1,11 +1,12 @@
 import React from 'react';
-import { SafeAreaView, StyleSheet, View, Text, TouchableOpacity, TextInput, Button } from 'react-native';
+import fonts from '../styles/fonts';
+
+import { SafeAreaView, StyleSheet, View, Text, TouchableOpacity, TextInput } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { colors, cores } from '../styles/colors';
 import { Feather, FontAwesome5 } from '@expo/vector-icons';
 import { TituloComunidade } from '../components/TituloComunidade';
 import { ScrollView } from 'react-native-gesture-handler';
-import fonts from '../styles/fonts';
 
 export function CriarPost({ route }: { route: any }) {
     const navigation = useNavigation();
@@ -101,25 +102,27 @@ export function CriarPost({ route }: { route: any }) {
         textView: {
             backgroundColor: cores[idMes][0],
             width: 360,
-            height: 150,
-            borderRadius: 16,
+            height: 'auto',
             borderTopLeftRadius: 0,
-            borderTopRightRadius: 0
+            borderTopRightRadius: 0,
+            borderBottomLeftRadius: 16,
+            borderBottomRightRadius: 16,
         },
         textText: {
             fontSize: 16,
             alignSelf: 'center',
             textAlign: 'justify',
             width: '94%',
+            height: 'auto',
             padding: '1.5%',
         },
         buttonAdd: {
             alignSelf: 'flex-end',
             backgroundColor: cores[idMes][2],
-            marginVertical: '20%',
+            marginVertical: 15,
             width: '48%',
-            marginLeft: 300,
-            marginRight: 10,
+            marginLeft: 295,
+            marginRight: 15,
             borderRadius: 8,
         },
         buttonAddIcon: {
@@ -132,6 +135,7 @@ export function CriarPost({ route }: { route: any }) {
             fontSize: 15,
             height: 30,
             color: cores[idMes][0],
+            marginTop: 5,
         },   
     });
 
@@ -150,28 +154,26 @@ export function CriarPost({ route }: { route: any }) {
 
             <View style={styles.scrollView}> 
             <ScrollView>
+                <TituloComunidade idMes={idMes} text={"Criar publicação"}/>
+                <View style={styles.titleView}>
+                    <View style={styles.head}>
+                        <View style={styles.profileImageView}>
+                            <FontAwesome5 name="user-circle" style={styles.profileImage}/>
+                        </View>
+                        <View style={styles.profileTextsView}>
+                            <View style={styles.nameTextView}>
+                                <Text style={styles.nameText}> {nome} </Text>
+                            </View>
+                        </View>
+                    </View>
 
-            <TituloComunidade idMes={idMes} text={"Criar publicação"}/>
-        
-            <View style={styles.titleView}>
-            <View style={styles.head}>
-                <View style={styles.profileImageView}>
-                    <FontAwesome5 name="user-circle" style={styles.profileImage}/>
-                </View>
-                <View style={styles.profileTextsView}>
-                    <View style={styles.nameTextView}>
-                        <Text style={styles.nameText}> {nome} </Text>
+                    <View style={styles.textView}>
+                        <TextInput style={styles.textText} placeholder="Adicione o texto aqui" maxLength={100}/>
+                        <TouchableOpacity style={styles.buttonAdd}>
+                            <Text style={styles.nameTextImage}>  Adicionar imagem  <FontAwesome5 name="images" style={styles.buttonAddIcon}/></Text>
+                        </TouchableOpacity>
                     </View>
                 </View>
-            </View>
-
-            <View style={styles.textView}>
-                <TextInput style={styles.textText} placeholder="Adicione o texto aqui" />
-                <TouchableOpacity style={styles.buttonAdd}>
-                    <Text style={styles.nameTextImage}>  Adicionar imagem  <FontAwesome5 name="images" style={styles.buttonAddIcon}/></Text>
-                </TouchableOpacity>
-            </View>
-            </View>
             </ScrollView>
             </View>
         </View>
