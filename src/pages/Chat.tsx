@@ -44,7 +44,7 @@ export function Chat({ route }: { route: any }) {
             return response.json()
         })
         .then((json) => {
-            //const data:any = [];
+            const data:any = [];
 
             json.map( (dado: any) => {
                 fetch(`${constants.API_URL}/usuarios/id_usuario=${dado.user_id}`, {
@@ -209,8 +209,8 @@ export function Chat({ route }: { route: any }) {
                             )
                         } */}
 
-                        {/* <Message idMes={idMes} nome={"Augusto"} conteudo={"Exemplo de texto"} data={"10:30"}/>
-                        <MyMessage idMes={idMes} conteudo={"Exemplo de texto"} data={"10:35"}/> */}
+                        <Message idMes={idMes} nome={"Augusto"} conteudo={"Exemplo de texto"} data={"10:30"}/>
+                        <MyMessage idMes={idMes} conteudo={"Exemplo de texto"} data={"10:35"}/>
                     </ScrollView>
                     </View>
                     

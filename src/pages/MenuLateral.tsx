@@ -39,8 +39,8 @@ export function MenuLateral() {
         navigation.navigate('Comunidade');
     }
 
-    function handleConfiguracoes() {
-        navigation.navigate('Configuracoes');
+    function handleSobre() {
+        navigation.navigate('Sobre');
     }
 
     function handleLogout() {
@@ -98,7 +98,7 @@ export function MenuLateral() {
                         <View style={styles.buttonMenuView}>
                         <TouchableOpacity style={styles.buttonMenu} onPress={handleUser}>
                             <Feather name="user" style={styles.buttonIcon}/>
-                            <Text style={styles.buttonText}>Alterar Usuário</Text>
+                            <Text style={styles.buttonText}>Editar Perfil</Text>
                         </TouchableOpacity>
                         </View>
         
@@ -129,9 +129,9 @@ export function MenuLateral() {
                         </View>
         
                         <View style={styles.buttonMenuView}>
-                        <TouchableOpacity style={styles.buttonMenu} onPress={handleConfiguracoes}>
-                            <Feather name="settings" style={styles.buttonIcon}/>
-                            <Text style={styles.buttonText}>Configurações</Text>
+                        <TouchableOpacity style={styles.buttonMenu} onPress={handleSobre}>
+                            <Feather name="info" style={styles.buttonIcon}/>
+                            <Text style={styles.buttonText}>Sobre o aplicativo</Text>
                         </TouchableOpacity>
                         </View>
         

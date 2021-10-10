@@ -6,7 +6,7 @@ import { Mes } from "../pages/Mes";
 import { Comunidade } from "../pages/Comunidade";
 import { Usuario } from "../pages/Usuario";
 import { MenuLateral } from "../pages/MenuLateral";
-import { Configuracoes } from "../pages/Configuracoes";
+import { Sobre } from "../pages/Sobre";
 import { colors } from "../styles/colors";
 import { Grupos } from "../pages/Grupos";
 import { Grupo } from "../pages/Grupo";
@@ -54,8 +54,8 @@ const AppRoutes: React.FC = () => (
         />
 
         <stackRoutes.Screen
-            name="Configuracoes"
-            component={Configuracoes}
+            name="Sobre"
+            component={Sobre}
         />
 
         <stackRoutes.Screen

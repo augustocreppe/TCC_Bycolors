@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Feather } from '@expo/vector-icons';
 import { colors } from '../styles/colors';
 
-export function Configuracoes() {
+export function Sobre() {
     const navigation = useNavigation();
 
     function handleGoBack() {
@@ -19,7 +19,7 @@ export function Configuracoes() {
             </TouchableOpacity>
 
             <View style={styles.titleView}>
-                <Text style={styles.title}>Página Configurações</Text>
+                <Text style={styles.title}>Sobre o App</Text>
             </View>
         </View>
         </SafeAreaView>

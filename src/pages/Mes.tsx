@@ -20,7 +20,7 @@ export function Mes({ route }: { route: any }) {
             <TouchableOpacity onPress={handleGoBack} style={styles.buttonMenu}>
                 <Feather name="arrow-left" style={styles.buttonMenuIcon}/>
             </TouchableOpacity>
-
+            
             <ScrollView>
             <View style={styles.contentView}>
                 <Titulo idMes={idMes}/>

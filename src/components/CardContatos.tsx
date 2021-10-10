@@ -1,7 +1,6 @@
 import React from 'react';
 import { SafeAreaView, StyleSheet, Text, View, TouchableOpacityProps } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { cores, colors } from '../styles/colors';
+import { colors } from '../styles/colors';
 import fonts from '../styles/fonts';
 
 interface ButtonProps extends TouchableOpacityProps{
@@ -24,7 +23,7 @@ export function Contato ({ idContato, nomeLugar, telefone, site, email, id_doenc
         container: {
             marginTop: 20,
             alignSelf: 'center',
-            height: '100%',
+            height: 300,
             width: '90%',
         },
         text: {
@@ -87,25 +86,25 @@ export function Contato ({ idContato, nomeLugar, telefone, site, email, id_doenc
             <View style={styles.itemContainer}>
                 <View style={styles.viewText}>
                     <Text style={styles.text}>
-                        ID do Contato: { [idContato] }
+                        ID do Contato: { idContato }
                     </Text>
                     <Text style={styles.subtext}>
-                        { [nomeLugar] }
+                        { nomeLugar }
                     </Text>
                     <Text style={styles.subtext}>
-                        { [telefone] }
+                        { telefone }
                     </Text>
                     <Text style={styles.subtext}>
-                        { [site] }
+                        { site }
                     </Text>
                     <Text style={styles.subtext}>
-                        { [email] }
+                        { email }
                     </Text>
                     <Text style={styles.subtext}>
-                        { [id_doenca] }
+                        { id_doenca }
                     </Text>
                     <Text style={styles.subtext}>
-                        { [excluido] }
+                        { excluido }
                     </Text>
                 </View>
         </View>

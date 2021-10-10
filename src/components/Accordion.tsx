@@ -98,17 +98,10 @@ export function Accordion({ idMes, ...rest }: ButtonProps) {
             categoryName: 'Diagnóstico',
             subCategory: [{id: '1', name: months[idMes][8]}],
         },
-
         {
             id: '8',
             categoryName: 'Tratamento',
             subCategory: [{id: '1', name: months[idMes][9]}],
-        },
-
-        {
-            id: '9',
-            categoryName: 'Contatos',
-            subCategory: [{id: '1', name: 'Sem Contatos 😭'}],
         },
     ];
 

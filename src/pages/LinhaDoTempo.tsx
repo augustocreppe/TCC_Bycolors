@@ -13,7 +13,7 @@ const profile = require('../assets/profile.png');
 
 export function LinhaDoTempo({ route }: { route: any }) {
     const navigation = useNavigation();
-    const idUser = route.params.idMes;
+    const idUser = route.params.idUser;
 
     const [ready, setReady] = useState(false);
     const [dados, setDados] = useState<any>();
@@ -35,8 +35,8 @@ export function LinhaDoTempo({ route }: { route: any }) {
         }
         else
         {
+            //(Mostrar Linha do Tempo do Fulano)
             //Pesquisar Usuário por Id
-            
             //Pesquisar publicações por Id
         }
     }

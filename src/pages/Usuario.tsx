@@ -1,4 +1,4 @@
-import React, { useEffect, useState }  from 'react';
+import React, { useEffect, useState, useCallback }  from 'react';
 import fonts from '../styles/fonts';
 import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View, Image, TextInput, Alert, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -8,8 +8,6 @@ import { Picker } from '@react-native-picker/picker';
 import { atualizaLogado, loadLogado, logoutLogado } from '../libs/storage';
 import { TextInputMask } from 'react-native-masked-text';
 import { constants } from '../config/app.config';
-
-const profile = require('../assets/profile.png');
 
 export function Usuario() {
     const navigation = useNavigation();
@@ -105,9 +103,6 @@ export function Usuario() {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify(user)
-                })
-                .then((response) => {
-                    return response.json()
                 })
                 .then((json) => {
                     Alert.alert('Usuário alterado com sucesso!');
