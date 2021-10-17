@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback }  from 'react';
+import React, { useEffect, useState }  from 'react';
 import fonts from '../styles/fonts';
 import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View, Image, TextInput, Alert, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -60,23 +60,28 @@ export function Usuario() {
     useEffect(() => {
         async function getData() {
             setDados(await loadLogado());
-
-            setAvatar(dados[7]);
-            setName(dados[1]);
-            setPassword(dados[4]);
-            setEmail(dados[3]);
-            setTel(dados[2]);
-            setCity(dados[5]);
-            setUf(dados[6]);
-            setBio(dados[8]);
+            await salvaDados(await dados);
 
             console.log(dados);
 
-            setReady(true);
+            //setTimeout(function(){
+                setReady(true);
+            //},1000);
         }
         
         getData();
     },[]);
+
+    async function salvaDados(dados:any) {
+        setAvatar(dados[7]);
+        setName(dados[1]);
+        setPassword(dados[4]);
+        setEmail(dados[3]);
+        setTel(dados[2]);
+        setCity(dados[5]);
+        setUf(dados[6]);
+        setBio(dados[8]);
+    }
 
     //Voltar
     function handleGoBack() {
