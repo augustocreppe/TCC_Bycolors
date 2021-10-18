@@ -1,5 +1,5 @@
-import React from 'react';
-import { SafeAreaView, StyleSheet, View, TouchableOpacity } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { SafeAreaView, StyleSheet, View, TouchableOpacity, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { colors } from '../styles/colors';
 import { Feather } from '@expo/vector-icons';
@@ -8,41 +8,120 @@ import { months } from '../styles/info';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Post } from '../components/Post';
 import { AddFile } from '../components/AddFile';
+import { constants } from '../config/app.config';
+import { MyPost } from '../components/MyPost';
+import { loadLogado } from '../libs/storage';
 
 export function Grupo({ route }: { route: any }) {
     const navigation = useNavigation();
     const idMes = route.params.idMes;
-    
+    const [ready, setReady] = useState(false);
+    const [dadosUser, setDadosUser] = useState<any>();
+    const [publicacoes, setPublicacoes] = useState<any>();
+
     const name1 = "Publicações - ";
     const name2 = months[idMes][0];
     const name = name1.concat(name2);
+
+    useEffect(() => {
+        async function getData() {
+            setDadosUser(await loadLogado());
+            await carregaPublicacoes();
+
+            console.log("PUBLI:", publicacoes);
+
+            setReady(true);
+            console.log("READY: ", ready);
+        }
+        
+        getData();
+    },[ready]);
+
+    async function carregaPublicacoes() {
+        fetch(`${constants.API_URL}/publicacao/id_doenca=${idMes}`, {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+        })
+        .then((response) => {
+            return response.json()
+        })
+        .then((json) => {
+            setPublicacoes(json);
+            console.log("JSON:", json);
+        })
+        .catch((error) => {
+            Alert.alert('Erro ao carregar mensagens!', error);
+        })
+    }
 
     function handleGoBack() {
         navigation.goBack();
     }
 
     return (
-        <SafeAreaView style={styles.container}>
-        <View style={styles.container}>
-            <View style={styles.topView}>
-                <TouchableOpacity onPress={handleGoBack} style={styles.buttonMenu}>
-                    <Feather name="arrow-left" style={styles.buttonMenuIcon}/>
-                </TouchableOpacity>
+        <>
+            {
+                (ready == true) &&
 
-                <AddFile idMes={idMes}/>
-            </View>
-            
-            <TituloComunidade idMes={idMes} text={name}/>
+                <SafeAreaView style={styles.container}>
+                <View style={styles.container}>
+                    <View style={styles.topView}>
+                        {
+                            console.log("LOADED!")
+                        }
+                        <TouchableOpacity onPress={handleGoBack} style={styles.buttonMenu}>
+                            <Feather name="arrow-left" style={styles.buttonMenuIcon}/>
+                        </TouchableOpacity>
 
-            <View style={styles.scrollView}>
-            <ScrollView>
-                <Post idMes={idMes}/>
-                <Post idMes={idMes}/>
-                <Post idMes={idMes}/>
-            </ScrollView>
-            </View>
-        </View>
-        </SafeAreaView>
+                        <AddFile idMes={idMes}/>
+                    </View>
+                    
+                    <TituloComunidade idMes={idMes} text={name}/>
+
+                    <View style={styles.scrollView}>
+                    <ScrollView>
+                        {
+                            (publicacoes != undefined) &&
+
+                            publicacoes.map((json: any) =>
+
+                                (dadosUser[0] == json.id_usuario) ? 
+                                    <MyPost
+                                        idMes={json.doenca_id} 
+                                        avatar={json.usuario.avatar} 
+                                        nome={json.usuario.nome_usuario} 
+                                        hora={new Date(json.data).toLocaleTimeString()} 
+                                        data={new Date(json.data).toLocaleDateString()} 
+                                        conteudo={json.conteudo} 
+                                        imagem={"none"}
+                                        idAutor={json.id_usuario}
+                                        idPost={json.id_publicacao}
+                                        idLogado={dadosUser[0]}
+                                    />
+                                :
+                                    <Post
+                                        idMes={json.doenca_id} 
+                                        avatar={json.usuario.avatar} 
+                                        nome={json.usuario.nome_usuario} 
+                                        hora={new Date(json.data).toLocaleTimeString()} 
+                                        data={new Date(json.data).toLocaleDateString()} 
+                                        conteudo={json.conteudo} 
+                                        imagem={"none"}
+                                        idAutor={json.id_usuario}
+                                        idPost={json.id_publicacao}
+                                        idLogado={dadosUser[0]}
+                                    />
+                            )
+                        }
+                    </ScrollView>
+                    </View>
+                </View>
+                </SafeAreaView>
+            }
+        </>
     );
 }
 

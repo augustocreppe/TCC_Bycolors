@@ -27,7 +27,7 @@ export function Chat({ route }: { route: any }) {
         }
 
         loadData();
-    },[]);
+    },[ready]);
 
     async function carregaMensagens() {
         fetch(`${constants.API_URL}/mensagem/id_doenca=${idMes}`, {
@@ -128,8 +128,9 @@ export function Chat({ route }: { route: any }) {
 
                     <View style={styles.scrollView}>
                     <ScrollView>
-
                         {
+                            (mensagens != undefined) &&
+
                             mensagens.map((json: any) =>
 
                                 (dadosUser[0] == json.id_usuario) ? 
@@ -138,9 +139,6 @@ export function Chat({ route }: { route: any }) {
                                     <Message idMes={idMes} nome={json.usuario.nome_usuario} conteudo={json.conteudo_msg} data={new Date(json.data).toLocaleTimeString()}/>
                             )
                         }
-
-                        <Message idMes={idMes} nome={"Augusto"} conteudo={"Exemplo de texto"} data={"10:30"}/>
-                        <MyMessage idMes={idMes} conteudo={"Exemplo de texto"} data={"10:35"}/>
                     </ScrollView>
                     </View>
                     

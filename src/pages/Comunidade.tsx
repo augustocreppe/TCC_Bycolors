@@ -10,22 +10,51 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { Post } from '../components/Post';
 import { TituloComunidade } from '../components/TituloComunidade';
 import { ButtonComunidade } from '../components/ButtonComunidade';
-import { isLogado } from '../libs/storage';
+import { isLogado, loadLogado } from '../libs/storage';
+import { constants } from '../config/app.config';
+import { MyPost } from '../components/MyPost';
 
 const fundo = require('../assets/fundo-comunidade.jpg');
 const marca = require('../assets/marca.png');
 
 export function Comunidade() {
     const navigation = useNavigation();
+    const [ready, setReady] = useState(false);
     const [isLogged, setIsLogged] = useState<any>();
+    const [dadosUser, setDadosUser] = useState<any>();
+    const [publicacoes, setPublicacoes] = useState<any>();
 
     useEffect(() => {
         async function getData() {
             setIsLogged(await isLogado());
+            setDadosUser(await loadLogado());
+            await carregaPublicacoes();
+
+            setReady(true);
         }
         
         getData();
-    },[]);
+    },[ready]);
+
+    async function carregaPublicacoes() {
+        fetch(`${constants.API_URL}/publicacao`, {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+        })
+        .then((response) => {
+            return response.json()
+        })
+        .then((json) => {
+            setPublicacoes(json);
+            console.log("JSON:", json);
+        })
+        .catch((error) => {
+            Alert.alert('Erro ao carregar mensagens!', error);
+        })
+    }
 
     function handleGoBack() {
         navigation.navigate('MenuLateral');
@@ -37,6 +66,10 @@ export function Comunidade() {
 
     function handleRegister() {
        navigation.navigate('CadastroUsuario');
+    }
+
+    function handleWait() {
+
     }
 
     return (
@@ -79,41 +112,77 @@ export function Comunidade() {
             {
                 (isLogged == 'true') &&
 
-                <SafeAreaView style={styles.container}>
-                    <View style={styles.container}>
-                        <View style={styles.topView}>
-                            <TouchableOpacity onPress={handleGoBack} style={styles.buttonMenu}>
-                                <Feather name="menu" style={styles.buttonMenuIcon}/>
-                            </TouchableOpacity>
+                <>
+                    {
+                        (ready == true) &&
 
-                            <AddFile idMes={0}/>
-                        </View>
-
-                        <View style={styles.feedView}>
-                        <ScrollView>
-                            <View style={styles.buttonsView}>
-                                <ButtonComunidade title={"Grupos"} icone={'users'}/>
-                                <View style={styles.buttonCenterView}>
-                                    <ButtonComunidade title={"Conversas"} icone={'comments'}/>
+                        <SafeAreaView style={styles.container}>
+                            <View style={styles.container}>
+                                <View style={styles.topView}>
+                                    <TouchableOpacity onPress={handleGoBack} style={styles.buttonMenu}>
+                                        <Feather name="menu" style={styles.buttonMenuIcon}/>
+                                    </TouchableOpacity>
+        
+                                    <AddFile idMes={0}/>
                                 </View>
-                                <ButtonComunidade title={"Meu Perfil"} icone={'id-card'}/>
-                            </View>
+        
+                                <View style={styles.feedView}>
+                                <ScrollView>
+                                    <View style={styles.buttonsView}>
+                                        <ButtonComunidade title={"Grupos"} icone={'users'}/>
+                                        <View style={styles.buttonCenterView}>
+                                            <ButtonComunidade title={"Conversas"} icone={'comments'}/>
+                                        </View>
+                                        <ButtonComunidade title={"Meu Perfil"} icone={'id-card'}/>
+                                    </View>
+        
+                                    <View style={styles.tituloView}>
+                                        <TituloComunidade idMes={0} text={"Principais Publicações"}/>
+                                    </View>
 
-                            <View style={styles.tituloView}>
-                                <TituloComunidade idMes={0} text={"Principais Publicações"}/>
-                            </View>
+                                    <View style={styles.postsView}>
+                                        {
+                                            (publicacoes != undefined) &&
 
-                            <View style={styles.postsView}>
-                                <Post idMes={10}/>
-                                <Post idMes={9}/>
-                                <Post idMes={11}/>
-                            </View>
-                        </ScrollView>
-                        </View>
+                                            publicacoes.map((json: any) =>
 
-                        <TabMenu/>   
-                    </View>
-                </SafeAreaView>
+                                                (dadosUser[0] == json.id_usuario) ? 
+                                                    <MyPost
+                                                        idMes={json.doenca_id} 
+                                                        avatar={json.usuario.avatar} 
+                                                        nome={json.usuario.nome_usuario} 
+                                                        hora={new Date(json.data).toLocaleTimeString()} 
+                                                        data={new Date(json.data).toLocaleDateString()} 
+                                                        conteudo={json.conteudo} 
+                                                        imagem={"none"}
+                                                        idAutor={json.id_usuario}
+                                                        idPost={json.id_publicacao}
+                                                        idLogado={dadosUser[0]}
+                                                    />
+                                                :
+                                                    <Post
+                                                        idMes={json.doenca_id} 
+                                                        avatar={json.usuario.avatar} 
+                                                        nome={json.usuario.nome_usuario} 
+                                                        hora={new Date(json.data).toLocaleTimeString()} 
+                                                        data={new Date(json.data).toLocaleDateString()} 
+                                                        conteudo={json.conteudo} 
+                                                        imagem={"none"}
+                                                        idAutor={json.id_usuario}
+                                                        idPost={json.id_publicacao}
+                                                        idLogado={dadosUser[0]}
+                                                    />
+                                            )
+                                        }
+                                    </View>
+                                </ScrollView>
+                                </View>
+        
+                                <TabMenu/>   
+                            </View>
+                        </SafeAreaView>
+                    }
+                </>
             }
         </>
     );

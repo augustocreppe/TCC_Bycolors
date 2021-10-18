@@ -9,7 +9,12 @@ import { Post } from '../components/Post';
 import fonts from '../styles/fonts';
 import { loadLogado } from '../libs/storage';
 
-const profile = require('../assets/profile.png');
+const avatar1 = require('../assets/avatar1.png');
+const avatar2 = require('../assets/avatar2.png');
+const avatar3 = require('../assets/avatar3.png');
+const avatar4 = require('../assets/avatar4.png');
+const avatar5 = require('../assets/avatar5.png');
+const avatar6 = require('../assets/avatar6.png');
 
 export function LinhaDoTempo({ route }: { route: any }) {
     const navigation = useNavigation();
@@ -62,7 +67,12 @@ export function LinhaDoTempo({ route }: { route: any }) {
                         <View style={styles.profileView}>
                         <View style={styles.notBioView}>
                                 <View style={styles.imageView}>
-                                    <Image source={profile} style={styles.image}/>
+                                    { (dados[7] == 1) && <Image source={avatar1} style={styles.image} resizeMode="contain"/> }
+                                    { (dados[7] == 2) && <Image source={avatar2} style={styles.image} resizeMode="contain"/> }
+                                    { (dados[7] == 3) && <Image source={avatar3} style={styles.image} resizeMode="contain"/> }
+                                    { (dados[7] == 4) && <Image source={avatar4} style={styles.image} resizeMode="contain"/> }
+                                    { (dados[7] == 5) && <Image source={avatar5} style={styles.image} resizeMode="contain"/> }
+                                    { (dados[7] == 6) && <Image source={avatar6} style={styles.image} resizeMode="contain"/> }
                                 </View>
 
                                 <View style={styles.infoView}>
@@ -85,9 +95,9 @@ export function LinhaDoTempo({ route }: { route: any }) {
                         <TituloComunidade idMes={0} text={"Minhas Publicações"}/>
                         
                         <View style={styles.postView}>
-                            <Post idMes={2}/>
+                            {/* <Post idMes={2}/>
                             <Post idMes={7}/>
-                            <Post idMes={5}/>
+                            <Post idMes={5}/> */}
                         </View>
                     </ScrollView>
                     </View>

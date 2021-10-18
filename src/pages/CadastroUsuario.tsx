@@ -1,6 +1,6 @@
 import React, { useState }  from 'react';
 import fonts from '../styles/fonts';
-import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View, TextInput, Alert } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View, TextInput, Alert, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Entypo, Feather } from '@expo/vector-icons';
 import { colors } from '../styles/colors';
@@ -9,6 +9,13 @@ import { Picker } from '@react-native-picker/picker';
 import { TextInputMask } from 'react-native-masked-text';
 import { constants } from '../config/app.config';
 import { saveLogado } from '../libs/storage';
+
+const avatar1 = require('../assets/avatar1.png');
+const avatar2 = require('../assets/avatar2.png');
+const avatar3 = require('../assets/avatar3.png');
+const avatar4 = require('../assets/avatar4.png');
+const avatar5 = require('../assets/avatar5.png');
+const avatar6 = require('../assets/avatar6.png');
 
 export function CadastroUsuario() {
     const navigation = useNavigation();
@@ -555,17 +562,17 @@ export function CadastroUsuario() {
                         <View style={styles.avatarViewUp}> 
                             <View style={styles.avatarViewButton}>
                                 <TouchableOpacity style={[styles.avatarButton, (B1Pressed) && { borderColor: colors._verde, borderWidth: 2 }]} onPress={handleB1}>
-                                    {/* 1 */}
+                                    <Image source={avatar1} style={styles.image}/>
                                 </TouchableOpacity>
                             </View>
                             <View style={styles.avatarViewButton}>
                                 <TouchableOpacity style={[styles.avatarButton, (B2Pressed) && { borderColor: colors._verde, borderWidth: 2 }]} onPress={handleB2}> 
-                                    {/* 2 */}
+                                    <Image source={avatar2} style={styles.image}/>
                                 </TouchableOpacity>
                             </View>
                             <View style={styles.avatarViewButton}>
                                 <TouchableOpacity style={[styles.avatarButton, (B3Pressed) && { borderColor: colors._verde, borderWidth: 2 }]} onPress={handleB3}> 
-                                    {/* 3 */}
+                                    <Image source={avatar3} style={styles.image}/>
                                 </TouchableOpacity>
                             </View>
                         </View>
@@ -573,17 +580,17 @@ export function CadastroUsuario() {
                         <View style={styles.avatarViewDown}> 
                             <View style={styles.avatarViewButton}>
                                 <TouchableOpacity style={[styles.avatarButton, (B4Pressed) && { borderColor: colors._verde, borderWidth: 2 }]} onPress={handleB4}> 
-                                    {/* 4 */}
+                                    <Image source={avatar4} style={styles.image}/>
                                 </TouchableOpacity>
                             </View>
                             <View style={styles.avatarViewButton}>
                                 <TouchableOpacity style={[styles.avatarButton, (B5Pressed) && { borderColor: colors._verde, borderWidth: 2 }]} onPress={handleB5}> 
-                                    {/* 5 */}
+                                    <Image source={avatar5} style={styles.image}/>
                                 </TouchableOpacity>
                             </View>
                             <View style={styles.avatarViewButton}>
                                 <TouchableOpacity style={[styles.avatarButton, (B6Pressed) && { borderColor: colors._verde, borderWidth: 2 }]} onPress={handleB6}> 
-                                    {/* 6 */}
+                                    <Image source={avatar6} style={styles.image}/>
                                 </TouchableOpacity>
                             </View>
                         </View>
@@ -731,8 +738,8 @@ const styles = StyleSheet.create({
         marginTop: 15,
     },
     image: {
-        width: 150,
-        height: 150,
+        width: '100%',
+        height: '100%',
     },
     complement: {
         fontFamily: fonts.heading,
@@ -864,9 +871,8 @@ const styles = StyleSheet.create({
         padding: 10,
     },
     avatarButton: {
-        width: '100%',
-        height: '100%',
+        width: 97,
+        height: 97,
         borderRadius: 50,
-        backgroundColor: colors.azul,
     },
 });

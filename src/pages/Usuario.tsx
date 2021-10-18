@@ -9,6 +9,13 @@ import { atualizaLogado, loadLogado, logoutLogado } from '../libs/storage';
 import { TextInputMask } from 'react-native-masked-text';
 import { constants } from '../config/app.config';
 
+const avatar1 = require('../assets/avatar1.png');
+const avatar2 = require('../assets/avatar2.png');
+const avatar3 = require('../assets/avatar3.png');
+const avatar4 = require('../assets/avatar4.png');
+const avatar5 = require('../assets/avatar5.png');
+const avatar6 = require('../assets/avatar6.png');
+
 export function Usuario() {
     const navigation = useNavigation();
 
@@ -62,15 +69,11 @@ export function Usuario() {
             setDados(await loadLogado());
             await salvaDados(await dados);
 
-            console.log(dados);
-
-            //setTimeout(function(){
-                setReady(true);
-            //},1000);
+            setReady(true);
         }
         
         getData();
-    },[]);
+    },[ready]);
 
     async function salvaDados(dados:any) {
         setAvatar(dados[7]);
@@ -81,6 +84,10 @@ export function Usuario() {
         setCity(dados[5]);
         setUf(dados[6]);
         setBio(dados[8]);
+    }
+
+    function handleCarregar() {
+        setReady(true);
     }
 
     //Voltar
@@ -476,17 +483,17 @@ export function Usuario() {
                             <View style={styles.avatarViewUp}> 
                                 <View style={styles.avatarViewButton}>
                                     <TouchableOpacity style={[styles.avatarButton, (avatar == 1) && { borderColor: colors._verde, borderWidth: 2 }]} onPress={handleB1}>
-                                        {/* 1 */}
+                                        <Image source={avatar1} style={styles.image}/>
                                     </TouchableOpacity>
                                 </View>
                                 <View style={styles.avatarViewButtonMiddle}>
                                     <TouchableOpacity style={[styles.avatarButton, (avatar == 2) && { borderColor: colors._verde, borderWidth: 2 }]} onPress={handleB2}> 
-                                        {/* 2 */}
+                                        <Image source={avatar2} style={styles.image}/>
                                     </TouchableOpacity>
                                 </View>
                                 <View style={styles.avatarViewButton}>
                                     <TouchableOpacity style={[styles.avatarButton, (avatar == 3) && { borderColor: colors._verde, borderWidth: 2 }]} onPress={handleB3}> 
-                                        {/* 3 */}
+                                        <Image source={avatar3} style={styles.image}/>
                                     </TouchableOpacity>
                                 </View>
                             </View>
@@ -494,17 +501,17 @@ export function Usuario() {
                             <View style={styles.avatarViewDown}> 
                                 <View style={styles.avatarViewButton}>
                                     <TouchableOpacity style={[styles.avatarButton, (avatar == 4) && { borderColor: colors._verde, borderWidth: 2 }]} onPress={handleB4}> 
-                                        {/* 4 */}
+                                        <Image source={avatar4} style={styles.image}/>
                                     </TouchableOpacity>
                                 </View>
                                 <View style={styles.avatarViewButtonMiddle}>
                                     <TouchableOpacity style={[styles.avatarButton, (avatar == 5) && { borderColor: colors._verde, borderWidth: 2 }]} onPress={handleB5}> 
-                                        {/* 5 */}
+                                        <Image source={avatar5} style={styles.image}/>
                                     </TouchableOpacity>
                                 </View>
                                 <View style={styles.avatarViewButton}>
                                     <TouchableOpacity style={[styles.avatarButton, (avatar == 6) && { borderColor: colors._verde, borderWidth: 2 }]} onPress={handleB6}> 
-                                        {/* 6 */}
+                                        <Image source={avatar6} style={styles.image}/>
                                     </TouchableOpacity>
                                 </View>
                             </View>
@@ -718,6 +725,14 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around',
         paddingHorizontal: 20
     },
+    buttonMenu: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 15,
+        marginLeft: 15,
+        height: 56,
+        width: 56,
+    },
     buttonCancelar: {
         justifyContent: 'center',
         alignItems: 'center',
@@ -769,8 +784,8 @@ const styles = StyleSheet.create({
         marginBottom: -10,
     },
     image: {
-        width: 150,
-        height: 150,
+        width: '100%',
+        height: '100%',
     },
     complement: {
         fontFamily: fonts.heading,
@@ -820,26 +835,6 @@ const styles = StyleSheet.create({
         color: colors.branco,
         fontFamily: fonts.heading
     },
-    slideWrapperView: {
-        width: 250,
-    },
-    slideWrapper: {
-        height: 200,
-        alignItems: 'center',
-    },
-    slide: {
-        width: 150,
-        height: 150,
-        marginLeft: 50,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: colors.azul,
-        borderRadius: 100,
-    },
-    slideText: {
-        fontSize: 20,
-        fontFamily: fonts.text,
-    },
     avatarView: {
         alignSelf: 'center',
         borderColor: colors.cinza_claro,
@@ -879,6 +874,21 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '100%',
         borderRadius: 50,
-        backgroundColor: colors.azul,
     },
+    buttonCarregar: {
+        height: 'auto',
+        width: 350,
+        marginTop: 250,
+        backgroundColor: colors.body_dark,
+        alignSelf: 'center',
+        alignContent: 'center',
+        borderRadius: 20
+    },
+    textCarregar: {
+        fontFamily: fonts.heading,
+        fontSize: 40,
+        textAlign: 'center',
+        color: colors.branco,
+        marginVertical: 20,
+    }
 });

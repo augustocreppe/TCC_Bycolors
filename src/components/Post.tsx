@@ -9,9 +9,18 @@ import { Menu, MenuOptions, MenuOption, MenuTrigger } from 'react-native-popup-m
 
 interface PostProps extends TouchableOpacityProps {
     idMes: number;
+    avatar: number;
+    nome: string;
+    hora: string;
+    data: string;
+    imagem: string;
+    conteudo: string;
+    idAutor: number;
+    idPost: number;
+    idLogado: number;
 }
 
-export function Post ({ idMes, ...rest }: PostProps) {
+export function Post ({ idMes, avatar, nome, hora, data, imagem, conteudo, idAutor, idPost, idLogado, ...rest }: PostProps) {
     const styles = StyleSheet.create({
         container: {
             backgroundColor: cores[idMes][1],
@@ -161,17 +170,28 @@ export function Post ({ idMes, ...rest }: PostProps) {
             fontSize: 20,
             color: colors.vermelho_escuro
         },
+        avatar: {
+            height: '95%',
+            width: '95%',
+            alignSelf: 'center',
+        }
     });
 
     const navigation = useNavigation();
 
+    const avatar1 = require('../assets/avatar1.png');
+    const avatar2 = require('../assets/avatar2.png');
+    const avatar3 = require('../assets/avatar3.png');
+    const avatar4 = require('../assets/avatar4.png');
+    const avatar5 = require('../assets/avatar5.png');
+    const avatar6 = require('../assets/avatar6.png');
+
     const postImage = require('../assets/outubro.jpg');
-    const nome = "Fulana da Silva";
-    const hora = "10:30";
-    const data = "30/08/2021";
-    const imagem = "../assets/outubro.jpg"
-    const texto = "O câncer de mama é algo muito sério! Devemos todos tomar muito cuidado e nos prevenirmos! Por isso, a Prefeitura de Bauru realizará uma palestra na próxima terça, e contamos com a presença de todos!"
     const curtidas = 123;
+
+    function handlePerfilPessoa() {
+        navigation.navigate('LinhaDoTempo', {idUser: idAutor});
+    }
 
     function handleMes() {
         navigation.navigate('Mes', {idMes: idMes});
@@ -199,15 +219,22 @@ export function Post ({ idMes, ...rest }: PostProps) {
         <View style={styles.container}>
             <View style={styles.head}>
                 <View style={styles.profileImageView}>
-                    <FontAwesome5 name="user-circle" style={styles.profileImage}/>
+                    { (avatar == 1) && <Image source={avatar1} style={styles.avatar} resizeMode="contain"/> }
+                    { (avatar == 2) && <Image source={avatar2} style={styles.avatar} resizeMode="contain"/> }
+                    { (avatar == 3) && <Image source={avatar3} style={styles.avatar} resizeMode="contain"/> }
+                    { (avatar == 4) && <Image source={avatar4} style={styles.avatar} resizeMode="contain"/> }
+                    { (avatar == 5) && <Image source={avatar5} style={styles.avatar} resizeMode="contain"/> }
+                    { (avatar == 6) && <Image source={avatar6} style={styles.avatar} resizeMode="contain"/> }
                 </View>
                 <View style={styles.profileTextsView}>
+                    <TouchableOpacity onPress={handlePerfilPessoa}>
                     <View style={styles.nameTextView}>
                         <Text style={styles.nameText}> {nome} </Text>
                     </View>
                     <View style={styles.dateTextView}>
                         <Text style={styles.dateText}> {hora} - {data} </Text>
                     </View>
+                    </TouchableOpacity>
                 </View>
                 <Menu>
                 <MenuTrigger>
@@ -237,7 +264,7 @@ export function Post ({ idMes, ...rest }: PostProps) {
                     <Image source={postImage} style={styles.postImage} resizeMode="cover"/>
                 }
                 <Text style={styles.textText}>
-                    {texto}
+                    {conteudo}
                 </Text>
             </View>
 

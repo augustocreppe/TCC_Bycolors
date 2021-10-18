@@ -6,7 +6,12 @@ import { Feather } from '@expo/vector-icons';
 import { colors } from '../styles/colors';
 import { loadLogado, logoutLogado } from '../libs/storage';
 
-const profile = require('../assets/profile.png');
+const avatar1 = require('../assets/avatar1.png');
+const avatar2 = require('../assets/avatar2.png');
+const avatar3 = require('../assets/avatar3.png');
+const avatar4 = require('../assets/avatar4.png');
+const avatar5 = require('../assets/avatar5.png');
+const avatar6 = require('../assets/avatar6.png');
 
 export function MenuLateral() {
     const navigation = useNavigation();
@@ -74,11 +79,12 @@ export function MenuLateral() {
                     </TouchableOpacity>
                 
                     <View style={styles.imageView}>
-                        <Image 
-                            source={profile} 
-                            style={styles.image}
-                            resizeMode="contain"
-                        />
+                        { (dados[7] == 1) && <Image source={avatar1} style={styles.image} resizeMode="contain"/> }
+                        { (dados[7] == 2) && <Image source={avatar2} style={styles.image} resizeMode="contain"/> }
+                        { (dados[7] == 3) && <Image source={avatar3} style={styles.image} resizeMode="contain"/> }
+                        { (dados[7] == 4) && <Image source={avatar4} style={styles.image} resizeMode="contain"/> }
+                        { (dados[7] == 5) && <Image source={avatar5} style={styles.image} resizeMode="contain"/> }
+                        { (dados[7] == 6) && <Image source={avatar6} style={styles.image} resizeMode="contain"/> }
                     </View>
         
                     <View style={styles.nameTextView}>
