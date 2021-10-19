@@ -14,6 +14,7 @@ import { Chats } from "../pages/Chats";
 import { Chat } from "../pages/Chat";
 import { LinhaDoTempo } from "../pages/LinhaDoTempo";
 import { CriarPost } from "../pages/CriarPost";
+import { CriarPostGeral } from "../pages/CriarPostGeral";
 import { CadastroUsuario } from "../pages/CadastroUsuario";
 
 const stackRoutes = createStackNavigator();
@@ -86,6 +87,11 @@ const AppRoutes: React.FC = () => (
         <stackRoutes.Screen
             name="CriarPost"
             component={CriarPost}
+        />
+
+        <stackRoutes.Screen
+            name="CriarPostGeral"
+            component={CriarPostGeral}
         />
 
         <stackRoutes.Screen

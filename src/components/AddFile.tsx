@@ -12,7 +12,10 @@ export function AddFile ({ idMes, ...rest }: ButtonProps) {
     const navigation = useNavigation();
 
     function handleAddPost() {
-        navigation.navigate('CriarPost', {idMes: idMes});
+        if(idMes == 0)
+            navigation.navigate('CriarPostGeral', {idMes: idMes});
+        else
+            navigation.navigate('CriarPost', {idMes: idMes});
     }
 
     const styles = StyleSheet.create({

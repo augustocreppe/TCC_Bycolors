@@ -17,11 +17,6 @@ export const colors = {
   _verde: '#00C850',
   _vermelho: '#C80000',
 
-  //Branco (já incluso no gradiente acima)
-  //branco
-  //cinza-claro
-  //cinza
-
   //Laranja
   laranja_claro: '#FFCB85',
   laranja: '#FFB457',
@@ -81,7 +76,7 @@ export const cores = [
     '#414BB2',
   ],
   [ //Janeiro Branco
-    '#FFFFFF',
+    '#F6F6F6',
     '#D3D3D3',
     '#8C8C8C',
   ],
@@ -112,8 +107,8 @@ export const cores = [
   ],
   [ // Julho Amarelo
     '#FAFA91',
-    '#FFFF00',
     '#E3E300',
+    '#BEBE00',
   ],
   [ // Agosto Laranja
     '#FFBB3D',

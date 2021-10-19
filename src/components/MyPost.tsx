@@ -260,7 +260,7 @@ export function MyPost ({ idMes, avatar, nome, hora, data, imagem, conteudo, idA
 
             <View style={styles.textView}>
                 {
-                    (imagem.length > 0) &&
+                    (imagem != "none") &&
                     <Image source={postImage} style={styles.postImage} resizeMode="cover"/>
                 }
                 <Text style={styles.textText}>

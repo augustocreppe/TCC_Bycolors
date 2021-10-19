@@ -140,6 +140,6 @@ const styles = StyleSheet.create({
     },
     topView: {
         flexDirection: 'row',
-        marginBottom: -10, 
+        marginBottom: -15, 
     },
 });
