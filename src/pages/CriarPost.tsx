@@ -1,26 +1,84 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import fonts from '../styles/fonts';
-
-import { SafeAreaView, StyleSheet, View, Text, TouchableOpacity, TextInput } from 'react-native';
+import { SafeAreaView, StyleSheet, View, Text, TouchableOpacity, TextInput, Image, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { colors, cores } from '../styles/colors';
 import { Feather, FontAwesome5 } from '@expo/vector-icons';
 import { TituloComunidade } from '../components/TituloComunidade';
 import { ScrollView } from 'react-native-gesture-handler';
+import { loadLogado } from '../libs/storage';
+import { constants } from '../config/app.config';
+
+const avatar1 = require('../assets/avatar1.png');
+const avatar2 = require('../assets/avatar2.png');
+const avatar3 = require('../assets/avatar3.png');
+const avatar4 = require('../assets/avatar4.png');
+const avatar5 = require('../assets/avatar5.png');
+const avatar6 = require('../assets/avatar6.png');
 
 export function CriarPost({ route }: { route: any }) {
     const navigation = useNavigation();
     const idMes = route.params.idMes;
+    
+    const [ready, setReady] = useState(false);
+    const [dados, setDados] = useState<any>();
+
+    const [conteudo, setConteudo] = useState<string>();
+    const [conteudoIsFilled, setConteudoIsFilled] = useState(false);
+    const [imagem, setImagem] = useState<string>("none");
+    const denuncias = 0;
+
+    useEffect(() => {
+        async function getData() {
+            setDados(await loadLogado());
+            
+            setReady(true);
+        }
+        
+        getData();
+    },[ready]);
 
     function handleGoBack() {
         navigation.goBack();
     }
 
     function handlePost() {
-        //
+        if(conteudoIsFilled && imagem != undefined)
+        {
+            const id_usuario = parseInt(dados[0]);
+            const id_doenca = idMes;
+    
+            const publi = { id_usuario, id_doenca, conteudo, imagem, denuncias }
+
+            fetch(`${constants.API_URL}/publicacao`, {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(publi)
+            })
+            .then((response) => {
+                return response.json();
+            })
+            .then((json) => {
+                Alert.alert('Publicação publicada com sucesso!');
+                navigation.navigate('Comunidade');
+            })
+            .catch((error) => {
+                Alert.alert('Erro ao publicar!', error);
+            });
+        }
+        else
+        {
+            Alert.alert('Preencha todos os campos corretamente!');
+        }
     }
 
-    const nome = "Fulana da Silva";
+    function handleConteudoChange(value: string) {
+        setConteudoIsFilled(!!value);
+        setConteudo(value);
+    }
     
     const styles = StyleSheet.create({
         container: {
@@ -29,7 +87,8 @@ export function CriarPost({ route }: { route: any }) {
         },
         scrollView: {
             width: '100%',
-            height: 600,
+            height: 725,
+            marginTop: -15,
         },
         buttonMenu: {
             justifyContent: 'center',
@@ -60,7 +119,7 @@ export function CriarPost({ route }: { route: any }) {
         },
         titleView: {
             alignItems: 'center',
-            height: 250,
+            height: 'auto',
             marginHorizontal: '10%',
         },
         head:
@@ -77,11 +136,11 @@ export function CriarPost({ route }: { route: any }) {
             height: 60,
             width: 78, 
         },
-        profileImage:
+        image:
         {
             margin: 5,
-            fontSize: 50,
-            color: cores[idMes][0],
+            width: 50,
+            height: 50,
         },
         profileTextsView: {
             height: 60,
@@ -140,43 +199,54 @@ export function CriarPost({ route }: { route: any }) {
     });
 
     return (
-        <SafeAreaView style={styles.container}>
-        <View style={styles.container}>
-            <View style={styles.topView}>
-                <TouchableOpacity onPress={handleGoBack} style={styles.buttonMenu}>
-                    <Feather name="arrow-left" style={styles.buttonMenuIcon}/>
-                </TouchableOpacity>
+        <>
+            {
+                (ready == true) &&
 
-                <TouchableOpacity onPress={handlePost} style={styles.buttonSend}>
-                    <Feather name="send" style={styles.buttonSendIcon}/>
-                </TouchableOpacity>
-            </View>
-
-            <View style={styles.scrollView}> 
-            <ScrollView>
-                <TituloComunidade idMes={idMes} text={"Criar publicação"}/>
-                <View style={styles.titleView}>
-                    <View style={styles.head}>
-                        <View style={styles.profileImageView}>
-                            <FontAwesome5 name="user-circle" style={styles.profileImage}/>
-                        </View>
-                        <View style={styles.profileTextsView}>
-                            <View style={styles.nameTextView}>
-                                <Text style={styles.nameText}> {nome} </Text>
-                            </View>
-                        </View>
-                    </View>
-
-                    <View style={styles.textView}>
-                        <TextInput style={styles.textText} placeholder="Adicione o texto aqui" maxLength={100}/>
-                        <TouchableOpacity style={styles.buttonAdd}>
-                            <Text style={styles.nameTextImage}>  Adicionar imagem  <FontAwesome5 name="images" style={styles.buttonAddIcon}/></Text>
+                <SafeAreaView style={styles.container}>
+                <View style={styles.container}>
+                    <View style={styles.topView}>
+                        <TouchableOpacity onPress={handleGoBack} style={styles.buttonMenu}>
+                            <Feather name="arrow-left" style={styles.buttonMenuIcon}/>
+                        </TouchableOpacity>
+        
+                        <TouchableOpacity onPress={handlePost} style={styles.buttonSend}>
+                            <Feather name="send" style={styles.buttonSendIcon}/>
                         </TouchableOpacity>
                     </View>
+        
+                    <View style={styles.scrollView}> 
+                    <ScrollView>
+                        <TituloComunidade idMes={idMes} text={"Criar publicação"}/>
+                        <View style={styles.titleView}>
+                            <View style={styles.head}>
+                                <View style={styles.profileImageView}>
+                                { (dados[7] == 1) && <Image source={avatar1} style={styles.image} resizeMode="contain"/> }
+                                { (dados[7] == 2) && <Image source={avatar2} style={styles.image} resizeMode="contain"/> }
+                                { (dados[7] == 3) && <Image source={avatar3} style={styles.image} resizeMode="contain"/> }
+                                { (dados[7] == 4) && <Image source={avatar4} style={styles.image} resizeMode="contain"/> }
+                                { (dados[7] == 5) && <Image source={avatar5} style={styles.image} resizeMode="contain"/> }
+                                { (dados[7] == 6) && <Image source={avatar6} style={styles.image} resizeMode="contain"/> }
+                                </View>
+                                <View style={styles.profileTextsView}>
+                                    <View style={styles.nameTextView}>
+                                        <Text style={styles.nameText}> {dados[1]} </Text>
+                                    </View>
+                                </View>
+                            </View>
+        
+                            <View style={styles.textView}>
+                                <TextInput style={styles.textText} placeholder="Adicione o texto aqui" maxLength={1000} multiline={true} onChangeText={handleConteudoChange}/>
+                                <TouchableOpacity style={styles.buttonAdd}>
+                                    <Text style={styles.nameTextImage}>  Adicionar imagem  <FontAwesome5 name="images" style={styles.buttonAddIcon}/></Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    </ScrollView>
+                    </View>
                 </View>
-            </ScrollView>
-            </View>
-        </View>
-        </SafeAreaView>
+                </SafeAreaView>     
+            }
+        </>
     );
 }

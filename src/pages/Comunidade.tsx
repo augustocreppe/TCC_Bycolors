@@ -49,7 +49,6 @@ export function Comunidade() {
         })
         .then((json) => {
             setPublicacoes(json);
-            console.log("JSON:", json);
         })
         .catch((error) => {
             Alert.alert('Erro ao carregar mensagens!', error);
@@ -66,10 +65,6 @@ export function Comunidade() {
 
     function handleRegister() {
        navigation.navigate('CadastroUsuario');
-    }
-
-    function handleWait() {
-
     }
 
     return (
@@ -151,8 +146,8 @@ export function Comunidade() {
                                                         idMes={json.doenca_id} 
                                                         avatar={json.usuario.avatar} 
                                                         nome={json.usuario.nome_usuario} 
-                                                        hora={new Date(json.data).toLocaleTimeString()} 
-                                                        data={new Date(json.data).toLocaleDateString()} 
+                                                        hora={new Date(json.data).toLocaleTimeString().substring(0, 5)} 
+                                                        data={new Date(json.data).toLocaleDateString()}
                                                         conteudo={json.conteudo} 
                                                         imagem={"none"}
                                                         idAutor={json.id_usuario}
@@ -164,7 +159,7 @@ export function Comunidade() {
                                                         idMes={json.doenca_id} 
                                                         avatar={json.usuario.avatar} 
                                                         nome={json.usuario.nome_usuario} 
-                                                        hora={new Date(json.data).toLocaleTimeString()} 
+                                                        hora={new Date(json.data).toLocaleTimeString().substring(0, 5)} 
                                                         data={new Date(json.data).toLocaleDateString()} 
                                                         conteudo={json.conteudo} 
                                                         imagem={"none"}

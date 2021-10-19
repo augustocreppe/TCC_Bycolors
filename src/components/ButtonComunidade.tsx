@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { TouchableOpacity, TouchableOpacityProps, StyleSheet, Text, View } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import { colors } from "../styles/colors";
 import { useNavigation } from "@react-navigation/native";
 import fonts from "../styles/fonts";
+import { loadLogado } from "../libs/storage";
 
 interface ButtonProps extends TouchableOpacityProps{
     title: string;
@@ -12,6 +13,18 @@ interface ButtonProps extends TouchableOpacityProps{
 
 export function ButtonComunidade ({title, icone, ...rest}: ButtonProps){
     const navigation = useNavigation();
+    const [ready, setReady] = useState(false);
+    const [dados, setDados] = useState<any>();
+
+    useEffect(() => {
+        async function getData() {
+            setDados(await loadLogado());
+
+            setReady(true);
+        }
+        
+        getData();
+    },[ready]);
     
     function handleGoToPage() {
         if(icone == 'users')
@@ -24,20 +37,26 @@ export function ButtonComunidade ({title, icone, ...rest}: ButtonProps){
         }
         else if(icone == 'id-card')
         {
-            navigation.navigate('LinhaDoTempo', {idUser: 0});
+            navigation.navigate('LinhaDoTempo', {idUser: dados[0]});
         }
     }
 
     return(
-        <TouchableOpacity style={styles.buttonView} onPress={handleGoToPage}>
-            <View style={styles.circleView}>
-                <FontAwesome name={icone} style={styles.buttonIcon}/>
-                
-            </View>
-            <View style={styles.textView}>
-                <Text style={styles.buttonText}>{title}</Text>
-            </View>
-        </TouchableOpacity>
+        <>
+            {
+                (ready == true) &&
+
+                <TouchableOpacity style={styles.buttonView} onPress={handleGoToPage}>
+                    <View style={styles.circleView}>
+                        <FontAwesome name={icone} style={styles.buttonIcon}/>
+                        
+                    </View>
+                    <View style={styles.textView}>
+                        <Text style={styles.buttonText}>{title}</Text>
+                    </View>
+                </TouchableOpacity>
+            }
+        </>
     )
 }
 

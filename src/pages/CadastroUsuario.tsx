@@ -602,7 +602,7 @@ export function CadastroUsuario() {
                     </Text>    
                     <TextInput
                         style={[
-                            styles.inputHolder,
+                            styles.inputHolderBio,
 
                             (bioGreen) &&
                             { borderColor: colors._verde },
@@ -614,6 +614,7 @@ export function CadastroUsuario() {
                         maxLength={100}
                         onBlur={handleBioBlur}
                         onChangeText={handleBioChange}
+                        multiline={true}
                     />
 
                     <Text style={styles.textHolder}>
@@ -814,6 +815,20 @@ const styles = StyleSheet.create({
         marginTop: 4,
         marginBottom: 6,
         padding: 10,
+        textAlign: 'justify',
+    },
+    inputHolderBio: {
+        borderWidth: 1,
+        borderRadius: 8,
+        borderColor: colors.cinza_claro,
+        color: colors.heading,
+        height: 'auto',
+        width: '100%',
+        fontSize: 18,
+        marginTop: 4,
+        marginBottom: 6,
+        padding: 10,
+        paddingVertical: 15,
         textAlign: 'justify',
     },
     inputHolder2: {

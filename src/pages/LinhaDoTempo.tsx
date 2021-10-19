@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { SafeAreaView, StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
+import { SafeAreaView, StyleSheet, View, Text, Image, TouchableOpacity, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { colors } from '../styles/colors';
 import { Feather } from '@expo/vector-icons';
@@ -7,6 +7,8 @@ import { TituloComunidade } from '../components/TituloComunidade';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Post } from '../components/Post';
 import fonts from '../styles/fonts';
+import { constants } from '../config/app.config';
+import { MyPost } from '../components/MyPost';
 import { loadLogado } from '../libs/storage';
 
 const avatar1 = require('../assets/avatar1.png');
@@ -22,28 +24,57 @@ export function LinhaDoTempo({ route }: { route: any }) {
 
     const [ready, setReady] = useState(false);
     const [dados, setDados] = useState<any>();
+    const [dadosLog, setDadosLog] = useState<any>();
+    const [publicacoes, setPublicacoes] = useState<any>();
 
     useEffect(() => {
         async function getData() {
+            setDadosLog(await loadLogado());
             await getUser();
+            await getPublicacoes();
             
             setReady(true);
         }
         
         getData();
-    },[]);
+    },[ready]);
 
     async function getUser() {
-        if(idUser == 0)
-        {
-            setDados(await loadLogado());
-        }
-        else
-        {
-            //(Mostrar Linha do Tempo do Fulano)
-            //Pesquisar Usuário por Id
-            //Pesquisar publicações por Id
-        }
+        fetch(`${constants.API_URL}/usuarios/id_usuario=${idUser}`, {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+        })
+        .then((response) => {
+            return response.json()
+        })
+        .then((json) => {
+            setDados(json);
+        })
+        .catch((error) => {
+            Alert.alert('Erro ao carregar mensagens!', error);
+        })
+    }
+
+    async function getPublicacoes() {
+        fetch(`${constants.API_URL}/publicacao/id_usuario=${idUser}`, {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+        })
+        .then((response) => {
+            return response.json()
+        })
+        .then((json) => {
+            setPublicacoes(json);
+        })
+        .catch((error) => {
+            Alert.alert('Erro ao carregar mensagens!', error);
+        })
     }
 
     function handleGoBack() {
@@ -53,8 +84,8 @@ export function LinhaDoTempo({ route }: { route: any }) {
     return (
         <>
             {
-                (ready == true) &&
-
+                (ready == true && dados != undefined) &&
+        
                 <SafeAreaView style={styles.container}>
                 <View style={styles.container}>
                     <TouchableOpacity onPress={handleGoBack} style={styles.buttonMenu}>
@@ -67,42 +98,72 @@ export function LinhaDoTempo({ route }: { route: any }) {
                         <View style={styles.profileView}>
                         <View style={styles.notBioView}>
                                 <View style={styles.imageView}>
-                                    { (dados[7] == 1) && <Image source={avatar1} style={styles.image} resizeMode="contain"/> }
-                                    { (dados[7] == 2) && <Image source={avatar2} style={styles.image} resizeMode="contain"/> }
-                                    { (dados[7] == 3) && <Image source={avatar3} style={styles.image} resizeMode="contain"/> }
-                                    { (dados[7] == 4) && <Image source={avatar4} style={styles.image} resizeMode="contain"/> }
-                                    { (dados[7] == 5) && <Image source={avatar5} style={styles.image} resizeMode="contain"/> }
-                                    { (dados[7] == 6) && <Image source={avatar6} style={styles.image} resizeMode="contain"/> }
+                                    { (dados[0].avatar == 1) && <Image source={avatar1} style={styles.image} resizeMode="contain"/> }
+                                    { (dados[0].avatar == 2) && <Image source={avatar2} style={styles.image} resizeMode="contain"/> }
+                                    { (dados[0].avatar == 3) && <Image source={avatar3} style={styles.image} resizeMode="contain"/> }
+                                    { (dados[0].avatar == 4) && <Image source={avatar4} style={styles.image} resizeMode="contain"/> }
+                                    { (dados[0].avatar == 5) && <Image source={avatar5} style={styles.image} resizeMode="contain"/> }
+                                    { (dados[0].avatar == 6) && <Image source={avatar6} style={styles.image} resizeMode="contain"/> }
                                 </View>
 
                                 <View style={styles.infoView}>
                                     <View style={styles.nameView}>
-                                        <Text style={styles.name}>{ dados[1] }</Text>
+                                        <Text style={styles.name}>{ dados[0].nome_usuario }</Text>
                                     </View>
 
                                     <View style={styles.placeView}>
                                         <Feather name="map-pin" style={styles.placeIcon}/>
-                                        <Text style={styles.place}>{ dados[5] } - { dados[6] }</Text>
+                                        <Text style={styles.place}>{ dados[0].cidade } - { dados[0].estado }</Text>
                                     </View>
                                 </View>
                         </View>
                         </View>
 
                         <View style={styles.bioView}>
-                            <Text style={styles.bio}>{ dados[8] }</Text>
+                            <Text style={styles.bio}>{ dados[0].bio }</Text>
                         </View>
 
                         <TituloComunidade idMes={0} text={"Minhas Publicações"}/>
                         
                         <View style={styles.postView}>
-                            {/* <Post idMes={2}/>
-                            <Post idMes={7}/>
-                            <Post idMes={5}/> */}
+                            {
+                                (publicacoes != undefined) &&
+
+                                publicacoes.map((json: any) =>
+
+                                    (dadosLog[0] == json.id_usuario) ?
+                                        <MyPost
+                                            idMes={json.doenca_id} 
+                                            avatar={json.usuario.avatar} 
+                                            nome={json.usuario.nome_usuario} 
+                                            hora={new Date(json.data).toLocaleTimeString().substring(0, 5)} 
+                                            data={new Date(json.data).toLocaleDateString()} 
+                                            conteudo={json.conteudo} 
+                                            imagem={"none"}
+                                            idAutor={json.id_usuario}
+                                            idPost={json.id_publicacao}
+                                            idLogado={dados[0]}
+                                        />
+                                    :
+                                        <Post
+                                            idMes={json.doenca_id} 
+                                            avatar={json.usuario.avatar} 
+                                            nome={json.usuario.nome_usuario} 
+                                            hora={new Date(json.data).toLocaleTimeString().substring(0, 5)} 
+                                            data={new Date(json.data).toLocaleDateString()} 
+                                            conteudo={json.conteudo} 
+                                            imagem={"none"}
+                                            idAutor={json.id_usuario}
+                                            idPost={json.id_publicacao}
+                                            idLogado={dados[0]}
+                                        />
+                                )
+                            }
                         </View>
                     </ScrollView>
                     </View>
                 </View>
-                </SafeAreaView>
+                </SafeAreaView> 
             }
         </>
     );

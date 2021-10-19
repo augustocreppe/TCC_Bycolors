@@ -205,7 +205,7 @@ export function MyPost ({ idMes, avatar, nome, hora, data, imagem, conteudo, idA
               {
                 text: "Sim",
                 onPress: () => {
-                    //Denunciar
+                    //Excluir
                 },
               },
               {
@@ -278,10 +278,10 @@ export function MyPost ({ idMes, avatar, nome, hora, data, imagem, conteudo, idA
                     <Text style={styles.likesText}>{curtidas}</Text>
                 </View>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.shareView}>
+                {/* <TouchableOpacity style={styles.shareView}>
                     <FontAwesome5 name="share-alt" style={styles.shareIcon}/>
                     <Text style={styles.shareText}>Compartilhar</Text>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
             </View>
         </View>
     )

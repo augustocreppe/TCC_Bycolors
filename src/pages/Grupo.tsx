@@ -28,10 +28,7 @@ export function Grupo({ route }: { route: any }) {
             setDadosUser(await loadLogado());
             await carregaPublicacoes();
 
-            console.log("PUBLI:", publicacoes);
-
             setReady(true);
-            console.log("READY: ", ready);
         }
         
         getData();
@@ -50,7 +47,6 @@ export function Grupo({ route }: { route: any }) {
         })
         .then((json) => {
             setPublicacoes(json);
-            console.log("JSON:", json);
         })
         .catch((error) => {
             Alert.alert('Erro ao carregar mensagens!', error);
@@ -69,9 +65,6 @@ export function Grupo({ route }: { route: any }) {
                 <SafeAreaView style={styles.container}>
                 <View style={styles.container}>
                     <View style={styles.topView}>
-                        {
-                            console.log("LOADED!")
-                        }
                         <TouchableOpacity onPress={handleGoBack} style={styles.buttonMenu}>
                             <Feather name="arrow-left" style={styles.buttonMenuIcon}/>
                         </TouchableOpacity>
@@ -93,7 +86,7 @@ export function Grupo({ route }: { route: any }) {
                                         idMes={json.doenca_id} 
                                         avatar={json.usuario.avatar} 
                                         nome={json.usuario.nome_usuario} 
-                                        hora={new Date(json.data).toLocaleTimeString()} 
+                                        hora={new Date(json.data).toLocaleTimeString().substring(0, 5)} 
                                         data={new Date(json.data).toLocaleDateString()} 
                                         conteudo={json.conteudo} 
                                         imagem={"none"}
@@ -106,7 +99,7 @@ export function Grupo({ route }: { route: any }) {
                                         idMes={json.doenca_id} 
                                         avatar={json.usuario.avatar} 
                                         nome={json.usuario.nome_usuario} 
-                                        hora={new Date(json.data).toLocaleTimeString()} 
+                                        hora={new Date(json.data).toLocaleTimeString().substring(0, 5)} 
                                         data={new Date(json.data).toLocaleDateString()} 
                                         conteudo={json.conteudo} 
                                         imagem={"none"}
