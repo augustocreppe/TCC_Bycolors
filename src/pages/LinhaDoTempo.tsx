@@ -96,7 +96,7 @@ export function LinhaDoTempo({ route }: { route: any }) {
                     <ScrollView>
 
                         <View style={styles.profileView}>
-                        <View style={styles.notBioView}>
+                            <View style={styles.notBioView}>
                                 <View style={styles.imageView}>
                                     { (dados[0].avatar == 1) && <Image source={avatar1} style={styles.image} resizeMode="contain"/> }
                                     { (dados[0].avatar == 2) && <Image source={avatar2} style={styles.image} resizeMode="contain"/> }
@@ -116,14 +116,19 @@ export function LinhaDoTempo({ route }: { route: any }) {
                                         <Text style={styles.place}>{ dados[0].cidade } - { dados[0].estado }</Text>
                                     </View>
                                 </View>
-                        </View>
+                            </View>
                         </View>
 
                         <View style={styles.bioView}>
                             <Text style={styles.bio}>{ dados[0].bio }</Text>
                         </View>
 
-                        <TituloComunidade idMes={0} text={"Minhas Publicações"}/>
+                        {
+                            (idUser == dadosLog[0]) ?
+                                <TituloComunidade idMes={0} text={"Minhas Publicações"}/>
+                            :
+                                <TituloComunidade idMes={0} text={"Publicações de "+dados[0].nome_usuario.substring(0,dados[0].nome_usuario.indexOf(' '))}/>
+                        }
                         
                         <View style={styles.postView}>
                             {
@@ -195,6 +200,9 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         width: '38%',
         height: '100%',
+        borderWidth: 2,
+        borderColor: colors.body_dark,
+        borderRadius: 100,
     },
     image: {
         width: '100%',

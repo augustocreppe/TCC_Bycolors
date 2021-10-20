@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { SafeAreaView, StyleSheet, View, TouchableOpacity, TextInput, Alert } from 'react-native';
+import { SafeAreaView, StyleSheet, View, TouchableOpacity, TextInput, Alert, RefreshControl } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { colors, cores } from '../styles/colors';
 import { Feather } from '@expo/vector-icons';
@@ -12,11 +12,20 @@ import { constants } from '../config/app.config';
 import { loadLogado } from '../libs/storage';
 
 export function Chat({ route }: { route: any }) {
+    const idMes = route.params.idMes;
     const navigation = useNavigation();
     const [ready, setReady] = useState(false);
-    const idMes = route.params.idMes;
     const [mensagens, setMensagens] = useState<any>();
     const [dadosUser, setDadosUser] = useState<any>();
+    const [conteudo, setConteudo] = useState<string>();
+    const [conteudoIsFilled, setConteudoIsFilled] = useState(false);
+
+    const [refreshing, setRefreshing] = React.useState(false);
+
+    const onRefresh = React.useCallback(() => {
+        setRefreshing(true);
+        setRefreshing(false);
+    },[]);
 
     useEffect(() => {
         async function loadData() {
@@ -42,7 +51,6 @@ export function Chat({ route }: { route: any }) {
         })
         .then((json) => {
             setMensagens(json);
-            console.log("JSON:", json);
         })
         .catch((error) => {
             Alert.alert('Erro ao carregar mensagens!', error);
@@ -54,7 +62,37 @@ export function Chat({ route }: { route: any }) {
     }
 
     function handleSend() {
-        //Enviar mensagem
+        if(conteudoIsFilled)
+        {
+            const id_usuario = dadosUser[0];
+            const id_doenca = idMes;
+            const conteudo_msg = conteudo;
+
+            const mensagem = { id_usuario, id_doenca, conteudo_msg }
+
+            fetch(`${constants.API_URL}/mensagem`, {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(mensagem)
+            })
+            .then((response) => {
+                return response.json();
+            })
+            .then((json) => {
+                setConteudo(undefined);
+            })
+            .catch((error) => {
+                Alert.alert('Erro ao enviar mensagem!', error);
+            });
+        }
+    }
+
+    function handleConteudoChange(value: string) {
+        setConteudoIsFilled(!!value);
+        setConteudo(value);
     }
 
     const styles = StyleSheet.create({
@@ -63,8 +101,16 @@ export function Chat({ route }: { route: any }) {
             paddingTop: 20,
             backgroundColor: colors.background,
         },
+        container2: {
+            paddingTop: 20,
+            height: 150,
+            backgroundColor: colors.background,
+        },
+        scrollViewOut: {
+            height: 650,
+        },
         scrollView: {
-            height: '75.5%',
+            height: '90%',
         },
         buttonMenu: {
             justifyContent: 'center',
@@ -74,7 +120,7 @@ export function Chat({ route }: { route: any }) {
             width: 56,
         },
         sendView: {
-            height: '8%',
+            height: '10%',
             width: '100%',
             flexDirection: 'row',
         },
@@ -84,12 +130,13 @@ export function Chat({ route }: { route: any }) {
             borderColor: colors.cinza_claro,
             backgroundColor: colors.branco,
             color: colors.heading,
-            height: '80%',
+            height: 'auto',
             width: '87%',
             fontSize: 15,
             marginVertical: '1.5%',
             marginLeft: '1.5%',
             padding: 10,
+            paddingVertical: 0,
             textAlign: 'justify',
         },
         buttonSend: {
@@ -119,38 +166,42 @@ export function Chat({ route }: { route: any }) {
                 (ready == true) &&
 
                 <SafeAreaView style={styles.container}>
-                <View style={styles.container}>
-                    <TouchableOpacity onPress={handleGoBack} style={styles.buttonMenu}>
-                        <Feather name="arrow-left" style={styles.buttonMenuIcon}/>
-                    </TouchableOpacity>
-
-                    <TituloComunidade idMes={idMes} text={months[idMes][0]}/>
-
-                    <View style={styles.scrollView}>
-                    <ScrollView>
-                        {
-                            (mensagens != undefined) &&
-
-                            mensagens.map((json: any) =>
-
-                                (dadosUser[0] == json.id_usuario) ? 
-                                    <MyMessage idMes={idMes} conteudo={json.conteudo_msg} data={new Date(json.data).toLocaleTimeString()}/>
-                                :
-                                    <Message idMes={idMes} nome={json.usuario.nome_usuario} conteudo={json.conteudo_msg} data={new Date(json.data).toLocaleTimeString()}/>
-                            )
-                        }
-                    </ScrollView>
-                    </View>
-                    
-                    <View style={styles.sendView}>
-                        <TextInput style={styles.input} placeholder="Digite sua mensagem" />
-                        <TouchableOpacity 
-                            onPress={handleSend} 
-                            style={styles.buttonSend}>
-                            <Feather name="send" style={styles.buttonIcon}/>
+                    <View style={styles.container2}>
+                        <TouchableOpacity onPress={handleGoBack} style={styles.buttonMenu}>
+                            <Feather name="arrow-left" style={styles.buttonMenuIcon}/>
                         </TouchableOpacity>
+
+                        <TituloComunidade idMes={idMes} text={months[idMes][0]}/>
                     </View>
-                </View>
+
+                    <ScrollView scrollEnabled={false}>
+                    <View style={styles.scrollViewOut}>
+                        <View style={styles.scrollView}>
+                        <ScrollView refreshControl={ <RefreshControl refreshing={refreshing} onRefresh={onRefresh}/> }>
+                            {
+                                (mensagens != undefined) &&
+
+                                mensagens.map((json: any) =>
+
+                                    (dadosUser[0] == json.id_usuario) ? 
+                                        <MyMessage idMes={idMes} conteudo={json.conteudo_msg} data={new Date(json.data).toLocaleTimeString()}/>
+                                    :
+                                        <Message idMes={idMes} nome={json.usuario.nome_usuario} conteudo={json.conteudo_msg} data={new Date(json.data).toLocaleTimeString()}/>
+                                )
+                            }
+                        </ScrollView>
+                        </View>
+                        
+                        <View style={styles.sendView}>
+                            <TextInput style={styles.input} placeholder="Digite sua mensagem" multiline={true} numberOfLines={6} value={conteudo} onChangeText={handleConteudoChange}/>
+                            <TouchableOpacity 
+                                onPress={handleSend} 
+                                style={styles.buttonSend}>
+                                <Feather name="send" style={styles.buttonIcon}/>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                    </ScrollView>
                 </SafeAreaView>
             }
         </>

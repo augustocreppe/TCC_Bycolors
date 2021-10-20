@@ -172,7 +172,7 @@ export function Inicio() {
                             <Image source={marca}  resizeMode="cover" style={styles.imageMarca}/>
                         </View>
 
-                        { // SE NÃO TIVER NADA DIGITADO
+                        {
                             (!existeEmail) &&
 
                             <>
@@ -200,8 +200,8 @@ export function Inicio() {
                                 </TouchableOpacity>
                             </>
                         }
-
-                        { // SE DIGITAR O EMAIL E EXISTIR
+                        
+                        {
                             (existeEmail) &&
 
                             <> 
@@ -444,6 +444,3 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     }
 });
-
-//<KeyboardAvoidingView style={styles.container} behavior={Platform.OS == 'ios' ? 'padding' : 'height'}>
-//<TouchableWithoutFeedback onPress={Keyboard.dismiss}>

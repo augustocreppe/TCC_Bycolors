@@ -38,6 +38,10 @@ export function Post ({ idMes, avatar, nome, hora, data, imagem, conteudo, idAut
         profileImageView: {
             height: 60,
             width: 60,
+            borderWidth: 2,
+            borderRadius: 100,
+            borderColor: cores[idMes][2],
+            backgroundColor: colors.branco,
         },
         profileImage:
         {

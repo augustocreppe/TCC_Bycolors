@@ -86,10 +86,6 @@ export function Usuario() {
         setBio(dados[8]);
     }
 
-    function handleCarregar() {
-        setReady(true);
-    }
-
     //Voltar
     function handleGoBack() {
         navigation.navigate('MenuLateral');
@@ -169,7 +165,7 @@ export function Usuario() {
                         navigation.navigate('Inicio');
                     })
                     .catch((error) => {
-                        Alert.alert('Erro ao salvar os dados!', error);
+                        Alert.alert('Erro ao excluir usuário!', error);
                     });
                 },
               },

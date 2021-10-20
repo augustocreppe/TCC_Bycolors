@@ -189,6 +189,12 @@ const styles = StyleSheet.create({
     imageView: {
         justifyContent: 'center',
         alignItems: 'center',
+        borderWidth: 2,
+        borderRadius: 100,
+        borderColor: colors.body_dark,
+        width: 160,
+        height: 160,
+        alignSelf: 'center'
     },
     image: {
         width: 150,

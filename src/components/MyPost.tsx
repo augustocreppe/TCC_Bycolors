@@ -6,6 +6,7 @@ import { Feather, FontAwesome5 } from '@expo/vector-icons';
 import { colors, cores } from '../styles/colors';
 import { months } from '../styles/info';
 import { Menu, MenuOptions, MenuOption, MenuTrigger } from 'react-native-popup-menu';
+import { constants } from '../config/app.config';
 
 interface PostProps extends TouchableOpacityProps {
     idMes: number;
@@ -38,6 +39,10 @@ export function MyPost ({ idMes, avatar, nome, hora, data, imagem, conteudo, idA
         profileImageView: {
             height: 60,
             width: 60,
+            borderWidth: 2,
+            borderRadius: 100,
+            borderColor: cores[idMes][2],
+            backgroundColor: colors.branco,
         },
         profileImage:
         {
@@ -205,7 +210,23 @@ export function MyPost ({ idMes, avatar, nome, hora, data, imagem, conteudo, idA
               {
                 text: "Sim",
                 onPress: () => {
-                    //Excluir
+                    const excluido = true;
+                    const publi = { excluido }
+
+                    fetch(`${constants.API_URL}/publicacao/excluir/${idPost}`, {
+                        method: 'PUT',
+                        headers: {
+                            Accept: 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(publi)
+                    })
+                    .then((json) => {
+                        Alert.alert('Publicação excluída com sucesso!');
+                    })
+                    .catch((error) => {
+                        Alert.alert('Erro ao excluir publicação!', error);
+                    });
                 },
               },
               {
