@@ -101,7 +101,7 @@ export function CriarPostGeral({ route }: { route: any }) {
         },
         scrollView: {
             width: '100%',
-            height: 725,
+            height: 'auto',
             marginTop: -15,
         },
         buttonMenu: {
@@ -213,7 +213,7 @@ export function CriarPostGeral({ route }: { route: any }) {
         pickerView: {
             borderRadius: 12,
             backgroundColor: cores[idMes][0],
-            marginTop: 15,
+            marginVertical: 15,
             padding: 4,
             height: 'auto',
             width: 360,
@@ -246,8 +246,8 @@ export function CriarPostGeral({ route }: { route: any }) {
                         </TouchableOpacity>
                     </View>
         
-                    <View style={styles.scrollView}> 
                     <ScrollView>
+                    <View style={styles.scrollView}> 
                         <TituloComunidade idMes={idMes} text={"Criar publicação"}/>
 
                         <View style={styles.titleView}>
@@ -296,8 +296,8 @@ export function CriarPostGeral({ route }: { route: any }) {
                             <Picker.Item label="Dezembro Vermelho" value="12" />
                         </Picker>
                         </View>
-                    </ScrollView>
                     </View>
+                    </ScrollView>
                 </View>
                 </SafeAreaView>     
             }

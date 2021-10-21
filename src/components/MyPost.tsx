@@ -192,7 +192,7 @@ export function MyPost ({ idMes, avatar, nome, hora, data, imagem, conteudo, idA
     const avatar6 = require('../assets/avatar6.png');
 
     const postImage = require('../assets/outubro.jpg');
-    const curtidas = 123;
+    const curtidas = "";
 
     function handlePerfilPessoa() {
         navigation.navigate('LinhaDoTempo', {idUser: idAutor});
@@ -299,10 +299,6 @@ export function MyPost ({ idMes, avatar, nome, hora, data, imagem, conteudo, idA
                     <Text style={styles.likesText}>{curtidas}</Text>
                 </View>
                 </TouchableOpacity>
-                {/* <TouchableOpacity style={styles.shareView}>
-                    <FontAwesome5 name="share-alt" style={styles.shareIcon}/>
-                    <Text style={styles.shareText}>Compartilhar</Text>
-                </TouchableOpacity> */}
             </View>
         </View>
     )

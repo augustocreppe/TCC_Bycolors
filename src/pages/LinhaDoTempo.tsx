@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { SafeAreaView, StyleSheet, View, Text, Image, TouchableOpacity, Alert } from 'react-native';
+import fonts from '../styles/fonts';
+import { SafeAreaView, ScrollView, StyleSheet, View, Text, Image, TouchableOpacity, Alert, RefreshControl } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { colors } from '../styles/colors';
 import { Feather } from '@expo/vector-icons';
 import { TituloComunidade } from '../components/TituloComunidade';
-import { ScrollView } from 'react-native-gesture-handler';
 import { Post } from '../components/Post';
-import fonts from '../styles/fonts';
 import { constants } from '../config/app.config';
 import { MyPost } from '../components/MyPost';
 import { loadLogado } from '../libs/storage';
@@ -26,12 +25,19 @@ export function LinhaDoTempo({ route }: { route: any }) {
     const [dados, setDados] = useState<any>();
     const [dadosLog, setDadosLog] = useState<any>();
     const [publicacoes, setPublicacoes] = useState<any>();
+    const [refreshing, setRefreshing] = React.useState(false);
+
+    const onRefresh = React.useCallback(() => {
+        setRefreshing(true);
+        
+        carregaPublicacoes().then(() => setRefreshing(false));
+    },[]);
 
     useEffect(() => {
         async function getData() {
             setDadosLog(await loadLogado());
             await getUser();
-            await getPublicacoes();
+            await carregaPublicacoes();
             
             setReady(true);
         }
@@ -58,7 +64,7 @@ export function LinhaDoTempo({ route }: { route: any }) {
         })
     }
 
-    async function getPublicacoes() {
+    async function carregaPublicacoes() {
         fetch(`${constants.API_URL}/publicacao/id_usuario=${idUser}`, {
             method: 'GET',
             headers: {
@@ -92,9 +98,8 @@ export function LinhaDoTempo({ route }: { route: any }) {
                         <Feather name="arrow-left" style={styles.buttonMenuIcon}/>
                     </TouchableOpacity>
 
-                    <View style={styles.scrollView}> 
-                    <ScrollView>
-
+                    <View style={styles.scrollView}>
+                    <ScrollView refreshControl={ <RefreshControl refreshing={refreshing} onRefresh={onRefresh}/> }>
                         <View style={styles.profileView}>
                             <View style={styles.notBioView}>
                                 <View style={styles.imageView}>
@@ -132,7 +137,7 @@ export function LinhaDoTempo({ route }: { route: any }) {
                         
                         <View style={styles.postView}>
                             {
-                                (publicacoes != undefined) &&
+                                (publicacoes) &&
 
                                 publicacoes.map((json: any) =>
 

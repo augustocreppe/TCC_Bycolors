@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { SafeAreaView, StyleSheet, View, TouchableOpacity, Alert } from 'react-native';
+import { SafeAreaView, ScrollView, StyleSheet, View, TouchableOpacity, Alert, RefreshControl } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { colors } from '../styles/colors';
 import { Feather } from '@expo/vector-icons';
 import { TituloComunidade } from '../components/TituloComunidade';
 import { months } from '../styles/info';
-import { ScrollView } from 'react-native-gesture-handler';
 import { Post } from '../components/Post';
 import { AddFile } from '../components/AddFile';
 import { constants } from '../config/app.config';
@@ -18,6 +17,13 @@ export function Grupo({ route }: { route: any }) {
     const [ready, setReady] = useState(false);
     const [dadosUser, setDadosUser] = useState<any>();
     const [publicacoes, setPublicacoes] = useState<any>();
+    const [refreshing, setRefreshing] = React.useState(false);
+
+    const onRefresh = React.useCallback(() => {
+        setRefreshing(true);
+        
+        carregaPublicacoes().then(() => setRefreshing(false));
+    },[]);
 
     const name1 = "Publicações - ";
     const name2 = months[idMes][0];
@@ -75,7 +81,7 @@ export function Grupo({ route }: { route: any }) {
                     <TituloComunidade idMes={idMes} text={name}/>
 
                     <View style={styles.scrollView}>
-                    <ScrollView>
+                    <ScrollView refreshControl={ <RefreshControl refreshing={refreshing} onRefresh={onRefresh} style={styles.scrollViewH}/> }>
                         {
                             (publicacoes != undefined) &&
 
@@ -137,6 +143,9 @@ const styles = StyleSheet.create({
     scrollView: {
         height: 652,
         alignSelf: 'center',
+    },
+    scrollViewH: {
+        height: 652,
     },
     topView: {
         flexDirection: 'row',

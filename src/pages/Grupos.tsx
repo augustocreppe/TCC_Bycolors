@@ -20,10 +20,10 @@ export function Grupos() {
                 <Feather name="arrow-left" style={styles.buttonMenuIcon}/>
             </TouchableOpacity>
 
-            <TituloComunidade idMes={0} text={"Grupos Específicos"}/>
-
             <View style={styles.scrollView}>
             <ScrollView>
+                <TituloComunidade idMes={0} text={"Grupos Específicos"}/>
+
                 <ButtonGrupos idMes={1}/>
                 <ButtonGrupos idMes={2}/>
                 <ButtonGrupos idMes={3}/>
@@ -69,6 +69,6 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     scrollView: {
-        height: 652,
+        height: 725,
     },
 });

@@ -93,18 +93,18 @@ export function CadastroUsuario() {
             .then((response) => {
                 return response.json()
             })
-            .then((json) => {
+            .then(async (json) => {
                 Alert.alert('Usuário cadastrado com sucesso!');
-                saveLogado(
-                    json[0].id_usuario, 
-                    json[0].nome_usuario, 
-                    json[0].telefone, 
-                    json[0].email, 
-                    json[0].senha,
-                    json[0].cidade,
-                    json[0].estado,
-                    json[0].avatar,
-                    json[0].bio,
+                await saveLogado(
+                    json.id_usuario, 
+                    json.nome_usuario, 
+                    json.telefone, 
+                    json.email, 
+                    json.senha,
+                    json.cidade,
+                    json.estado,
+                    json.avatar,
+                    json.bio,
                 );
                 navigation.navigate('Calendario');
             })

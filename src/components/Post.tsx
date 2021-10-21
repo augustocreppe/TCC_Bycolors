@@ -191,7 +191,7 @@ export function Post ({ idMes, avatar, nome, hora, data, imagem, conteudo, idAut
     const avatar6 = require('../assets/avatar6.png');
 
     const postImage = require('../assets/outubro.jpg');
-    const curtidas = 123;
+    const curtidas = "";
 
     function handlePerfilPessoa() {
         navigation.navigate('LinhaDoTempo', {idUser: idAutor});

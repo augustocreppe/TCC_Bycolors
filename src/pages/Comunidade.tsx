@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import TabMenu from '../components/TabMenu';
 import fonts from '../styles/fonts';
-import { ImageBackground, SafeAreaView, StyleSheet, TouchableOpacity, View, Text, Image, Alert } from 'react-native';
+import { ImageBackground, SafeAreaView, ScrollView, StyleSheet, TouchableOpacity, View, Text, Image, Alert, RefreshControl } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Feather } from '@expo/vector-icons';
 import { colors } from '../styles/colors';
 import { AddFile } from '../components/AddFile';
-import { ScrollView } from 'react-native-gesture-handler';
 import { Post } from '../components/Post';
 import { TituloComunidade } from '../components/TituloComunidade';
 import { ButtonComunidade } from '../components/ButtonComunidade';
@@ -23,6 +22,13 @@ export function Comunidade() {
     const [isLogged, setIsLogged] = useState<any>();
     const [dadosUser, setDadosUser] = useState<any>();
     const [publicacoes, setPublicacoes] = useState<any>();
+    const [refreshing, setRefreshing] = React.useState(false);
+
+    const onRefresh = React.useCallback(() => {
+        setRefreshing(true);
+        
+        carregaPublicacoes().then(() => setRefreshing(false));
+    },[]);
 
     useEffect(() => {
         async function getData() {
@@ -122,7 +128,8 @@ export function Comunidade() {
                                 </View>
         
                                 <View style={styles.feedView}>
-                                <ScrollView>
+                                <ScrollView refreshControl={ <RefreshControl refreshing={refreshing} onRefresh={onRefresh}/> }>
+                                <>
                                     <View style={styles.buttonsView}>
                                         <ButtonComunidade title={"Grupos"} icone={'users'}/>
                                         <View style={styles.buttonCenterView}>
@@ -147,7 +154,7 @@ export function Comunidade() {
                                                         avatar={json.usuario.avatar} 
                                                         nome={json.usuario.nome_usuario} 
                                                         hora={new Date(json.data).toLocaleTimeString().substring(0, 5)} 
-                                                        data={new Date(json.data).toLocaleDateString()}
+                                                        data={new Date(json.data).toLocaleDateString('pt-BR')}
                                                         conteudo={json.conteudo} 
                                                         imagem={"none"}
                                                         idAutor={json.id_usuario}
@@ -160,7 +167,7 @@ export function Comunidade() {
                                                         avatar={json.usuario.avatar} 
                                                         nome={json.usuario.nome_usuario} 
                                                         hora={new Date(json.data).toLocaleTimeString().substring(0, 5)} 
-                                                        data={new Date(json.data).toLocaleDateString()} 
+                                                        data={new Date(json.data).toLocaleDateString('pt-BR')} 
                                                         conteudo={json.conteudo} 
                                                         imagem={"none"}
                                                         idAutor={json.id_usuario}
@@ -170,6 +177,7 @@ export function Comunidade() {
                                             )
                                         }
                                     </View>
+                                </>
                                 </ScrollView>
                                 </View>
         

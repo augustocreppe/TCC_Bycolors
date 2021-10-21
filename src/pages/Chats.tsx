@@ -20,10 +20,10 @@ export function Chats() {
                 <Feather name="arrow-left" style={styles.buttonMenuIcon}/>
             </TouchableOpacity>
 
-            <TituloComunidade idMes={0} text={"Chats Específicos"}/>
-
             <View style={styles.scrollView}>
             <ScrollView>
+                <TituloComunidade idMes={0} text={"Chats Específicos"}/>
+
                 <ButtonChats idMes={1}/>
                 <ButtonChats idMes={2}/>
                 <ButtonChats idMes={3}/>
@@ -69,6 +69,6 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     scrollView: {
-        height: 652,
+        height: 725,
     },
 });

@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { SafeAreaView, StyleSheet, View, TouchableOpacity, TextInput, Alert, RefreshControl } from 'react-native';
+import { SafeAreaView, StyleSheet, View, TouchableOpacity, ScrollView, TextInput, Alert, RefreshControl } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { colors, cores } from '../styles/colors';
 import { Feather } from '@expo/vector-icons';
-import { ScrollView } from 'react-native-gesture-handler';
 import { TituloComunidade } from '../components/TituloComunidade';
 import { months } from '../styles/info';
 import { Message } from '../components/Message';
@@ -19,12 +18,12 @@ export function Chat({ route }: { route: any }) {
     const [dadosUser, setDadosUser] = useState<any>();
     const [conteudo, setConteudo] = useState<string>();
     const [conteudoIsFilled, setConteudoIsFilled] = useState(false);
-
     const [refreshing, setRefreshing] = React.useState(false);
 
     const onRefresh = React.useCallback(() => {
         setRefreshing(true);
-        setRefreshing(false);
+        
+        carregaMensagens().then(() => setRefreshing(false));
     },[]);
 
     useEffect(() => {
@@ -36,7 +35,7 @@ export function Chat({ route }: { route: any }) {
         }
 
         loadData();
-    },[ready]);
+    }, [ready]);
 
     async function carregaMensagens() {
         fetch(`${constants.API_URL}/mensagem/id_doenca=${idMes}`, {
@@ -82,6 +81,13 @@ export function Chat({ route }: { route: any }) {
                 return response.json();
             })
             .then((json) => {
+                const novaMensagem = {
+                    id_usuario,
+                    conteudo_msg,
+                    data: new Date()
+                }
+
+                setMensagens((mensagens: any) => [...mensagens, novaMensagem])
                 setConteudo(undefined);
             })
             .catch((error) => {
@@ -177,7 +183,7 @@ export function Chat({ route }: { route: any }) {
                     <ScrollView scrollEnabled={false}>
                     <View style={styles.scrollViewOut}>
                         <View style={styles.scrollView}>
-                        <ScrollView refreshControl={ <RefreshControl refreshing={refreshing} onRefresh={onRefresh}/> }>
+                        <ScrollView invertStickyHeaders={true} refreshControl={ <RefreshControl refreshing={refreshing} onRefresh={onRefresh}/> }>
                             {
                                 (mensagens != undefined) &&
 
