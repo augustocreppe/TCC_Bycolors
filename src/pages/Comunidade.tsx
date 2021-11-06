@@ -154,7 +154,7 @@ export function Comunidade() {
                                                         avatar={json.usuario.avatar} 
                                                         nome={json.usuario.nome_usuario} 
                                                         hora={new Date(json.data).toLocaleTimeString().substring(0, 5)} 
-                                                        data={new Date(json.data).toLocaleDateString('pt-BR')}
+                                                        data={new Date(json.data).toLocaleDateString('en-GB')}
                                                         conteudo={json.conteudo} 
                                                         imagem={"none"}
                                                         idAutor={json.id_usuario}

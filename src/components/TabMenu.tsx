@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, TouchableOpacity, View, Text } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import { colors } from '../styles/colors';
+import { colors, cores } from '../styles/colors';
 import fonts from '../styles/fonts';
 
 export default function TabMenu () {
@@ -30,21 +30,21 @@ export default function TabMenu () {
         },
         icon1: {
             fontSize: 25,
-            color: colors.background,
+            color: cores[0][0]
         },
         text1: {
             fontFamily: fonts.text,
             fontSize: 15,
-            color: colors.background,
+            color: cores[0][0]
         },
         icon2: {
             fontSize: 25,
-            color: colors.background,
+            color: cores[0][0]
         },
         text2: {
             fontFamily: fonts.text,
             fontSize: 15,
-            color: colors.background,
+            color: cores[0][0]
         }
     });
 

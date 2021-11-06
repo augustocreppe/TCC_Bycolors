@@ -26,7 +26,6 @@ export function CriarPost({ route }: { route: any }) {
     const [conteudo, setConteudo] = useState<string>();
     const [conteudoIsFilled, setConteudoIsFilled] = useState(false);
     const [imagem, setImagem] = useState<string>("none");
-    const denuncias = 0;
 
     useEffect(() => {
         async function getData() {
@@ -48,7 +47,7 @@ export function CriarPost({ route }: { route: any }) {
             const id_usuario = parseInt(dados[0]);
             const id_doenca = idMes;
     
-            const publi = { id_usuario, id_doenca, conteudo, imagem, denuncias }
+            const publi = { id_usuario, id_doenca, conteudo, imagem }
 
             fetch(`${constants.API_URL}/publicacao`, {
                 method: 'POST',

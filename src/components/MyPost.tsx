@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import fonts from '../styles/fonts';
 import { StyleSheet, Text, TouchableOpacity, View, TouchableOpacityProps, Image, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -47,7 +47,7 @@ export function MyPost ({ idMes, avatar, nome, hora, data, imagem, conteudo, idA
         profileImage:
         {
             margin: 5,
-            fontSize: 50,
+            fontSize: 55,
             color: cores[idMes][2]
         },
         profileTextsView: {
@@ -168,21 +168,29 @@ export function MyPost ({ idMes, avatar, nome, hora, data, imagem, conteudo, idA
             marginTop: '2.5%',
         },
         menuOption: {
-            height: '100%',
+            height: 38,
         },
-        menuOptionText: {
+        menuOptionTextEditar: {
+            fontFamily: fonts.heading,
+            fontSize: 20,
+            color: colors.cinza_escuro
+        },
+        menuOptionTextExcluir: {
             fontFamily: fonts.heading,
             fontSize: 20,
             color: colors.vermelho_escuro
         },
         avatar: {
-            height: '95%',
-            width: '95%',
+            margin: 1,
+            width: 55,
+            height: 55,
             alignSelf: 'center',
         }
     });
 
     const navigation = useNavigation();
+    const [ready, setReady] = useState(false);
+    const [curtidas, setCurtidas] = useState();
 
     const avatar1 = require('../assets/avatar1.png');
     const avatar2 = require('../assets/avatar2.png');
@@ -192,7 +200,16 @@ export function MyPost ({ idMes, avatar, nome, hora, data, imagem, conteudo, idA
     const avatar6 = require('../assets/avatar6.png');
 
     const postImage = require('../assets/outubro.jpg');
-    const curtidas = "";
+
+    useEffect(() => {
+        async function getData() {
+            await getCurtidas();
+            
+            setReady(true);
+        }
+        
+        getData();
+    },[ready]);
 
     function handlePerfilPessoa() {
         navigation.navigate('LinhaDoTempo', {idUser: idAutor});
@@ -236,70 +253,107 @@ export function MyPost ({ idMes, avatar, nome, hora, data, imagem, conteudo, idA
         );
     }
 
+    function handleCurtir() {
+        //Curtir
+    }
+
+    async function getCurtidas() {
+        fetch(`${constants.API_URL}/curtidas/id_publicacao=${idPost}`, {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+        })
+        .then((response) => {
+            return response.json()
+        })
+        .then((json) => {
+            setCurtidas(json);
+        })
+        .catch((error) => {
+            Alert.alert('Erro ao carregar curtidas!', error);
+        })
+    }
+
+    function handleEditar() {
+        navigation.navigate('EditarPost', {idPost: idPost});
+    }
+
     return (
-        <View style={styles.container}>
-            <View style={styles.head}>
-                <View style={styles.profileImageView}>
-                    { (avatar == 1) && <Image source={avatar1} style={styles.avatar} resizeMode="contain"/> }
-                    { (avatar == 2) && <Image source={avatar2} style={styles.avatar} resizeMode="contain"/> }
-                    { (avatar == 3) && <Image source={avatar3} style={styles.avatar} resizeMode="contain"/> }
-                    { (avatar == 4) && <Image source={avatar4} style={styles.avatar} resizeMode="contain"/> }
-                    { (avatar == 5) && <Image source={avatar5} style={styles.avatar} resizeMode="contain"/> }
-                    { (avatar == 6) && <Image source={avatar6} style={styles.avatar} resizeMode="contain"/> }
-                </View>
-                <View style={styles.profileTextsView}>
-                    <TouchableOpacity onPress={handlePerfilPessoa}>
-                    <View style={styles.nameTextView}>
-                        <Text style={styles.nameText}> {nome} </Text>
+        <>
+            {
+                (ready == true) &&
+                <View style={styles.container}>
+                    <View style={styles.head}>
+                        <View style={styles.profileImageView}>
+                            { (avatar == 1) && <Image source={avatar1} style={styles.avatar} resizeMode="contain"/> }
+                            { (avatar == 2) && <Image source={avatar2} style={styles.avatar} resizeMode="contain"/> }
+                            { (avatar == 3) && <Image source={avatar3} style={styles.avatar} resizeMode="contain"/> }
+                            { (avatar == 4) && <Image source={avatar4} style={styles.avatar} resizeMode="contain"/> }
+                            { (avatar == 5) && <Image source={avatar5} style={styles.avatar} resizeMode="contain"/> }
+                            { (avatar == 6) && <Image source={avatar6} style={styles.avatar} resizeMode="contain"/> }
+                        </View>
+                        <View style={styles.profileTextsView}>
+                            <TouchableOpacity onPress={handlePerfilPessoa}>
+                            <View style={styles.nameTextView}>
+                                <Text style={styles.nameText}> {nome} </Text>
+                            </View>
+                            <View style={styles.dateTextView}>
+                                <Text style={styles.dateText}> {hora} - {data} </Text>
+                            </View>
+                            </TouchableOpacity>
+                        </View>
+                        <Menu>
+                        <MenuTrigger>
+                            <View style={styles.ellipsisView}>
+                                <FontAwesome5 name="ellipsis-v" style={styles.ellipsisIcon}/>
+                            </View>
+                        </MenuTrigger>
+                        <MenuOptions>
+                            <MenuOption onSelect={handleEditar} style={styles.menuOption}>
+                                <Text style={styles.menuOptionTextEditar}>
+                                    Editar
+                                </Text>
+                            </MenuOption>
+                            <MenuOption onSelect={handleExcluir} style={styles.menuOption}>
+                                <Text style={styles.menuOptionTextExcluir}>
+                                    Excluir
+                                </Text>
+                            </MenuOption>
+                        </MenuOptions>
+                        </Menu>
                     </View>
-                    <View style={styles.dateTextView}>
-                        <Text style={styles.dateText}> {hora} - {data} </Text>
+
+                    <View style={styles.tagView}>
+                        <TouchableOpacity onPress={handleMes}>
+                            <Text style={styles.tagText}>#{months[idMes][1]}</Text>
+                        </TouchableOpacity>
                     </View>
-                    </TouchableOpacity>
-                </View>
-                <Menu>
-                <MenuTrigger>
-                    <View style={styles.ellipsisView}>
-                        <FontAwesome5 name="ellipsis-v" style={styles.ellipsisIcon}/>
-                    </View>
-                </MenuTrigger>
-                <MenuOptions>
-                    <MenuOption onSelect={handleExcluir} style={styles.menuOption}>
-                        <Text style={styles.menuOptionText}>
-                            Excluir
+
+                    <View style={styles.textView}>
+                        {
+                            (imagem != "none") &&
+                            <Image source={postImage} style={styles.postImage} resizeMode="cover"/>
+                        }
+                        <Text style={styles.textText}>
+                            {conteudo}
                         </Text>
-                    </MenuOption>
-                </MenuOptions>
-                </Menu>
-            </View>
+                    </View>
 
-            <View style={styles.tagView}>
-                <TouchableOpacity onPress={handleMes}>
-                    <Text style={styles.tagText}>#{months[idMes][1]}</Text>
-                </TouchableOpacity>
-            </View>
-
-            <View style={styles.textView}>
-                {
-                    (imagem != "none") &&
-                    <Image source={postImage} style={styles.postImage} resizeMode="cover"/>
-                }
-                <Text style={styles.textText}>
-                    {conteudo}
-                </Text>
-            </View>
-
-            <View style={styles.bottom}>
-                <TouchableOpacity style={styles.likeView}>
-                <View style={styles.thumbView}>
-                    <Feather name="thumbs-up" style={styles.likeIcon}/>
-                    <Text style={styles.likeText}>Curtir</Text>
+                    <View style={styles.bottom}>
+                        <TouchableOpacity style={styles.likeView} onPress={handleCurtir}>
+                        <View style={styles.thumbView}>
+                            <Feather name="thumbs-up" style={styles.likeIcon}/>
+                            <Text style={styles.likeText}>Curtir</Text>
+                        </View>
+                        <View style={styles.likesView}>
+                            <Text style={styles.likesText}>{curtidas}</Text>
+                        </View>
+                        </TouchableOpacity>
+                    </View>
                 </View>
-                <View style={styles.likesView}>
-                    <Text style={styles.likesText}>{curtidas}</Text>
-                </View>
-                </TouchableOpacity>
-            </View>
-        </View>
+            }
+        </>
     )
 };

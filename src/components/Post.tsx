@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import fonts from '../styles/fonts';
 import { StyleSheet, Text, TouchableOpacity, View, TouchableOpacityProps, Image, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -6,6 +6,8 @@ import { Feather, FontAwesome5 } from '@expo/vector-icons';
 import { colors, cores } from '../styles/colors';
 import { months } from '../styles/info';
 import { Menu, MenuOptions, MenuOption, MenuTrigger } from 'react-native-popup-menu';
+import { constants } from '../config/app.config';
+import { loadLogado } from '../libs/storage';
 
 interface PostProps extends TouchableOpacityProps {
     idMes: number;
@@ -175,13 +177,17 @@ export function Post ({ idMes, avatar, nome, hora, data, imagem, conteudo, idAut
             color: colors.vermelho_escuro
         },
         avatar: {
-            height: '95%',
-            width: '95%',
+            margin: 1,
+            width: 55,
+            height: 55,
             alignSelf: 'center',
         }
     });
 
     const navigation = useNavigation();
+    const [ready, setReady] = useState(false);
+    const [dados, setDados] = useState<any>();
+    const [curtidas, setCurtidas] = useState();
 
     const avatar1 = require('../assets/avatar1.png');
     const avatar2 = require('../assets/avatar2.png');
@@ -191,7 +197,17 @@ export function Post ({ idMes, avatar, nome, hora, data, imagem, conteudo, idAut
     const avatar6 = require('../assets/avatar6.png');
 
     const postImage = require('../assets/outubro.jpg');
-    const curtidas = "";
+
+    useEffect(() => {
+        async function getData() {
+            setDados(await loadLogado());
+            await getCurtidas();
+            
+            setReady(true);
+        }
+        
+        getData();
+    },[ready]);
 
     function handlePerfilPessoa() {
         navigation.navigate('LinhaDoTempo', {idUser: idAutor});
@@ -209,7 +225,29 @@ export function Post ({ idMes, avatar, nome, hora, data, imagem, conteudo, idAut
               {
                 text: "Sim",
                 onPress: () => {
-                    //Denunciar
+                    const id_usuario = parseInt(dados[0]);
+                    const id_publicacao = idPost;
+                    const publi = { id_usuario, id_publicacao }
+
+                    console.log("PUBLI: ", publi)
+
+                    fetch(`${constants.API_URL}/denuncias`, {
+                        method: 'POST',
+                        headers: {
+                            Accept: 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(publi)
+                    })
+                    .then((response) => {
+                        return response.json();
+                    })
+                    .then((json) => {
+                        Alert.alert('Publicação denunciada com sucesso!');
+                    })
+                    .catch((error) => {
+                        Alert.alert('Erro ao denunciar publicação!', error);
+                    });
                 },
               },
               {
@@ -219,74 +257,103 @@ export function Post ({ idMes, avatar, nome, hora, data, imagem, conteudo, idAut
         );
     }
 
+    function handleCurtir() {
+        //Curtir
+    }
+
+    async function getCurtidas() {
+        fetch(`${constants.API_URL}/curtidas/id_publicacao=${idPost}`, {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+        })
+        .then((response) => {
+            return response.json()
+        })
+        .then((json) => {
+            setCurtidas(json);
+        })
+        .catch((error) => {
+            Alert.alert('Erro ao carregar curtidas!', error);
+        })
+    }
+
     return (
-        <View style={styles.container}>
-            <View style={styles.head}>
-                <View style={styles.profileImageView}>
-                    { (avatar == 1) && <Image source={avatar1} style={styles.avatar} resizeMode="contain"/> }
-                    { (avatar == 2) && <Image source={avatar2} style={styles.avatar} resizeMode="contain"/> }
-                    { (avatar == 3) && <Image source={avatar3} style={styles.avatar} resizeMode="contain"/> }
-                    { (avatar == 4) && <Image source={avatar4} style={styles.avatar} resizeMode="contain"/> }
-                    { (avatar == 5) && <Image source={avatar5} style={styles.avatar} resizeMode="contain"/> }
-                    { (avatar == 6) && <Image source={avatar6} style={styles.avatar} resizeMode="contain"/> }
-                </View>
-                <View style={styles.profileTextsView}>
-                    <TouchableOpacity onPress={handlePerfilPessoa}>
-                    <View style={styles.nameTextView}>
-                        <Text style={styles.nameText}> {nome} </Text>
+        <>
+            {
+                (ready == true) &&
+
+                <View style={styles.container}>
+                    <View style={styles.head}>
+                        <View style={styles.profileImageView}>
+                            { (avatar == 1) && <Image source={avatar1} style={styles.avatar} resizeMode="contain"/> }
+                            { (avatar == 2) && <Image source={avatar2} style={styles.avatar} resizeMode="contain"/> }
+                            { (avatar == 3) && <Image source={avatar3} style={styles.avatar} resizeMode="contain"/> }
+                            { (avatar == 4) && <Image source={avatar4} style={styles.avatar} resizeMode="contain"/> }
+                            { (avatar == 5) && <Image source={avatar5} style={styles.avatar} resizeMode="contain"/> }
+                            { (avatar == 6) && <Image source={avatar6} style={styles.avatar} resizeMode="contain"/> }
+                        </View>
+                        <View style={styles.profileTextsView}>
+                            <TouchableOpacity onPress={handlePerfilPessoa}>
+                            <View style={styles.nameTextView}>
+                                <Text style={styles.nameText}> {nome} </Text>
+                            </View>
+                            <View style={styles.dateTextView}>
+                                <Text style={styles.dateText}> {hora} - {data} </Text>
+                            </View>
+                            </TouchableOpacity>
+                        </View>
+                        <Menu>
+                        <MenuTrigger>
+                            <View style={styles.ellipsisView}>
+                                <FontAwesome5 name="ellipsis-v" style={styles.ellipsisIcon}/>
+                            </View>
+                        </MenuTrigger>
+                        <MenuOptions>
+                            <MenuOption onSelect={handleDenunciar} style={styles.menuOption}>
+                                <Text style={styles.menuOptionText}>
+                                    Denunciar
+                                </Text>
+                            </MenuOption>
+                        </MenuOptions>
+                        </Menu>
                     </View>
-                    <View style={styles.dateTextView}>
-                        <Text style={styles.dateText}> {hora} - {data} </Text>
+
+                    <View style={styles.tagView}>
+                        <TouchableOpacity onPress={handleMes}>
+                            <Text style={styles.tagText}>#{months[idMes][1]}</Text>
+                        </TouchableOpacity>
                     </View>
-                    </TouchableOpacity>
-                </View>
-                <Menu>
-                <MenuTrigger>
-                    <View style={styles.ellipsisView}>
-                        <FontAwesome5 name="ellipsis-v" style={styles.ellipsisIcon}/>
-                    </View>
-                </MenuTrigger>
-                <MenuOptions>
-                    <MenuOption onSelect={handleDenunciar} style={styles.menuOption}>
-                        <Text style={styles.menuOptionText}>
-                            Denunciar
+
+                    <View style={styles.textView}>
+                        {
+                            (imagem != "none") &&
+                            <Image source={postImage} style={styles.postImage} resizeMode="cover"/>
+                        }
+                        <Text style={styles.textText}>
+                            {conteudo}
                         </Text>
-                    </MenuOption>
-                </MenuOptions>
-                </Menu>
-            </View>
+                    </View>
 
-            <View style={styles.tagView}>
-                <TouchableOpacity onPress={handleMes}>
-                    <Text style={styles.tagText}>#{months[idMes][1]}</Text>
-                </TouchableOpacity>
-            </View>
-
-            <View style={styles.textView}>
-                {
-                    (imagem != "none") &&
-                    <Image source={postImage} style={styles.postImage} resizeMode="cover"/>
-                }
-                <Text style={styles.textText}>
-                    {conteudo}
-                </Text>
-            </View>
-
-            <View style={styles.bottom}>
-                <TouchableOpacity style={styles.likeView}>
-                <View style={styles.thumbView}>
-                    <Feather name="thumbs-up" style={styles.likeIcon}/>
-                    <Text style={styles.likeText}>Curtir</Text>
+                    <View style={styles.bottom}>
+                        <TouchableOpacity style={styles.likeView} onPress={handleCurtir}>
+                        <View style={styles.thumbView}>
+                            <Feather name="thumbs-up" style={styles.likeIcon}/>
+                            <Text style={styles.likeText}>Curtir</Text>
+                        </View>
+                        <View style={styles.likesView}>
+                            <Text style={styles.likesText}>{curtidas}</Text>
+                        </View>
+                        </TouchableOpacity>
+                        {/* <TouchableOpacity style={styles.shareView}>
+                            <FontAwesome5 name="share-alt" style={styles.shareIcon}/>
+                            <Text style={styles.shareText}>Compartilhar</Text>
+                        </TouchableOpacity> */}
+                    </View>
                 </View>
-                <View style={styles.likesView}>
-                    <Text style={styles.likesText}>{curtidas}</Text>
-                </View>
-                </TouchableOpacity>
-                {/* <TouchableOpacity style={styles.shareView}>
-                    <FontAwesome5 name="share-alt" style={styles.shareIcon}/>
-                    <Text style={styles.shareText}>Compartilhar</Text>
-                </TouchableOpacity> */}
-            </View>
-        </View>
+            }
+        </>
     )
 };

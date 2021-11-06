@@ -18,6 +18,7 @@ const avatar6 = require('../assets/avatar6.png');
 
 export function Usuario() {
     const navigation = useNavigation();
+    const [emailExiste, setEmailExiste] = useState(false);
 
     const [nameGreen, setNameGreen] = useState(false);
     const [nameRed, setNameRed] = useState(false);
@@ -75,6 +76,7 @@ export function Usuario() {
         getData();
     },[ready]);
 
+    //Salva Dados
     async function salvaDados(dados:any) {
         setAvatar(dados[7]);
         setName(dados[1]);
@@ -84,6 +86,47 @@ export function Usuario() {
         setCity(dados[5]);
         setUf(dados[6]);
         setBio(dados[8]);
+    }
+
+    //Verifica se Email existe
+    function VerificarEmail(email: string) {
+        fetch(`${constants.API_URL}/usuarios/email=${email}`, {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+        })
+        .then((response) => {
+            return response.json()
+        })
+        .then((json) => {
+            if(json[0] != undefined)
+            {
+                if(json[0].email != dados[3])
+                {
+                    Alert.alert('Email já cadastrado!');
+                    setEmailExiste(true);
+                    setEmailRed(true);
+                    setEmailGreen(false);
+                }
+                else
+                {
+                    setEmailExiste(false);
+                    setEmailRed(false);
+                    setEmailGreen(true);
+                }
+            }
+            else
+            {
+                setEmailExiste(false);
+                setEmailRed(false);
+                setEmailGreen(true);
+            }
+        })
+        .catch((error) => {
+            Alert.alert('Erro ao encontrar email!', error);
+        });
     }
 
     //Voltar
@@ -201,12 +244,14 @@ export function Usuario() {
 
         if(email != undefined)
         {
-            if(email.includes('@'))
+            VerificarEmail(email);
+
+            if(email.includes('@') && !email.includes(' ') && !emailExiste)
             {
                 setEmailGreen(true);
                 setEmailRed(false);
             }
-            else  
+            else
             {
                 setEmailRed(true);
                 setEmailGreen(false);
@@ -635,9 +680,7 @@ export function Usuario() {
                         <View style={styles.campos}>
                             <Text style={styles.campo_alteracao}>Estado</Text>
                             <Picker
-                                style={[
-                                    styles.input,
-                                ]}
+                                style={styles.input}
                                 selectedValue={uf}
                                 onValueChange={handleUfChange}
                             >

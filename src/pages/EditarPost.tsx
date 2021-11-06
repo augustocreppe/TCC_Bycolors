@@ -17,13 +17,16 @@ const avatar4 = require('../assets/avatar4.png');
 const avatar5 = require('../assets/avatar5.png');
 const avatar6 = require('../assets/avatar6.png');
 
-export function CriarPostGeral({ route }: { route: any }) {
+export function EditarPost({ route }: { route: any }) {
     const navigation = useNavigation();
-    const [idMes, setIdMes] = useState(route.params.idMes);
-    const [IdMesIsFilled, setIdMesIsFilled] = useState(false);
+    const [idPost, setIdPost] = useState(route.params.idPost);
+
+    const [idMes, setIdMes] = useState(1);
     const [conteudo, setConteudo] = useState<string>();
-    const [conteudoIsFilled, setConteudoIsFilled] = useState(false);
     const [imagem, setImagem] = useState<string>("none");
+
+    const [IdMesIsFilled, setIdMesIsFilled] = useState(false);
+    const [conteudoIsFilled, setConteudoIsFilled] = useState(false);
 
     const [ready, setReady] = useState(false);
     const [dados, setDados] = useState<any>();
@@ -31,7 +34,7 @@ export function CriarPostGeral({ route }: { route: any }) {
     useEffect(() => {
         async function getData() {
             setDados(await loadLogado());
-            setIdMes(0);
+            getDadosPost();
             
             setReady(true);
         }
@@ -43,33 +46,49 @@ export function CriarPostGeral({ route }: { route: any }) {
         navigation.goBack();
     }
 
-    function handlePost() {
+    function getDadosPost() {
+        fetch(`${constants.API_URL}/publicacao/id_publicacao=${idPost}`, {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
+        .then((response) => {
+            return response.json();
+        })
+        .then((json) => {
+            setConteudo(json[0].conteudo);
+            setIdMes(json[0].doenca_id);
+        })
+        .catch((error) => {
+            Alert.alert('Erro ao achar!', error);
+        });
+    }
+
+    function handleUpdate() {
         if(idMes != 0)
         {
-            if(conteudoIsFilled && imagem != undefined)
+            if(conteudo != null && imagem != undefined)
             {
-                const id_usuario = parseInt(dados[0]);
-                const id_doenca = idMes;
+                const doenca_id = idMes;
         
-                const publi = { id_usuario, id_doenca, conteudo, imagem }
+                const publi = { doenca_id, conteudo, imagem }
 
-                fetch(`${constants.API_URL}/publicacao`, {
-                    method: 'POST',
+                fetch(`${constants.API_URL}/publicacao/${idPost}`, {
+                    method: 'PUT',
                     headers: {
                         Accept: 'application/json',
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify(publi)
                 })
-                .then((response) => {
-                    return response.json();
-                })
                 .then((json) => {
-                    Alert.alert('Publicação publicada com sucesso!');
+                    Alert.alert('Publicação atualizada com sucesso!');
                     navigation.navigate('Comunidade');
                 })
                 .catch((error) => {
-                    Alert.alert('Erro ao publicar!', error);
+                    Alert.alert('Erro ao atualizar!', error);
                 });
             }
             else
@@ -88,7 +107,7 @@ export function CriarPostGeral({ route }: { route: any }) {
         setConteudo(value);
     }
     
-    function handleIdMesChange(value: string) {
+    function handleIdMesChange(value:number) {
         setIdMesIsFilled(!!value);
         setIdMes(value);
     }
@@ -246,14 +265,14 @@ export function CriarPostGeral({ route }: { route: any }) {
                             <Feather name="arrow-left" style={styles.buttonMenuIcon}/>
                         </TouchableOpacity>
         
-                        <TouchableOpacity onPress={handlePost} style={styles.buttonSend}>
+                        <TouchableOpacity onPress={handleUpdate} style={styles.buttonSend}>
                             <Feather name="send" style={styles.buttonSendIcon}/>
                         </TouchableOpacity>
                     </View>
         
                     <ScrollView>
                     <View style={styles.scrollView}> 
-                        <TituloComunidade idMes={idMes} text={"Criar publicação"}/>
+                        <TituloComunidade idMes={idMes} text={"Editar publicação"}/>
 
                         <View style={styles.titleView}>
                             <View style={styles.head}>
@@ -273,7 +292,7 @@ export function CriarPostGeral({ route }: { route: any }) {
                             </View>
         
                             <View style={styles.textView}>
-                                <TextInput style={styles.textText} placeholder="Adicione o texto aqui" maxLength={1000} multiline={true} onChangeText={handleConteudoChange}/>
+                                <TextInput value={conteudo} style={styles.textText} placeholder="Adicione o texto aqui" maxLength={1000} multiline={true} onChangeText={handleConteudoChange}/>
                                 <TouchableOpacity style={styles.buttonAdd}>
                                     <Text style={styles.nameTextImage}>  Adicionar imagem  <FontAwesome5 name="images" style={styles.buttonAddIcon}/></Text>
                                 </TouchableOpacity>
@@ -286,19 +305,19 @@ export function CriarPostGeral({ route }: { route: any }) {
                             selectedValue={idMes}
                             onValueChange={handleIdMesChange}
                         >
-                            <Picker.Item label="Selecione a campanha" value="0" />
-                            <Picker.Item label="Janeiro Branco" value="1" />
-                            <Picker.Item label="Fevereiro Roxo" value="2" />
-                            <Picker.Item label="Março Lilás" value="3" />
-                            <Picker.Item label="Abril Azul" value="4" />
-                            <Picker.Item label="Maio Vermelho" value="5" />
-                            <Picker.Item label="Junho Laranja" value="6" />
-                            <Picker.Item label="Julho Amarelo" value="7" />
-                            <Picker.Item label="Agosto Laranja" value="8" />
-                            <Picker.Item label="Setembro Amarelo" value="9" />
-                            <Picker.Item label="Outubro Rosa" value="10" />
-                            <Picker.Item label="Novembro Azul" value="11" />
-                            <Picker.Item label="Dezembro Vermelho" value="12" />
+                            <Picker.Item label="Selecione a campanha" value={0} />
+                            <Picker.Item label="Janeiro Branco" value={1} />
+                            <Picker.Item label="Fevereiro Roxo" value={2} />
+                            <Picker.Item label="Março Lilás" value={3} />
+                            <Picker.Item label="Abril Azul" value={4} />
+                            <Picker.Item label="Maio Vermelho" value={5} />
+                            <Picker.Item label="Junho Laranja" value={6} />
+                            <Picker.Item label="Julho Amarelo" value={7} />
+                            <Picker.Item label="Agosto Laranja" value={8} />
+                            <Picker.Item label="Setembro Amarelo" value={9} />
+                            <Picker.Item label="Outubro Rosa" value={10} />
+                            <Picker.Item label="Novembro Azul" value={11} />
+                            <Picker.Item label="Dezembro Vermelho" value={12} />
                         </Picker>
                         </View>
                     </View>

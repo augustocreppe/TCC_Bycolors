@@ -1,4 +1,4 @@
-import React, { useState }  from 'react';
+import React, { useEffect, useState }  from 'react';
 import fonts from '../styles/fonts';
 import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View, TextInput, Alert, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -19,6 +19,7 @@ const avatar6 = require('../assets/avatar6.png');
 
 export function CadastroUsuario() {
     const navigation = useNavigation();
+    const [emailExiste, setEmailExiste] = useState(false);
 
     const [nameGreen, setNameGreen] = useState(false);
     const [nameRed, setNameRed] = useState(false);
@@ -65,6 +66,15 @@ export function CadastroUsuario() {
     const [bioIsFilled, setBioIsFilled] = useState(false);
     const [passwordIsFilled, setPasswordIsFilled] = useState(false);
     const [password2IsFilled, setPassword2IsFilled] = useState(false);
+
+    useEffect(() => {
+        async function verify() {
+            if(email != null)
+                handleEmailBlur();
+        }
+        
+        verify();
+    },[emailExiste]);
 
     //Voltar
     function handleGoBack() {
@@ -117,6 +127,34 @@ export function CadastroUsuario() {
         }
     }
 
+    //Verifica se Email existe
+    function VerificarEmail(email: string) {
+        fetch(`${constants.API_URL}/usuarios/email=${email}`, {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+        })
+        .then((response) => {
+            return response.json()
+        })
+        .then((json) => {
+            if(json[0] != undefined)
+            {
+                Alert.alert('Email já cadastrado!');
+                setEmailExiste(true);
+            }
+            else
+            {
+                setEmailExiste(false);
+            }
+        })
+        .catch((error) => {
+            Alert.alert('Erro ao encontrar email!', error);
+        });
+    }
+
     //Desfoque do Campo
     function handleNameBlur(){
         setNameIsFilled(!!name);
@@ -142,12 +180,14 @@ export function CadastroUsuario() {
 
         if(email != undefined)
         {
-            if(email.includes('@'))
+            VerificarEmail(email);
+
+            if(email.includes('@') && !email.includes(' ') && !emailExiste)
             {
                 setEmailGreen(true);
                 setEmailRed(false);
             }
-            else  
+            else
             {
                 setEmailRed(true);
                 setEmailGreen(false);
