@@ -27,14 +27,14 @@ export function ButtonChats ({ idMes, ...rest }: ButtonProps) {
         },
         text: {
             fontSize: 22,
-            color: cores[idMes][1], 
+            color: cores[idMes][0], 
             fontFamily: fonts.heading,
             marginBottom: 5,
         },
         subtext:
         {
             fontSize: 16,
-            color: cores[idMes][1],
+            color: cores[idMes][0],
             fontFamily: fonts.heading,
         },
         subcont:
@@ -57,7 +57,7 @@ export function ButtonChats ({ idMes, ...rest }: ButtonProps) {
         {
             fontSize: 60,
             marginLeft: 20,
-            color: cores[idMes][1],
+            color: cores[idMes][0],
         },
     });
 

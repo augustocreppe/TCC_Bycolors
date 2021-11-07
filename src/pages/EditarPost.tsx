@@ -85,7 +85,7 @@ export function EditarPost({ route }: { route: any }) {
                 })
                 .then((json) => {
                     Alert.alert('Publicação atualizada com sucesso!');
-                    navigation.navigate('Comunidade');
+                    navigation.goBack();
                 })
                 .catch((error) => {
                     Alert.alert('Erro ao atualizar!', error);

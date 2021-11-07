@@ -114,53 +114,41 @@ export function Post ({ idMes, avatar, nome, hora, data, imagem, conteudo, idAut
             height: 60,
             flexWrap: 'wrap',
         },
-        likeView: {
+        likeViewF: {
             height: 60,
-            width: '50%',
+            width: 180,
             flexDirection: 'row',
+            paddingVertical: '8%',
         },
-        thumbView: {
-            width: '60%',
+        likeViewT: {
+            height: 60,
+            width: 180,
             flexDirection: 'row',
+            paddingVertical: '8%',
+            backgroundColor: cores[idMes][2],
+            borderBottomLeftRadius: 16
         },
         likesView: {
             height: 60,
-            width: '40%',
-            alignItems: 'center',
-        },
-        shareView: {
-            height: 60,
             width: '50%',
-            flexDirection: 'row',
+            alignItems: 'center',
+            textAlignVertical: 'center',
         },
         likeIcon: {
             fontSize: 20,
             height: 60,
-            paddingVertical: '17%',
+            paddingVertical: '2%',
             paddingLeft: '12%',
             paddingRight: '5%',
-        },
-        shareIcon: {
-            fontSize: 20,
-            height: 60,
-            paddingVertical: '10%',
-            paddingLeft: '10%',
-            paddingRight: '3%',
         },
         likeText: {
             fontFamily: fonts.heading,
             fontSize: 20,
-            paddingVertical: '12%',
         },
         likesText: {
             fontFamily: fonts.heading,
             fontSize: 20,
-            paddingVertical: '17%',
-        },
-        shareText: {
-            fontFamily: fonts.heading,
-            fontSize: 20,
-            paddingVertical: '7%',
+            paddingVertical: '8%',
         },
         postImage: {
             alignSelf: 'center',
@@ -186,8 +174,9 @@ export function Post ({ idMes, avatar, nome, hora, data, imagem, conteudo, idAut
 
     const navigation = useNavigation();
     const [ready, setReady] = useState(false);
+    const [curtidas, setCurtidas] = useState<number>();
+    const [curtido, setCurtido] = useState(false);
     const [dados, setDados] = useState<any>();
-    const [curtidas, setCurtidas] = useState();
 
     const avatar1 = require('../assets/avatar1.png');
     const avatar2 = require('../assets/avatar2.png');
@@ -202,6 +191,7 @@ export function Post ({ idMes, avatar, nome, hora, data, imagem, conteudo, idAut
         async function getData() {
             setDados(await loadLogado());
             await getCurtidas();
+            await ifAlreadyLiked();
             
             setReady(true);
         }
@@ -257,10 +247,6 @@ export function Post ({ idMes, avatar, nome, hora, data, imagem, conteudo, idAut
         );
     }
 
-    function handleCurtir() {
-        //Curtir
-    }
-
     async function getCurtidas() {
         fetch(`${constants.API_URL}/curtidas/id_publicacao=${idPost}`, {
             method: 'GET',
@@ -278,6 +264,86 @@ export function Post ({ idMes, avatar, nome, hora, data, imagem, conteudo, idAut
         .catch((error) => {
             Alert.alert('Erro ao carregar curtidas!', error);
         })
+    }
+
+    function handleCurtir() {
+        setCurtido(true);
+
+        if(curtidas != undefined)
+        {
+            const val = curtidas+1;
+            setCurtidas(val);
+
+            const id_usuario = idLogado;
+            const id_publicacao = idPost;
+            const publi = { id_publicacao, id_usuario }
+
+            fetch(`${constants.API_URL}/curtidas`, {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(publi)
+            })
+            .then((json) => {
+                //Alert.alert('Publicação curtida com sucesso!');
+            })
+            .catch((error) => {
+                Alert.alert('Erro ao curtir publicação!', error);
+            });
+        }
+    }
+
+    function handleDescurtir() {
+        setCurtido(false);
+
+        if(curtidas != undefined)
+        {
+            const val = curtidas-1;
+            setCurtidas(val);
+
+            const id_usuario = idLogado;
+            const id_publicacao = idPost;
+            const publi = { id_publicacao, id_usuario }
+
+            fetch(`${constants.API_URL}/curtidas`, {
+                method: 'DELETE',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(publi)
+            })
+            .then((json) => {
+                //Alert.alert('Publicação descurtida com sucesso!');
+            })
+            .catch((error) => {
+                Alert.alert('Erro ao descurtir publicação!', error);
+            });
+        }
+    }
+
+    async function ifAlreadyLiked() {
+        fetch(`${constants.API_URL}/curtidas/id_publicacao=${idPost}/id_usuario=${idLogado}`, {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+        })
+        .then((response) => {
+            return response.json()
+        })
+        .then((json) => {
+            if(json[0] != undefined)
+                setCurtido(true);
+            else
+                setCurtido(false);
+        })
+        .catch((error) => {
+            Alert.alert('Erro ao pesquisar curtida!', error);
+        });
     }
 
     return (
@@ -338,19 +404,29 @@ export function Post ({ idMes, avatar, nome, hora, data, imagem, conteudo, idAut
                     </View>
 
                     <View style={styles.bottom}>
-                        <TouchableOpacity style={styles.likeView} onPress={handleCurtir}>
-                        <View style={styles.thumbView}>
-                            <Feather name="thumbs-up" style={styles.likeIcon}/>
-                            <Text style={styles.likeText}>Curtir</Text>
-                        </View>
+                        {
+                            (curtido == false) &&
+
+                            <TouchableOpacity onPress={handleCurtir}>
+                            <View style={styles.likeViewF}>
+                                <Feather name="thumbs-up" style={styles.likeIcon}/>
+                                <Text style={styles.likeText}>Curtir</Text>
+                            </View>
+                            </TouchableOpacity>
+                        }
+                        {
+                            (curtido == true) &&
+
+                            <TouchableOpacity onPress={handleDescurtir}>
+                            <View style={styles.likeViewT}>
+                                <Feather name="thumbs-up" style={styles.likeIcon}/>
+                                <Text style={styles.likeText}>Curtido</Text>
+                            </View>
+                            </TouchableOpacity>
+                        }
                         <View style={styles.likesView}>
                             <Text style={styles.likesText}>{curtidas}</Text>
                         </View>
-                        </TouchableOpacity>
-                        {/* <TouchableOpacity style={styles.shareView}>
-                            <FontAwesome5 name="share-alt" style={styles.shareIcon}/>
-                            <Text style={styles.shareText}>Compartilhar</Text>
-                        </TouchableOpacity> */}
                     </View>
                 </View>
             }

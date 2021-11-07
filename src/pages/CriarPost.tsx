@@ -62,7 +62,7 @@ export function CriarPost({ route }: { route: any }) {
             })
             .then((json) => {
                 Alert.alert('Publicação publicada com sucesso!');
-                navigation.navigate('Comunidade');
+                navigation.goBack();
             })
             .catch((error) => {
                 Alert.alert('Erro ao publicar!', error);
