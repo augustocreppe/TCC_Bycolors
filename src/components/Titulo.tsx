@@ -13,7 +13,7 @@ export function Titulo ({ idMes, ...rest }: ButtonProps) {
     const styles = StyleSheet.create({
         container: {
             height: 100,
-            width: '90%',
+            width: '88%',
             borderRadius: 16,
             flexDirection: 'row',
             justifyContent: 'flex-end',

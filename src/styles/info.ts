@@ -156,3 +156,120 @@ export const months = [
         'Não existe cura para a AIDS, mas uma adesão estrita aos regimes antirretrovirais (ARVs) pode retardar significativamente o progresso da doença, bem como prevenir infecções secundárias e complicações.',
     ]
 ]
+
+export const contatos1 = 
+[
+    [
+        'Hospital de Base de Bauru',
+        '(14)3231-4770',
+        'https://www.famesp.org.br/transparencia/hbb/',
+        'sau.hb@famesp.org.br',
+    ],
+    [
+        'Hospital de Base de Bauru',
+        '(14)3231-4770',
+        'https://www.famesp.org.br/transparencia/hbb/',
+        'sau.hb@famesp.org.br',
+    ],
+    [
+        'Hospital de Base de Bauru',
+        '(14)3231-4770',
+        'https://www.famesp.org.br/transparencia/hbb/',
+        'sau.hb@famesp.org.br',
+    ],
+]
+
+export const contatos2 = 
+[
+    [
+        'Hospital de Base de Bauru',
+        '(14)3231-4770',
+        'https://www.famesp.org.br/transparencia/hbb/',
+        'sau.hb@famesp.org.br',
+    ],
+]
+
+export const contatos3 = 
+[
+    [
+
+    ],
+]
+
+export const contatos4 = 
+[
+    [
+
+    ],
+    [
+
+    ],
+    [
+
+    ],
+    [
+
+    ],
+]
+
+export const contatos5 = 
+[
+    [
+
+    ],
+]
+
+export const contatos6 = 
+[
+    [
+
+    ],
+]
+
+export const contatos7 = 
+[
+    [
+
+    ],
+    [
+
+    ],
+    [
+
+    ],
+]
+
+export const contatos8 = 
+[
+    [
+
+    ],
+]
+
+export const contatos9 = 
+[
+    [
+
+    ], 
+]
+
+export const contatos10 = 
+[
+    [
+
+    ],
+]
+
+export const contatos11 = 
+[
+    [
+
+    ],
+]
+
+export const contatos12 = 
+[
+    [
+
+    ],
+]

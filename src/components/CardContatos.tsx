@@ -1,37 +1,33 @@
 import React from 'react';
-import { SafeAreaView, StyleSheet, Text, View, TouchableOpacityProps } from 'react-native';
-import { colors } from '../styles/colors';
+import { StyleSheet, Text, View, TouchableOpacityProps, Linking } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { colors, cores } from '../styles/colors';
 import fonts from '../styles/fonts';
 
-interface ButtonProps extends TouchableOpacityProps{
-    idMes: number;
-}
-
 interface ContatoProps extends TouchableOpacityProps {
-    idContato: number;
+    idMes: number;
     nomeLugar: string;
     telefone: string;
     site: string;
     email: string;
-    id_doenca: number;
-    excluido: boolean;
 }
 
-export function Contato ({ idContato, nomeLugar, telefone, site, email, id_doenca, excluido, ...rest }: ContatoProps, { idMes }: ButtonProps) {
+export function Contato ({ idMes, nomeLugar, telefone, site, email, ...rest }: ContatoProps) {
     
     const styles = StyleSheet.create({
-        container: {
-            marginTop: 20,
+        itemContainer: {
+            width: '88%',
+            height: 140,
             alignSelf: 'center',
-            height: 300,
-            width: '90%',
+            marginBottom: 20,
+            backgroundColor: cores[idMes][0],
+            borderRadius: 15,
+            borderColor: cores[idMes][2],
+            borderWidth: 1.5,
+            padding: 10,
         },
-        text: {
-            fontSize: 22,
-            color: colors.preto, 
-            fontFamily: fonts.heading,
-            marginLeft: 15,
-            textAlign: 'justify',
+        titleView: {
+
         },
         subtext:
         {
@@ -39,76 +35,42 @@ export function Contato ({ idContato, nomeLugar, telefone, site, email, id_doenc
             color: colors.preto,
             fontFamily: fonts.heading,
             textAlign: 'justify',
-            marginLeft: 15,
         },
-        viewText: {
-            alignItems: 'flex-start',
-            width: 220,
-            height: '100%',
-            marginBottom: 20
-        },
-        buttonMenu: {
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginBottom: 15,
-            marginLeft: 15,
-            height: 56,
-            width: 56,
-        },
-        buttonMenuIcon: {
-            fontSize: 40,
-            color: colors.body_dark,
-        },
-        itemContainer: {
-            backgroundColor: colors.vermelho_claro,
-            borderTopLeftRadius: 15,
-            borderTopRightRadius: 15,
-            marginTop: 15,
-            borderColor: colors.vermelho_escuro,
-            borderWidth: 1.5,
-        },
-        innerItemLabel: {
-            //backgroundColor: cores[idMes][0],
-            paddingVertical: 10,
-            fontFamily: fonts.text,
-            borderBottomLeftRadius: 15,
-            borderBottomRightRadius: 15,
+        nameText: {
+            fontSize: 18,
+            fontWeight: 'bold',
+            color: colors.preto,
+            fontFamily: fonts.heading,
             textAlign: 'justify',
-            //borderColor: cores[idMes][2],
-            borderWidth: 1.5,
-            borderTopWidth: 0,
         },
+        link: {
+
+        },
+        hyperlink: {
+            fontSize: 16,
+            color: colors.body_dark,
+            fontFamily: fonts.heading,
+            textAlign: 'justify',
+        }
     });
 
+    function handleOpenLink() {
+        Linking.openURL(site);
+    }
+
     return (
-        <SafeAreaView style={styles.container}>
-        <View style={styles.container}>
-            <View style={styles.itemContainer}>
-                <View style={styles.viewText}>
-                    <Text style={styles.text}>
-                        ID do Contato: { idContato }
-                    </Text>
-                    <Text style={styles.subtext}>
-                        { nomeLugar }
-                    </Text>
-                    <Text style={styles.subtext}>
-                        { telefone }
-                    </Text>
-                    <Text style={styles.subtext}>
-                        { site }
-                    </Text>
-                    <Text style={styles.subtext}>
-                        { email }
-                    </Text>
-                    <Text style={styles.subtext}>
-                        { id_doenca }
-                    </Text>
-                    <Text style={styles.subtext}>
-                        { excluido }
-                    </Text>
-                </View>
+        <View style={styles.itemContainer}>
+            <View style={styles.titleView}>
+                <Text style={styles.nameText}>{ nomeLugar }</Text>
+            </View>
+
+            <View>
+                <Text style={styles.subtext}>{ telefone }</Text>
+                <TouchableOpacity style={styles.link} onPress={handleOpenLink}>
+                    <Text style={styles.hyperlink}>{ nomeLugar }</Text>
+                </TouchableOpacity>
+                <Text style={styles.subtext}>{ email }</Text>
+            </View>
         </View>
-        </View>
-        </SafeAreaView>
     )
 };

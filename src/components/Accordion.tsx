@@ -14,8 +14,7 @@ export function Accordion({ idMes, ...rest }: ButtonProps) {
         container:{
             marginTop: 20,
             alignSelf: 'center',
-            height: '100%',
-            width: '90%',
+            width: '88%',
         },
         itemLabel: {
             fontFamily: fonts.heading,
