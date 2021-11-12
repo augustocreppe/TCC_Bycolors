@@ -177,6 +177,7 @@ export function Post ({ idMes, avatar, nome, hora, data, imagem, conteudo, idAut
     const [curtidas, setCurtidas] = useState<number>();
     const [curtido, setCurtido] = useState(false);
     const [dados, setDados] = useState<any>();
+    const [novaData, setNovaData] = useState<string>();     
 
     const avatar1 = require('../assets/avatar1.png');
     const avatar2 = require('../assets/avatar2.png');
@@ -191,6 +192,7 @@ export function Post ({ idMes, avatar, nome, hora, data, imagem, conteudo, idAut
         async function getData() {
             setDados(await loadLogado());
             await getCurtidas();
+            await getNewDate();
             await ifAlreadyLiked();
             
             setReady(true);
@@ -265,6 +267,14 @@ export function Post ({ idMes, avatar, nome, hora, data, imagem, conteudo, idAut
             Alert.alert('Erro ao carregar curtidas!', error);
         })
     }
+
+    async function getNewDate() {
+        const mes = data.substring(0, 2);
+        const dia = data.substring(3, 5);
+        const ano = data.substring(6, 8);
+
+        setNovaData(dia+'/'+mes+'/'+ano);
+    } 
 
     function handleCurtir() {
         setCurtido(true);
@@ -367,7 +377,7 @@ export function Post ({ idMes, avatar, nome, hora, data, imagem, conteudo, idAut
                                 <Text style={styles.nameText}> {nome} </Text>
                             </View>
                             <View style={styles.dateTextView}>
-                                <Text style={styles.dateText}> {hora} - {data} </Text>
+                                <Text style={styles.dateText}> {hora} - {novaData} </Text>
                             </View>
                             </TouchableOpacity>
                         </View>

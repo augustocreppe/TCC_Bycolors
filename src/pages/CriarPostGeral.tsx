@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import fonts from '../styles/fonts';
-import { SafeAreaView, StyleSheet, View, Text, TouchableOpacity, TextInput, Image, Alert } from 'react-native';
+import { SafeAreaView, StyleSheet, View, Text, TouchableOpacity, TextInput, Image, Alert, Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { colors, cores } from '../styles/colors';
 import { Feather, FontAwesome5 } from '@expo/vector-icons';
@@ -9,6 +9,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { loadLogado } from '../libs/storage';
 import { constants } from '../config/app.config';
 import { Picker } from '@react-native-picker/picker';
+import * as ImagePicker from 'expo-image-picker';
 
 const avatar1 = require('../assets/avatar1.png');
 const avatar2 = require('../assets/avatar2.png');
@@ -23,7 +24,9 @@ export function CriarPostGeral({ route }: { route: any }) {
     const [IdMesIsFilled, setIdMesIsFilled] = useState(false);
     const [conteudo, setConteudo] = useState<string>();
     const [conteudoIsFilled, setConteudoIsFilled] = useState(false);
-    const [imagem, setImagem] = useState<string>("none");
+    const [image, setImage] = useState<string>('none');
+    const [height, setHeight] = useState<number>();
+    const [base64, setBase64] = useState<string>();
 
     const [ready, setReady] = useState(false);
     const [dados, setDados] = useState<any>();
@@ -39,6 +42,32 @@ export function CriarPostGeral({ route }: { route: any }) {
         getData();
     },[ready]);
 
+    useEffect(() => {
+        (async () => {
+            if (Platform.OS !== 'web') {
+            const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+                if (status !== 'granted')
+                    alert('Sorry, we need camera roll permissions to make this work!');
+            }
+        })();
+    }, [image]);
+    
+    const pickImage = async () => {
+        let result = await ImagePicker.launchImageLibraryAsync({
+            base64: true,
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: false,
+            aspect: [4, 3],
+            quality: 1,
+        });
+
+        if (!result.cancelled && result.base64 != undefined) {
+            setBase64(result.base64);
+            setHeight((result.height/result.width)*330);
+            setImage(result.uri);
+        }
+    };
+
     function handleGoBack() {
         navigation.goBack();
     }
@@ -46,10 +75,13 @@ export function CriarPostGeral({ route }: { route: any }) {
     function handlePost() {
         if(idMes != 0)
         {
-            if(conteudoIsFilled && imagem != undefined)
+            if(conteudoIsFilled && image != undefined && base64 != undefined)
             {
                 const id_usuario = parseInt(dados[0]);
                 const id_doenca = idMes;
+                const imagem = base64;
+
+                console.log("BASE 64: ", base64)
         
                 const publi = { id_usuario, id_doenca, conteudo, imagem }
 
@@ -91,6 +123,10 @@ export function CriarPostGeral({ route }: { route: any }) {
     function handleIdMesChange(value: string) {
         setIdMesIsFilled(!!value);
         setIdMes(value);
+    }
+
+    function deleteImage() {
+        setImage('none');
     }
     
     const styles = StyleSheet.create({
@@ -160,6 +196,12 @@ export function CriarPostGeral({ route }: { route: any }) {
             width: 55,
             height: 55,
         },
+        image2: { 
+            width: 330,
+            height: height,
+            alignSelf: 'center',
+            marginVertical: 10,
+        },
         profileTextsView: {
             paddingLeft: 20,
             height: 60,
@@ -202,6 +244,16 @@ export function CriarPostGeral({ route }: { route: any }) {
             marginLeft: 295,
             marginRight: 15,
             borderRadius: 8,
+        },
+        buttonDelete: {
+            alignSelf: 'flex-end',
+            backgroundColor: cores[idMes][2],
+            width: '48%',
+            marginLeft: 295,
+            marginRight: 15,
+            borderRadius: 8,
+            marginBottom: 15,
+            marginTop: 5,
         },
         buttonAddIcon: {
             fontSize: 18,
@@ -274,9 +326,27 @@ export function CriarPostGeral({ route }: { route: any }) {
         
                             <View style={styles.textView}>
                                 <TextInput style={styles.textText} placeholder="Adicione o texto aqui" maxLength={1000} multiline={true} onChangeText={handleConteudoChange}/>
-                                <TouchableOpacity style={styles.buttonAdd}>
-                                    <Text style={styles.nameTextImage}>  Adicionar imagem  <FontAwesome5 name="images" style={styles.buttonAddIcon}/></Text>
-                                </TouchableOpacity>
+
+                                {
+                                    (image != 'none') &&
+
+                                    <>
+                                        <Image source={{ uri: image }} style={styles.image2} />
+                                        {/* <Image source={{uri: `base64,${base64}`}} /> */}
+
+                                        <TouchableOpacity style={styles.buttonDelete} onPress={deleteImage}>
+                                            <Text style={styles.nameTextImage}>      Excluir imagem  <Feather name="trash-2" style={styles.buttonAddIcon}/></Text>
+                                        </TouchableOpacity>
+                                    </>
+                                }
+
+                                {
+                                    (image == 'none') &&
+
+                                    <TouchableOpacity style={styles.buttonAdd} onPress={pickImage}>
+                                        <Text style={styles.nameTextImage}>  Adicionar imagem  <FontAwesome5 name="images" style={styles.buttonAddIcon}/></Text>
+                                    </TouchableOpacity>
+                                }
                             </View>
                         </View>
 
