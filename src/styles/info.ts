@@ -160,116 +160,371 @@ export const months = [
 export const contatos1 = 
 [
     [
-        'Hospital de Base de Bauru',
-        '(14)3231-4770',
-        'https://www.famesp.org.br/transparencia/hbb/',
-        'sau.hb@famesp.org.br',
+        'Sociedade Amigos da Vida',
+        '(19)97145-4111',
+        'https://sociedadeamigosdavida.org.br/Chatonline/',
+        '',
     ],
     [
-        'Hospital de Base de Bauru',
-        '(14)3231-4770',
-        'https://www.famesp.org.br/transparencia/hbb/',
-        'sau.hb@famesp.org.br',
+        'CVV - Centro de Valorização da Vida',
+        '188',
+        'https://www.cvv.org.br/',
+        '',
     ],
     [
-        'Hospital de Base de Bauru',
-        '(14)3231-4770',
-        'https://www.famesp.org.br/transparencia/hbb/',
-        'sau.hb@famesp.org.br',
+        'DisKardec',
+        '(16)3630-3232',
+        'https://diskardec.com.br/?gclid=CjwKCAjwlYCHBhAQEiwA4K21m7S4TAHSGUz5ptD6hhoNktx_bASJnf6yoSjxjsEW9-OO9A6dhnNh8xoCjeIQAvD_BwE',
+        '',
     ],
 ]
 
 export const contatos2 = 
 [
     [
-        'Hospital de Base de Bauru',
-        '(14)3231-4770',
-        'https://www.famesp.org.br/transparencia/hbb/',
-        'sau.hb@famesp.org.br',
+        'Associação Brasileira de Alzheimer',
+        '(11)3237-0385',
+        'http://www.abraz.org.br',
+        'abraz@abraz.org.br',
     ],
 ]
 
 export const contatos3 = 
 [
     [
-
+        'SUS - Sistema Único de Saúde',
+        '136',
+        'https://conectesus-paciente.saude.gov.br/',
+        '',
     ],
 ]
 
 export const contatos4 = 
 [
     [
-
+        'APAE Brasil',
+        '(61)3224-9922',
+        'https://apaebrasil.org.br/',
+        'fenapaes@apaebrasil.org.br',
     ],
     [
-
+        'Centro de Atenção Psicossocial',
+        '(14)3227-5022',
+        'https://www.gov.br/saude/pt-br/acesso-a-informacao/acoes-e-programas/centro-de-atencao-psicossocial-caps',
+        '',
     ],
     [
-
+        'Centro de Referência em Transtornos do Espectro Autista (CREAPP Ambulatório)',
+        '(11)3993-8235',
+        'http://portal.saude.sp.gov.br/caism-philippe-pinel/assistencia/centro-de-referencia-em-transtornos-do-espectro-autista-creapp-ambulatorio',
+        'caismpinel-cih@saude.sp.gov.br',
     ],
     [
-
+        'Núcleo de Apoio à Saúde da Família',
+        '(61)3315-9044',
+        'http://buscasaude.prefeitura.sp.gov.br/',
+        'dab@saude.gov.br',
     ],
 ]
 
 export const contatos5 = 
 [
     [
-
+        'SUS - Sistema Único de Saúde',
+        '136',
+        'https://conectesus-paciente.saude.gov.br/',
+        '',
     ],
 ]
 
 export const contatos6 = 
 [
     [
-
+        'SUS - Sistema Único de Saúde',
+        '136',
+        'https://conectesus-paciente.saude.gov.br/',
+        '',
     ],
 ]
 
 export const contatos7 = 
 [
     [
-
+        'Hospital Amaral Carvalho',
+        '(14)3602-1200',
+        'https://amaralcarvalho.org.br/',
+        'ouvidoria@amaralcarvalho.org.br',
     ],
     [
-
-    ],
-    [
-
+        'Serviço de Orientação e Prevenção do Câncer',
+        '(14)3218-9086',
+        'https://www2.bauru.sp.gov.br/',
+        'sopc@bauru.sp.gov.br',
     ],
 ]
 
 export const contatos8 = 
 [
     [
-
+        'Associação Brasileira de Esclerose Múltipla',
+        '(11) 5587-6050',
+        'https://www.abem.org.br/',
+        'abem@abem.org.br',
     ],
 ]
 
 export const contatos9 = 
 [
     [
-
+        'Sociedade Amigos da Vida',
+        '(19)97145-4111',
+        'https://sociedadeamigosdavida.org.br/Chatonline/',
+        '',
+    ],
+    [
+        'CVV - Centro de Valorização da Vida',
+        '188',
+        'https://www.cvv.org.br/',
+        '',
+    ],
+    [
+        'DisKardec',
+        '(16)3630-3232',
+        'https://diskardec.com.br/?gclid=CjwKCAjwlYCHBhAQEiwA4K21m7S4TAHSGUz5ptD6hhoNktx_bASJnf6yoSjxjsEW9-OO9A6dhnNh8xoCjeIQAvD_BwE',
+        '',
     ], 
 ]
 
 export const contatos10 = 
 [
     [
-
+        'Instituto Nacional de Câncer',
+        '(11)4508-1118',
+        'https://www.inca.gov.br/onde-tratar-pelo-sus',
+        '',
     ],
 ]
 
 export const contatos11 = 
 [
     [
-
+        'SUS - Sistema Único de Saúde',
+        '136',
+        'https://conectesus-paciente.saude.gov.br/',
+        '',
     ],
 ]
 
 export const contatos12 = 
 [
     [
+        'Centro de Apoio ao Doente de AIDS',
+        '(62)3249-4502',
+        'http://www.cada.com.br/',
+        'apoio@cada.com.br',
+    ],
+]
 
+export const outras1 =
+[
+    [
+        'Janeiro Verde-piscina',
+        'Combate ao Câncer do Colo de Útero',
+        '#00ad9f',
+        'https://oncocentersaj.com.br/janeiro-verde-piscina-a-campanha-colorida-sobre-o-cancer-do-colo-do-utero/',
+    ],
+    [
+        'Janeiro Roxo',
+        'Prevenção à Hanseníase',
+        '#8a00cf',
+        'https://institutolegado.org/blog/dia-mundial-da-luta-contra-a-hanseniase/?gclid=Cj0KCQiA4b2MBhD2ARIsAIrcB-RXe9GrYJt_mUEuo3ICEiqAvqhx8JEbeSjOpTIVeUZyx5BprD0pS5kaAglFEALw_wcB',
+    ],
+]
+
+export const outras2 =
+[
+    [
+        'Fevereiro Laranja',
+        'Prevenção à Leucemia',
+        '#ffa333',
+        'https://www.gov.br/pt-br/noticias/saude-e-vigilancia-sanitaria/2021/02/campanha-fevereiro-laranja-busca-conscientizar-sobre-a-leucemia',
+    ],
+]
+
+export const outras3 =
+[
+    [
+        'Março Azul-Marinho',
+        'Prevenção ao Câncer Colorretal',
+        '#070b87',
+        'https://leforte.com.br/sua-saude/marco-azul-marinho-mes-de-conscientizacao-sobre-o-cancer-colorretal/',
+    ],
+]
+
+export const outras4 =
+[
+    [
+        'Abril Verde',
+        'Prevenção a Acidentes de Trabalho',
+        '#00c914',
+        'https://saude.es.gov.br/Not%C3%ADcia/abril-verde-mes-de-prevencao-seguranca-e-saude-no-trabalho',
+    ],
+    [
+        'Abril Lilás',
+        'Prevenção ao Câncer de Testículo',
+        '#7300d1',
+        'https://institutodecancer.com.br/abril-lilas-e-cancer-de-testiculo-conheca-os-sintomas-que-se-disfarcam/',
+    ],
+]
+
+export const outras5 =
+[
+    [
+        'Maio Amarelo',
+        'Prevenção a Acidentes de Trânsito',
+        '#f1f511',
+        'https://www.onsv.org.br/o-movimento-maio-amarelo/?gclid=Cj0KCQiA4b2MBhD2ARIsAIrcB-SL43IyK7DrrYtmlYjQw0OmHj6R3Fx2BR0wxJZ8xsXyoFDhigt3GIIaAkP4EALw_wcB',
+    ],
+    [
+        'Maio Verde',
+        'Prevenção ao Glaucoma',
+        '#00c914',
+        'https://radios.ebc.com.br/tarde-nacional/2019/05/campanha-maio-verde-alerta-para-prevencao-e-combate-ao-glaucoma',
+    ],
+    [
+        'Maio Vermelho',
+        'Prevenção ao Câncer Bucal',
+        '#cc0000',
+        'http://www.oncoguia.org.br/conteudo/maio-vermelho-conscientiza-sobre-cancer-bucal/13644/7/',
+    ],
+    [
+        'Maio Cinza',
+        'Prevenção ao Câncer Cerebral',
+        '#737373',
+        'https://radioterapiasaofrancisco.com.br/maio-cinza-conscientizacao-do-cancer-cerebral/',
+    ],
+    [
+        'Maio Roxo',
+        'Prevenção à Doença Inflamatória Intestinal',
+        '#8a00cf',
+        'http://conselho.saude.gov.br/ultimas-noticias-cns/1716-maio-roxo-traz-o-alerta-para-pacientes-que-convivem-com-doencas-imunomediadas-inflamatorias#:~:text=Maio%20Roxo%20%C3%A9%20um%20m%C3%AAs,de%20conscientiza%C3%A7%C3%A3o%20das%20doen%C3%A7as%20reum%C3%A1ticas.',
+    ],
+]
+
+export const outras6 =
+[
+    [
+        'Junho Vermelho',
+        'Conscientização sobre a Doação de Sangue',
+        '#cc0000',
+        'https://www.amigosdohc.org.br/2020/06/02/junho-vermelho-mes-da-doacao-de-sangue/?gclid=Cj0KCQiA4b2MBhD2ARIsAIrcB-RkHQDPQJix0HnyT4lGxA4X5d1h5TfKEOiiALCNqa3dEp_HHAk3YW8aAskXEALw_wcB',
+    ],
+    [
+        'Junho Verde',
+        'Conscientização sobre a Escoliose',
+        '#00c914',
+        'https://www.segs.com.br/saude/294580-junho-verde-saiba-o-que-e-escoliose',
+    ],
+    [
+        'Junho Preto',
+        'Prevenção ao Melanoma',
+        '#212121',
+        'https://www.terra.com.br/noticias/dino/junho-preto-mes-e-destinado-a-luta-contra-o-cancer-de-pele,d312992ed5f87e72e06dd770bae067532kbyt3jr.html',
+    ],
+]
+
+export const outras7 =
+[
+    [
+        'Julho Amarelo',
+        'Prevenção às Hepatites Virais',
+        '#f1f511',
+        'https://bvsms.saude.gov.br/julho-amarelo-mes-de-luta-contra-as-hepatites-virais/',
+    ],
+    [
+        'Julho Verde',
+        'Prevenção ao Câncer de Cabeça e Pescoço',
+        '#00c914',
+        'https://www.ufpb.br/cras/contents/noticias/julho-verde-campanha-de-prevencao-e-conscientizacao-do-cancer-de-cabeca-e-pescoco',
+    ],
+]
+
+export const outras8 =
+[
+    [
+        'Agosto Dourado',
+        'Conscientização sobre o Aleitamento Materno',
+        '#dec800',
+        'https://agenciabrasil.ebc.com.br/saude/noticia/2021-08/agosto-dourado-amamentacao-previne-doencas-da-infancia#:~:text=O%20Agosto%20Dourado%20simboliza%20a,o%20sexto%20m%C3%AAs%20de%20idade.',
+    ],
+    [
+        'Agosto Verde-claro',
+        'Prevenção ao Linfoma',
+        '#00e353',
+        'https://drbrenogusmao.com.br/destaque/agosto-verde-claro-o-mes-da-conscientizacao-sobre-os-linfomas/',
+    ],
+]
+
+export const outras9 =
+[
+    [
+        'Setembro Verde',
+        'Conscientização sobre a Doação de Órgãos',
+        '#00c914',
+        'https://www.al.sp.gov.br/noticia/?09/09/2021/campanha-setembro-verde-busca-conscientizar-a-populacao-para-a-doacao-de-orgaos-em-sao-paulo',
+    ],
+    [
+        'Setembro Vermelho',
+        'Prevenção às Doenças Cardiovasculares',
+        '#cc0000',
+        'https://alvaroapoio.com.br/medicina-diagnostica/setembro-vermelho-o-mes-para-lembrar-do-seu-coracao',
+    ],
+    [
+        'Setembro Roxo',
+        'Prevenção ao Câncer de Pâncreas',
+        '#8a00cf',
+        'https://jornaldecampinas.com.br/setembro-roxo-mes-de-combate-ao-cancer-de-pancreas/',
+    ],
+]
+
+export const outras10 =
+[
+    [
+        'Outubro Verde',
+        'Prevenção à Síflis Congênita',
+        '#00c914',
+        'https://www.agenciabrasilia.df.gov.br/2021/10/18/outubro-verde-chama-a-atencao-para-combate-a-sifilis/',
+    ],
+]
+
+export const outras11 =
+[
+    [
+        'Novembro Azul',
+        'Prevenção às Diabetes',
+        '#0070e8',
+        'https://novembrodiabetesazul.com.br/',
+    ],
+    [
+        'Novembro Dourado',
+        'Prevenção ao Câncer Infanto-juvenil',
+        '#dec800',
+        'https://www.uopeccan.org.br/noticias/novembro-dourado-prevencao-e-diagnostico-do-cancer-infantil/',
+    ],
+    [
+        'Novembro Roxo',
+        'Conscientização sobre a Prematuridade',
+        '#8a00cf',
+        'https://www.saude.df.gov.br/novembro-roxo-alerta-sobre-os-indices-de-prematuridade-e-consequencias-do-nascimento-antes-da-hora/#:~:text=A%20campanha%20do%20Novembro%20Roxo,s%C3%ADmbolo%20da%20causa%20da%20prematuridade.',
+    ],
+]
+
+export const outras12 =
+[
+    [
+        'Dezembro Laranja',
+        'Prevenção ao Câncer de Pele',
+        '#ffa333',
+        'https://www.hospitaloswaldocruz.org.br/imprensa/noticias/dezembro-laranja-mes-de-conscientizacao-sobre-o-cancer-de-pele/',
     ],
 ]

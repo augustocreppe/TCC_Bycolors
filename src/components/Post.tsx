@@ -217,25 +217,63 @@ export function Post ({ idMes, avatar, nome, hora, data, imagem, conteudo, idAut
               {
                 text: "Sim",
                 onPress: () => {
-                    const id_usuario = parseInt(dados[0]);
-                    const id_publicacao = idPost;
-                    const publi = { id_usuario, id_publicacao }
-
-                    console.log("PUBLI: ", publi)
-
-                    fetch(`${constants.API_URL}/denuncias`, {
-                        method: 'POST',
+                    fetch(`${constants.API_URL}/denuncias/id_publicacao=${idPost}`, {
+                        method: 'GET',
                         headers: {
                             Accept: 'application/json',
                             'Content-Type': 'application/json'
                         },
-                        body: JSON.stringify(publi)
                     })
                     .then((response) => {
                         return response.json();
                     })
                     .then((json) => {
-                        Alert.alert('Publicação denunciada com sucesso!');
+                        const denuncias = parseInt(json);
+
+                        if(denuncias < 4)
+                        {
+                            const id_usuario = parseInt(dados[0]);
+                            const id_publicacao = idPost;
+                            const publi = { id_usuario, id_publicacao }
+
+                            fetch(`${constants.API_URL}/denuncias`, {
+                                method: 'POST',
+                                headers: {
+                                    Accept: 'application/json',
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify(publi)
+                            })
+                            .then((response) => {
+                                return response.json();
+                            })
+                            .then((json) => {
+                                Alert.alert('Publicação denunciada com sucesso!');
+                            })
+                            .catch((error) => {
+                                Alert.alert('Erro ao denunciar publicação!', error);
+                            });
+                        }
+                        else
+                        {
+                            const excluido = true;
+                            const publi = { excluido }
+
+                            fetch(`${constants.API_URL}/publicacao/excluir/${idPost}`, {
+                                method: 'PUT',
+                                headers: {
+                                    Accept: 'application/json',
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify(publi)
+                            })
+                            .then((json) => {
+                                Alert.alert('Publicação denunciada com sucesso!');
+                            })
+                            .catch((error) => {
+                                Alert.alert('Erro ao denunciar publicação!', error);
+                            });
+                        }
                     })
                     .catch((error) => {
                         Alert.alert('Erro ao denunciar publicação!', error);

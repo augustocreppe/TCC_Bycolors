@@ -59,6 +59,7 @@ export function Contato ({ idMes, nomeLugar, telefone, site, email, ...rest }: C
         contentView: {
             flexDirection: 'row',
             marginVertical: 6,
+            width: 300,
         },
         contentMegaView: {
             paddingRight: 15,

@@ -148,7 +148,7 @@ export function Comunidade() {
 
                                             publicacoes.map((json: any) =>
 
-                                                (dadosUser[0] == json.id_usuario) ? 
+                                                (dadosUser[0] == json.id_usuario) ?
                                                     <MyPost
                                                         idMes={json.doenca_id} 
                                                         avatar={json.usuario.avatar} 

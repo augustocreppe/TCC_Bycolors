@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import fonts from '../styles/fonts';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StyleSheet, Text, View, TextInput, Alert, TouchableOpacity, ImageBackground, Image, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Feather, Entypo, FontAwesome } from '@expo/vector-icons';
 import { colors } from '../styles/colors';
 import { constants } from '../config/app.config';
-import { logoutLogado, saveLogado } from '../libs/storage';
+import { isLogado, logoutLogado, saveLogado } from '../libs/storage';
 
 const fundo = require('../assets/fundo.png');
 const logo = require('../assets/logo.png');
@@ -20,9 +21,10 @@ export function Inicio() {
     const [password, setPassword] = useState<string>();
     const [existeEmail, setExisteEmail] = useState(false);
     const [senhaCerta, setSenhaCerta] = useState<string>();
+    const [data, setData] = useState<any>();
+    const [isLogged, setIsLogged] = useState<any>();
     const navigation = useNavigation();
 
-    //Continuar
     function handleContinue() {
         if(!email)
             return Alert.alert('Por favor, digite seu e-mail.');
@@ -62,10 +64,9 @@ export function Inicio() {
         });
     }
 
-    //Salvar Dados Login
     async function salvaAsync(dados: any) {
         try {
-            saveLogado(
+            setData([
                 dados[0].id_usuario, 
                 dados[0].nome_usuario, 
                 dados[0].telefone, 
@@ -74,8 +75,8 @@ export function Inicio() {
                 dados[0].cidade,
                 dados[0].estado,
                 dados[0].avatar,
-                dados[0].bio,
-            );
+                dados[0].bio
+            ]);
 
             setSenhaCerta(dados[0].senha);
         } 
@@ -85,16 +86,16 @@ export function Inicio() {
         }
     }
 
-    //Voltar
     async function handleVoltar() {
         setExisteEmail(false);
         setEmail(undefined);
         setPassword(undefined);
+        setData(null);
+        await AsyncStorage.setItem('@TCC_Bycolors:isLogged', ""+false);
         await logoutLogado();
     }
 
-    //Entrar
-    async function handleSubmit(){
+    async function handleSubmit() {
         if(!password)
             return Alert.alert('Por favor, digite sua senha.');
 
@@ -104,6 +105,17 @@ export function Inicio() {
                 setPassword(undefined);
                 setSenhaCerta(undefined);
                 setExisteEmail(false);
+                await saveLogado(
+                    data[0],
+                    data[1],
+                    data[2],
+                    data[3],
+                    data[4],
+                    data[5],
+                    data[6],
+                    data[7],
+                    data[8],
+                );
                 navigation.navigate('Calendario');
             }
             else {
@@ -115,43 +127,53 @@ export function Inicio() {
         }
     }
 
-    //Cadastrar-se
     function handleRegister() {
         navigation.navigate('CadastroUsuario');
     }
 
-    //Entrar sem logar
-    function handleEnter() {
+    async function handleEnter() {
+        await AsyncStorage.setItem('@TCC_Bycolors:isLogged', ""+false);
         navigation.navigate('Calendario');
     }
 
-    function handleEmailBlur(){
+    function handleEmailBlur() {
         setEmailIsFocused(false);
         setEmailIsFilled(!!email);
     }
 
-    function handleEmailFocus(){
+    function handleEmailFocus() {
         setEmailIsFocused(true);
     }
 
-    function handleEmailChange(value: string){
+    function handleEmailChange(value: string) {
         setEmailIsFilled(!!value);
         setEmail(value);
     }
 
-    function handlePasswordBlur(){
+    function handlePasswordBlur() {
         setPasswordIsFocused(false);
         setPasswordIsFilled(!!password);
     }
 
-    function handlePasswordFocus(){
+    function handlePasswordFocus() {
         setPasswordIsFocused(true);
     }
 
-    function handlePasswordChange(value: string){
+    function handlePasswordChange(value: string) {
         setPasswordIsFilled(!!value);
         setPassword(value);
     }
+
+    useEffect(() => {
+        async function setLogged() {
+            setIsLogged(await isLogado());
+
+            if(isLogged == 'true')
+                navigation.navigate('Calendario');
+        }
+        
+        setLogged();
+    },[isLogged]);
 
     return (
         <KeyboardAvoidingView style={styles.container} behavior={Platform.OS == 'ios' ? 'padding' : 'height'}>
@@ -182,11 +204,7 @@ export function Inicio() {
                                 </Text>
                                             
                                 <TextInput
-                                    style={[
-                                        styles.input1, 
-                                        (emailIsFocused || emailIsFilled) &&
-                                        { borderColor: colors.body_dark }
-                                    ]}
+                                    style={styles.input1}
                                     placeholder="Ex: joao@gmail.com"
                                     
                                     onBlur={handleEmailBlur}
@@ -211,11 +229,7 @@ export function Inicio() {
                                 </Text>
 
                                 <TextInput
-                                    style={[
-                                        styles.input,
-                                        (passwordIsFocused || passwordIsFilled) &&
-                                        { borderColor: colors.body_dark }
-                                    ]}
+                                    style={styles.input}
                                     placeholder="••••••"
                                     secureTextEntry={true}
 
@@ -335,17 +349,17 @@ const styles = StyleSheet.create({
     },
     complement1: {
         fontFamily: fonts.heading,
-        color: colors.body_dark,
-        fontSize: 12,
-        marginLeft: 26,
+        color: colors.preto,
+        fontSize: 15,
+        marginLeft: 27,
         marginBottom: '1%',
         marginTop: -10,
     },
     complement2: {
         fontFamily: fonts.heading,
-        color: colors.body_dark,
-        fontSize: 12,
-        marginLeft: 144,
+        color: colors.preto,
+        fontSize: 15,
+        marginLeft: 105,
         marginBottom: '1%',
         marginTop: -10,
     },
@@ -362,6 +376,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         marginHorizontal: 25,
         marginTop: '5%',
+        color: colors.preto
     },
     icon: {
         fontSize: 18,
