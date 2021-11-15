@@ -33,7 +33,7 @@ export const colors = {
 
   //Roxo
   roxo_claro: '#DBA8FF',
-  roxo: '#9500FF',
+  roxo: '#AB56E8',
   roxo_escuro:'#6700B0',
 
   //Lilás
@@ -61,7 +61,7 @@ export const colors = {
 
   //Vermelho
   vermelho_claro: '#F4796B',
-  vermelho: '#F44E3F',
+  vermelho: '#F23C2C',
   vermelho_escuro: '#D40000',
 
   vermelho_claro2: '#FFADB0',
@@ -82,13 +82,13 @@ export const cores = [
   ],
   [ // Fevereiro Roxo
     '#DBA8FF',
-    '#9500FF',
-    '#6100A6',
+    '#AB56E8',
+    '#912BD9',
   ],
   [ // Março Lilás
     '#B994F7',
-    '#904FFF',
-    '#6B1BF5',
+    '#9F66FF',
+    '#8050D4',
   ],
   [ // Abril Azul
     '#B0E0E6',
@@ -97,7 +97,7 @@ export const cores = [
   ],
   [ // Maio Vermelho
     '#F4796B',
-    '#F44E3F',
+    '#F23C2C',
     '#D40000',
   ],
   [ // Junho Laranja
@@ -127,12 +127,12 @@ export const cores = [
   ],
   [ // Novembro Azul
     '#A3C3FF',
-    '#0059FF',
-    '#0243BD',
+    '#4586FF',
+    '#2D6FEB',
   ],
   [ // Dezembro Vermelho
     '#FFADB0',
-    '#FC1E26',
-    '#D40209',
+    '#FF5258',
+    '#ED262D',
   ],
 ]

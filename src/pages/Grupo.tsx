@@ -95,7 +95,7 @@ export function Grupo({ route }: { route: any }) {
                                         hora={new Date(json.data).toLocaleTimeString().substring(0, 5)} 
                                         data={new Date(json.data).toLocaleDateString()} 
                                         conteudo={json.conteudo} 
-                                        imagem={"none"}
+                                        imagem={json.imagem}
                                         idAutor={json.id_usuario}
                                         idPost={json.id_publicacao}
                                         idLogado={dadosUser[0]}
@@ -108,7 +108,7 @@ export function Grupo({ route }: { route: any }) {
                                         hora={new Date(json.data).toLocaleTimeString().substring(0, 5)} 
                                         data={new Date(json.data).toLocaleDateString()} 
                                         conteudo={json.conteudo} 
-                                        imagem={"none"}
+                                        imagem={json.imagem}
                                         idAutor={json.id_usuario}
                                         idPost={json.id_publicacao}
                                         idLogado={dadosUser[0]}

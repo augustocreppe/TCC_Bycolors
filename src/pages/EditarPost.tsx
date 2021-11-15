@@ -9,6 +9,8 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { loadLogado } from '../libs/storage';
 import { constants } from '../config/app.config';
 import { Picker } from '@react-native-picker/picker';
+import * as ImagePicker from 'expo-image-picker';
+
 
 const avatar1 = require('../assets/avatar1.png');
 const avatar2 = require('../assets/avatar2.png');
@@ -23,7 +25,7 @@ export function EditarPost({ route }: { route: any }) {
 
     const [idMes, setIdMes] = useState(1);
     const [conteudo, setConteudo] = useState<string>();
-    const [imagem, setImagem] = useState<string>("none");
+    const [image, setImage] = useState<string>('none');
 
     const [IdMesIsFilled, setIdMesIsFilled] = useState(false);
     const [conteudoIsFilled, setConteudoIsFilled] = useState(false);
@@ -41,6 +43,20 @@ export function EditarPost({ route }: { route: any }) {
         
         getData();
     },[ready]);
+
+    const pickImage = async () => {
+        let result = await ImagePicker.launchImageLibraryAsync({
+            base64: true,
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: false,
+            aspect: [4, 3],
+            quality: 1,
+        });
+
+        if (!result.cancelled && result.base64 != undefined) {
+            setImage(result.uri);
+        }
+    };
 
     function handleGoBack() {
         navigation.goBack();
@@ -60,6 +76,7 @@ export function EditarPost({ route }: { route: any }) {
         .then((json) => {
             setConteudo(json[0].conteudo);
             setIdMes(json[0].doenca_id);
+            setImage(json[0].imagem);
         })
         .catch((error) => {
             Alert.alert('Erro ao achar!', error);
@@ -69,9 +86,10 @@ export function EditarPost({ route }: { route: any }) {
     function handleUpdate() {
         if(idMes != 0)
         {
-            if(conteudo != null && imagem != undefined)
+            if(conteudo != null && image != undefined)
             {
                 const doenca_id = idMes;
+                const imagem = image;
         
                 const publi = { doenca_id, conteudo, imagem }
 
@@ -110,6 +128,10 @@ export function EditarPost({ route }: { route: any }) {
     function handleIdMesChange(value:number) {
         setIdMesIsFilled(!!value);
         setIdMes(value);
+    }
+
+    function deleteImage() {
+        setImage('none');
     }
     
     const styles = StyleSheet.create({
@@ -222,6 +244,22 @@ export function EditarPost({ route }: { route: any }) {
             marginRight: 15,
             borderRadius: 8,
         },
+        buttonDelete: {
+            alignSelf: 'flex-end',
+            backgroundColor: cores[idMes][2],
+            width: '48%',
+            marginLeft: 295,
+            marginRight: 15,
+            borderRadius: 8,
+            marginBottom: 15,
+            marginTop: 5,
+        },
+        image2: { 
+            width: 330,
+            height: 350,
+            alignSelf: 'center',
+            marginVertical: 10,
+        },
         buttonAddIcon: {
             fontSize: 18,
             alignSelf: 'flex-end',
@@ -293,9 +331,25 @@ export function EditarPost({ route }: { route: any }) {
         
                             <View style={styles.textView}>
                                 <TextInput value={conteudo} style={styles.textText} placeholder="Adicione o texto aqui" maxLength={1000} multiline={true} onChangeText={handleConteudoChange}/>
-                                <TouchableOpacity style={styles.buttonAdd}>
-                                    <Text style={styles.nameTextImage}>  Adicionar imagem  <FontAwesome5 name="images" style={styles.buttonAddIcon}/></Text>
-                                </TouchableOpacity>
+                                {
+                                    (image != 'none') &&
+
+                                    <>
+                                        <Image source={{ uri: image }} style={styles.image2} resizeMode="stretch"/>
+
+                                        <TouchableOpacity style={styles.buttonDelete} onPress={deleteImage}>
+                                            <Text style={styles.nameTextImage}>      Excluir imagem  <Feather name="trash-2" style={styles.buttonAddIcon}/></Text>
+                                        </TouchableOpacity>
+                                    </>
+                                }
+
+                                {
+                                    (image == 'none') &&
+
+                                    <TouchableOpacity style={styles.buttonAdd} onPress={pickImage}>
+                                        <Text style={styles.nameTextImage}>  Adicionar imagem  <FontAwesome5 name="images" style={styles.buttonAddIcon}/></Text>
+                                    </TouchableOpacity>
+                                }
                             </View>
                         </View>
 

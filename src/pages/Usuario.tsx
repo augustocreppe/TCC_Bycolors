@@ -76,7 +76,6 @@ export function Usuario() {
         getData();
     },[ready]);
 
-    //Salva Dados
     async function salvaDados(dados:any) {
         setAvatar(dados[7]);
         setName(dados[1]);
@@ -88,7 +87,6 @@ export function Usuario() {
         setBio(dados[8]);
     }
 
-    //Verifica se Email existe
     function VerificarEmail(email: string) {
         fetch(`${constants.API_URL}/usuarios/email=${email}`, {
             method: 'GET',
@@ -129,12 +127,10 @@ export function Usuario() {
         });
     }
 
-    //Voltar
     function handleGoBack() {
         navigation.navigate('MenuLateral');
     }
 
-    //Atualizar
     function handleUpdate() {
         if((name != undefined) && (email != undefined) && (email != undefined) && (tel != undefined) && (city != undefined) && (uf != undefined) && (avatar != undefined) && (bio != undefined) && (password != undefined)) {
             if((name.length >= 3) && (email.includes('@')) && (tel.length >= 13) && (city.length >= 3) && (uf != '0') && (bio.length >= 3) && (password.length >= 8)) {
@@ -182,7 +178,6 @@ export function Usuario() {
         }
     }
 
-    //Deletar
     function handleDelete() {
         const excluido = true;
         const user = { excluido }

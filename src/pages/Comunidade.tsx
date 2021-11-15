@@ -24,10 +24,11 @@ export function Comunidade() {
     const [publicacoes, setPublicacoes] = useState<any>();
     const [refreshing, setRefreshing] = React.useState(false);
 
-    const onRefresh = React.useCallback(() => {
+    const onRefresh = React.useCallback(async () => {
         setRefreshing(true);
+        setPublicacoes(null);
         
-        carregaPublicacoes().then(() => setRefreshing(false));
+        await carregaPublicacoes().then(() => setRefreshing(false));
     },[]);
 
     useEffect(() => {
@@ -156,7 +157,7 @@ export function Comunidade() {
                                                         hora={new Date(json.data).toLocaleTimeString().substring(0, 5)} 
                                                         data={new Date(json.data).toLocaleDateString('en-GB')}
                                                         conteudo={json.conteudo} 
-                                                        imagem={"none"}
+                                                        imagem={json.imagem}
                                                         idAutor={json.id_usuario}
                                                         idPost={json.id_publicacao}
                                                         idLogado={dadosUser[0]}
@@ -169,7 +170,7 @@ export function Comunidade() {
                                                         hora={new Date(json.data).toLocaleTimeString().substring(0, 5)} 
                                                         data={new Date(json.data).toLocaleDateString('pt-BR')} 
                                                         conteudo={json.conteudo} 
-                                                        imagem={"none"}
+                                                        imagem={json.imagem}
                                                         idAutor={json.id_usuario}
                                                         idPost={json.id_publicacao}
                                                         idLogado={dadosUser[0]}

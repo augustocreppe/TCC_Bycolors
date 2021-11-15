@@ -78,7 +78,7 @@ export function CadastroUsuario() {
 
     //Voltar
     function handleGoBack() {
-        navigation.navigate('Inicio');
+        navigation.goBack();
     }
 
     //Cadastrar

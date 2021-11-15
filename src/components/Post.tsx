@@ -152,8 +152,8 @@ export function Post ({ idMes, avatar, nome, hora, data, imagem, conteudo, idAut
         },
         postImage: {
             alignSelf: 'center',
-            width: 340,
-            height: 340,
+            width: 330,
+            height: 350,
             marginTop: '2.5%',
         },
         menuOption: {
@@ -185,8 +185,6 @@ export function Post ({ idMes, avatar, nome, hora, data, imagem, conteudo, idAut
     const avatar4 = require('../assets/avatar4.png');
     const avatar5 = require('../assets/avatar5.png');
     const avatar6 = require('../assets/avatar6.png');
-
-    const postImage = require('../assets/outubro.jpg');
 
     useEffect(() => {
         async function getData() {
@@ -442,13 +440,14 @@ export function Post ({ idMes, avatar, nome, hora, data, imagem, conteudo, idAut
                     </View>
 
                     <View style={styles.textView}>
-                        {
-                            (imagem != "none") &&
-                            <Image source={postImage} style={styles.postImage} resizeMode="cover"/>
-                        }
                         <Text style={styles.textText}>
                             {conteudo}
                         </Text>
+                        {
+                            (imagem != "none") &&
+                            
+                            <Image source={{ uri: imagem }} style={styles.postImage} resizeMode="stretch"/>
+                        }
                     </View>
 
                     <View style={styles.bottom}>

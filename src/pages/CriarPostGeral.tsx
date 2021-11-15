@@ -25,9 +25,6 @@ export function CriarPostGeral({ route }: { route: any }) {
     const [conteudo, setConteudo] = useState<string>();
     const [conteudoIsFilled, setConteudoIsFilled] = useState(false);
     const [image, setImage] = useState<string>('none');
-    const [height, setHeight] = useState<number>();
-    const [base64, setBase64] = useState<string>();
-
     const [ready, setReady] = useState(false);
     const [dados, setDados] = useState<any>();
 
@@ -62,8 +59,6 @@ export function CriarPostGeral({ route }: { route: any }) {
         });
 
         if (!result.cancelled && result.base64 != undefined) {
-            setBase64(result.base64);
-            setHeight((result.height/result.width)*330);
             setImage(result.uri);
         }
     };
@@ -75,13 +70,11 @@ export function CriarPostGeral({ route }: { route: any }) {
     function handlePost() {
         if(idMes != 0)
         {
-            if(conteudoIsFilled && image != undefined && base64 != undefined)
+            if(conteudoIsFilled && image != undefined)
             {
                 const id_usuario = parseInt(dados[0]);
                 const id_doenca = idMes;
-                const imagem = base64;
-
-                console.log("BASE 64: ", base64)
+                const imagem = image;
         
                 const publi = { id_usuario, id_doenca, conteudo, imagem }
 
@@ -198,7 +191,7 @@ export function CriarPostGeral({ route }: { route: any }) {
         },
         image2: { 
             width: 330,
-            height: height,
+            height: 350,
             alignSelf: 'center',
             marginVertical: 10,
         },
@@ -326,13 +319,11 @@ export function CriarPostGeral({ route }: { route: any }) {
         
                             <View style={styles.textView}>
                                 <TextInput style={styles.textText} placeholder="Adicione o texto aqui" maxLength={1000} multiline={true} onChangeText={handleConteudoChange}/>
-
                                 {
                                     (image != 'none') &&
 
                                     <>
                                         <Image source={{ uri: image }} style={styles.image2} />
-                                        {/* <Image source={{uri: `base64,${base64}`}} /> */}
 
                                         <TouchableOpacity style={styles.buttonDelete} onPress={deleteImage}>
                                             <Text style={styles.nameTextImage}>      Excluir imagem  <Feather name="trash-2" style={styles.buttonAddIcon}/></Text>

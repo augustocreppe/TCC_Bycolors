@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import fonts from '../styles/fonts';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { StyleSheet, Text, View, TextInput, Alert, TouchableOpacity, ImageBackground, Image, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Alert, TouchableOpacity, ImageBackground, Image, KeyboardAvoidingView, Platform, ScrollView, Linking } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Feather, Entypo, FontAwesome } from '@expo/vector-icons';
 import { colors } from '../styles/colors';
@@ -164,6 +164,78 @@ export function Inicio() {
         setPassword(value);
     }
 
+    async function handleForgotPassword() {
+        Alert.alert(
+            "Redefinir Senha",
+            "Você deseja realmente redefinir sua senha?",
+            [
+              {
+                text: "Sim",
+                onPress: () => {
+                    const nome = data[1];
+                    const senha = Math.floor(Math.random() * (99999999 - 11111111));
+
+                    const publi = { email, nome, senha}
+
+                    fetch(`${constants.API_URL}/mail/password`, {
+                        method: 'POST',
+                        headers: {
+                            Accept: 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(publi)
+                    })
+                    .then((response) => {
+                        return response.json();
+                    })
+                    .then(async (json) => {
+                        Alert.alert(`Senha redefinida com sucesso! Cheque seu email para vê-la.`);
+                        await alterarSenha(senha);
+                    })
+                    .catch((error) => {
+                        Alert.alert('Erro ao redefinir senha!', error);
+                    });
+                },
+              },
+              {
+                text: "Não",
+              },
+            ]
+        );
+    }
+
+    async function alterarSenha(senha:any) {
+        const nome_usuario = data[1];
+        const telefone = data[2];
+        const email = data[3];
+        const cidade = data[5];
+        const estado = data[6];
+        const avatar = data[7];
+        const bio = data[8];
+
+        const user = { nome_usuario, email, telefone, cidade, estado, bio, avatar, senha }
+        
+        fetch(`${constants.API_URL}/usuarios/${data[0]}`, {
+            method: 'PUT',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(user)
+        })
+        .then(async (json) => {
+            setExisteEmail(false);
+            setEmail(undefined);
+            setPassword(undefined);
+            setData(null);
+            await AsyncStorage.setItem('@TCC_Bycolors:isLogged', ""+false);
+            await logoutLogado();
+        })
+        .catch((error) => {
+            Alert.alert('Erro ao redefinir senha!', error);
+        });
+    }
+
     useEffect(() => {
         async function setLogged() {
             setIsLogged(await isLogado());
@@ -245,7 +317,7 @@ export function Inicio() {
                                     </Text>
                                 </TouchableOpacity>       
 
-                                <TouchableOpacity>
+                                <TouchableOpacity onPress={handleForgotPassword}>
                                     <Text style={styles.complement2}>
                                         Esqueci minha senha
                                     </Text>
@@ -352,7 +424,6 @@ const styles = StyleSheet.create({
         color: colors.preto,
         fontSize: 15,
         marginLeft: 27,
-        marginBottom: '1%',
         marginTop: -10,
     },
     complement2: {
@@ -408,7 +479,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 8,
-        marginTop: 29,
+        marginTop: 25,
         marginBottom: 10,
         marginHorizontal: '7%',
         height: 50,
