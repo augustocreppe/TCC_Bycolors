@@ -153,7 +153,7 @@ export function LinhaDoTempo({ route }: { route: any }) {
                                             imagem={json.imagem}
                                             idAutor={json.id_usuario}
                                             idPost={json.id_publicacao}
-                                            idLogado={dados[0]}
+                                            idLogado={dados[0].id_usuario}
                                         />
                                     :
                                         <Post
@@ -166,7 +166,7 @@ export function LinhaDoTempo({ route }: { route: any }) {
                                             imagem={json.imagem}
                                             idAutor={json.id_usuario}
                                             idPost={json.id_publicacao}
-                                            idLogado={dados[0]}
+                                            idLogado={dados[0].id_usuario}
                                         />
                                 )
                             }

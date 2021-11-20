@@ -17,7 +17,7 @@ export function MyMessage ({ idMes, conteudo, data, ...rest }: PostProps) {
             marginRight: '6%',
             alignSelf: 'flex-end',
             height: 'auto',
-            marginBottom: '5%',
+            marginTop: 15,
             borderTopLeftRadius: 10,
             borderBottomLeftRadius: 10,
             borderBottomRightRadius: 10,

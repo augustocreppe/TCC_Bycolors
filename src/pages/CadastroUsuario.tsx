@@ -484,6 +484,10 @@ export function CadastroUsuario() {
                         onBlur={handleNameBlur}
                         onChangeText={handleNameChange}
                     />
+                    {
+                        (nameRed) &&
+                        <Text style={styles.redText}>Nome inválido!</Text>
+                    }
 
                     <Text style={styles.textHolder}>
                         <Entypo name="mail" style={styles.iconHolder}/>
@@ -504,6 +508,10 @@ export function CadastroUsuario() {
                         onBlur={handleEmailBlur}
                         onChangeText={handleEmailChange}
                     />
+                    {
+                        (emailRed) &&
+                        <Text style={styles.redText}>Email inválido!</Text>
+                    }
 
                     <Text style={styles.textHolder}>
                         <Entypo name="phone" style={styles.iconHolder}/>
@@ -530,6 +538,10 @@ export function CadastroUsuario() {
                         onBlur={handleTelBlur}
                         onChangeText={handleTelChange}
                     />
+                    {
+                        (telRed) &&
+                        <Text style={styles.redText}>Telefone inválido!</Text>
+                    }
 
                     <Text style={styles.textHolder}>
                         <Entypo name="location" style={styles.iconHolder}/>
@@ -550,6 +562,10 @@ export function CadastroUsuario() {
                         onBlur={handleCityBlur}
                         onChangeText={handleCityChange}
                     />
+                    {
+                        (cityRed) &&
+                        <Text style={styles.redText}>Cidade inválida!</Text>
+                    }
 
                     <Text style={styles.textHolder}>
                         <Entypo name="map" style={styles.iconHolder}/>
@@ -593,6 +609,10 @@ export function CadastroUsuario() {
                         <Picker.Item label="Tocantins" value="TO" />
                     </Picker>
                     </View>
+                    {
+                        (uf == '0') &&
+                        <Text style={styles.redText}>Selecione um Estado!</Text>
+                    }
 
                     <Text style={styles.textHolder}>
                         <Entypo name="emoji-happy" style={styles.iconHolder}/>
@@ -635,6 +655,10 @@ export function CadastroUsuario() {
                             </View>
                         </View>
                     </View>
+                    {
+                        (avatar == 0) &&
+                        <Text style={styles.redText}>Escolha um avatar!</Text>
+                    }
 
                     <Text style={styles.textHolder}>
                         <Entypo name="new-message" style={styles.iconHolder}/>
@@ -656,6 +680,10 @@ export function CadastroUsuario() {
                         onChangeText={handleBioChange}
                         multiline={true}
                     />
+                    {
+                        (bioRed) &&
+                        <Text style={styles.redText}>Biografia muito curta!</Text>
+                    }
 
                     <Text style={styles.textHolder}>
                         <Entypo name="lock" style={styles.iconHolder}/>
@@ -677,6 +705,10 @@ export function CadastroUsuario() {
                         onBlur={handlePasswordBlur}
                         onChangeText={handlePasswordChange}
                     />
+                    {
+                        (passwordRed) &&
+                        <Text style={styles.redText}>Senha muito curta!</Text>
+                    }
 
                     <Text style={styles.textHolder}>
                         <Entypo name="lock" style={styles.iconHolder}/>
@@ -698,6 +730,10 @@ export function CadastroUsuario() {
                         onBlur={handlePassword2Blur}
                         onChangeText={handlePassword2Change}
                     />
+                    {
+                        (password2Red) &&
+                        <Text style={styles.redText}>Senhas diferentes!</Text>
+                    }
                 </View>
 
                 <TouchableOpacity style={styles.button} onPress={handleSubmit}>
@@ -930,4 +966,9 @@ const styles = StyleSheet.create({
         height: 97,
         borderRadius: 50,
     },
+    redText: {
+        color: colors.vermelho,
+        fontSize: 20,
+        fontFamily: fonts.text
+    }
 });

@@ -10,7 +10,7 @@ export function Grupos() {
     const navigation = useNavigation();
 
     function handleGoBack() {
-        navigation.navigate('Comunidade');
+        navigation.goBack();
     }
 
     return (

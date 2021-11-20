@@ -29,13 +29,14 @@ export function Comunidade() {
         setPublicacoes(null);
         
         await carregaPublicacoes().then(() => setRefreshing(false));
-    },[]);
+    },[publicacoes]);
 
     useEffect(() => {
         async function getData() {
             setIsLogged(await isLogado());
             setDadosUser(await loadLogado());
             await carregaPublicacoes();
+            setPublicacoes(null);
 
             setReady(true);
         }

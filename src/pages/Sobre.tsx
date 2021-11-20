@@ -1,5 +1,5 @@
 import React from 'react';
-import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
+import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View, Image, Linking } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Feather } from '@expo/vector-icons';
 import { colors } from '../styles/colors';
@@ -21,6 +21,10 @@ export function Sobre() {
 
     function handleGoBack() {
         navigation.navigate('MenuLateral');
+    }
+
+    function handleEmail() {
+        Linking.openURL(`mailto:bycolors73A2021@gmail.com`)
     }
 
     return (
@@ -77,17 +81,17 @@ export function Sobre() {
             </View>
 
             <View style={styles.fotoView}>
-                <View style={styles.imageView}>
-                    <Image source={alicia} style={styles.image}/>
-                </View>
-                <View style={styles.infoView}>
+                <View style={styles.infoView2}>
                     <Text style={styles.boldText}>
                         Alicia Gomes Dias {"\n"}
                     </Text>
-                    <Text style={styles.infoText}>
+                    <Text style={styles.infoText2}>
                     <Feather name="mail" style={styles.icon2}/>
                         {" "}alicia.gomes@unesp.br
                     </Text>
+                </View>
+                <View style={styles.imageView}>
+                    <Image source={alicia} style={styles.image}/>
                 </View>
             </View>
 
@@ -107,17 +111,17 @@ export function Sobre() {
             </View>
 
             <View style={styles.fotoView}>
-                <View style={styles.imageView}>
-                    <Image source={analaura} style={styles.image}/>
-                </View>
-                <View style={styles.infoView}>
+                <View style={styles.infoView2}>
                     <Text style={styles.boldText}>
                         Ana Laura Aparecida Caetano {"\n"}
                     </Text>
-                    <Text style={styles.infoText}>
+                    <Text style={styles.infoText2}>
                         <Feather name="mail" style={styles.icon2}/>
                         {" "}a.caetano@unesp.br
                     </Text>
+                </View>
+                <View style={styles.imageView}>
+                    <Image source={analaura} style={styles.image}/>
                 </View>
             </View>
 
@@ -137,17 +141,17 @@ export function Sobre() {
             </View>
 
             <View style={styles.fotoView}>
-                <View style={styles.imageView}>
-                    <Image source={augusto2} style={styles.image}/>
-                </View>
-                <View style={styles.infoView}>
+                <View style={styles.infoView2}>
                     <Text style={styles.boldText}>
                         Augusto Zanardi Creppe {"\n"}
                     </Text>
-                    <Text style={styles.infoText}>
+                    <Text style={styles.infoText2}>
                         <Feather name="mail" style={styles.icon2}/>
                         {" "}augusto.creppe@unesp.br
                     </Text>
+                </View>
+                <View style={styles.imageView}>
+                    <Image source={augusto2} style={styles.image}/>
                 </View>
             </View>
 
@@ -167,17 +171,17 @@ export function Sobre() {
             </View>
 
             <View style={styles.fotoView}>
-                <View style={styles.imageView}>
-                    <Image source={bruna} style={styles.image}/>
-                </View>
-                <View style={styles.infoView}>
+                <View style={styles.infoView2}>
                     <Text style={styles.boldText}>
                         Bruna Luisa De Sousa {"\n"}
                     </Text>
-                    <Text style={styles.infoText}>
+                    <Text style={styles.infoText2}>
                         <Feather name="mail" style={styles.icon2}/>
                         {" "}bruna.l.sousa@unesp.br
                     </Text>
+                </View>
+                <View style={styles.imageView}>
+                    <Image source={bruna} style={styles.image}/>
                 </View>
             </View>
 
@@ -204,12 +208,14 @@ export function Sobre() {
                 <Text style={styles.corpoText}>
                     Para mais informações, contate-nos pelo email: {"\n"}
                 </Text>
+                <TouchableOpacity onPress={handleEmail}>
                 <View style={styles.iconView}>
                     <Feather name="mail" style={styles.icon}/>
                     <Text style={styles.emailText}>
                         bycolors73A2021@gmail.com
                     </Text>
                 </View>
+                </TouchableOpacity>
             </View>
 
             </ScrollView>
@@ -297,12 +303,27 @@ const styles = StyleSheet.create({
         paddingLeft: 10,
         paddingTop: 10,
     },
+    infoView2: {
+        width: '75%',
+        textAlignVertical: 'center',
+        paddingRight: 10,
+        paddingTop: 10,
+        alignItems: 'flex-end',
+    },
     infoText: {
         fontFamily: fonts.heading,
         fontSize: 14.9,
         color: colors.cinza_escuro,
         textAlignVertical: 'center',
         marginTop: -10
+    },
+    infoText2: {
+        fontFamily: fonts.heading,
+        fontSize: 14.9,
+        color: colors.cinza_escuro,
+        textAlignVertical: 'center',
+        marginTop: -10,
+        marginRight: 5,
     },
     boldText: {
         fontFamily: fonts.heading,
@@ -313,6 +334,7 @@ const styles = StyleSheet.create({
     },
     iconView: {
         flexDirection: 'row',
+        marginLeft: 45
     },
     icon: {
         fontSize: 20,

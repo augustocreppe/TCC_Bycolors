@@ -9,6 +9,7 @@ import { Message } from '../components/Message';
 import { MyMessage } from '../components/MyMessage';
 import { constants } from '../config/app.config';
 import { loadLogado } from '../libs/storage';
+//import { } from 'react-native-invertible-scroll-view'
 
 export function Chat({ route }: { route: any }) {
     const idMes = route.params.idMes;
@@ -18,7 +19,9 @@ export function Chat({ route }: { route: any }) {
     const [dadosUser, setDadosUser] = useState<any>();
     const [conteudo, setConteudo] = useState<string>();
     const [conteudoIsFilled, setConteudoIsFilled] = useState(false);
+    const [conteudoIsFocused, setConteudoIsFocused] = useState(false);
     const [refreshing, setRefreshing] = React.useState(false);
+    const [canSend, setCanSend] = useState(false);
 
     const onRefresh = React.useCallback(() => {
         setRefreshing(true);
@@ -61,6 +64,7 @@ export function Chat({ route }: { route: any }) {
     }
 
     function handleSend() {
+        setCanSend(false);
         if(conteudoIsFilled)
         {
             const id_usuario = dadosUser[0];
@@ -101,6 +105,21 @@ export function Chat({ route }: { route: any }) {
         setConteudo(value);
     }
 
+    function handleConteudoFocus() {
+        setConteudoIsFocused(true);
+    }
+
+    function handleConteudoBlur() {
+        setConteudoIsFocused(false);
+        if(conteudo != undefined)
+        {
+            if(conteudo.match(/[^ ]/gm) != null)
+                setCanSend(true);
+            else
+                setCanSend(false);
+        }
+    }
+
     const styles = StyleSheet.create({
         container: {
             flex: 1,
@@ -116,7 +135,8 @@ export function Chat({ route }: { route: any }) {
             height: 650,
         },
         scrollView: {
-            height: '90%',
+            marginTop: -15,
+            marginBottom: 5,
         },
         buttonMenu: {
             justifyContent: 'center',
@@ -153,7 +173,7 @@ export function Chat({ route }: { route: any }) {
             marginLeft: 3,
             justifyContent: 'center',
             alignItems: 'center',
-            marginVertical: '2.5%',
+            marginVertical: 13,
         },
         buttonIcon: {
             fontSize: 25,
@@ -182,8 +202,17 @@ export function Chat({ route }: { route: any }) {
 
                     <ScrollView scrollEnabled={false}>
                     <View style={styles.scrollViewOut}>
-                        <View style={styles.scrollView}>
-                        <ScrollView invertStickyHeaders={true} refreshControl={ <RefreshControl refreshing={refreshing} onRefresh={onRefresh}/> }>
+
+                        <View style={[
+                            styles.scrollView,
+
+                            (conteudoIsFocused) &&
+                            { height: 305 },
+
+                            (!conteudoIsFocused) &&
+                            { height: 585 },
+                        ]}>
+                        <ScrollView invertStickyHeaders={true} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>}>
                             {
                                 (mensagens != undefined) &&
 
@@ -199,15 +228,18 @@ export function Chat({ route }: { route: any }) {
                         </View>
                         
                         <View style={styles.sendView}>
-                            <TextInput style={styles.input} placeholder="Digite sua mensagem" multiline={true} numberOfLines={6} value={conteudo} onChangeText={handleConteudoChange}/>
-                            <TouchableOpacity 
+                            <TextInput style={styles.input} placeholder="Digite sua mensagem" multiline={true} numberOfLines={6} value={conteudo} onChangeText={handleConteudoChange} onFocus={handleConteudoFocus} onBlur={handleConteudoBlur}/>
+                            <TouchableOpacity
                                 onPress={handleSend} 
-                                style={styles.buttonSend}>
+                                style={styles.buttonSend}
+                                disabled={!canSend}>
                                 <Feather name="send" style={styles.buttonIcon}/>
                             </TouchableOpacity>
                         </View>
+
                     </View>
                     </ScrollView>
+
                 </SafeAreaView>
             }
         </>
