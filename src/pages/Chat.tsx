@@ -9,7 +9,6 @@ import { Message } from '../components/Message';
 import { MyMessage } from '../components/MyMessage';
 import { constants } from '../config/app.config';
 import { loadLogado } from '../libs/storage';
-//import { } from 'react-native-invertible-scroll-view'
 
 export function Chat({ route }: { route: any }) {
     const idMes = route.params.idMes;
@@ -212,7 +211,7 @@ export function Chat({ route }: { route: any }) {
                             (!conteudoIsFocused) &&
                             { height: 585 },
                         ]}>
-                        <ScrollView invertStickyHeaders={true} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>}>
+                        <ScrollView refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>}>
                             {
                                 (mensagens != undefined) &&
 
