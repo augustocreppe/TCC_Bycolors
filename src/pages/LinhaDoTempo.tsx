@@ -154,6 +154,7 @@ export function LinhaDoTempo({ route }: { route: any }) {
                                             idAutor={json.id_usuario}
                                             idPost={json.id_publicacao}
                                             idLogado={dados[0].id_usuario}
+                                            key={json.id_publicacao}
                                         />
                                     :
                                         <Post
@@ -167,6 +168,7 @@ export function LinhaDoTempo({ route }: { route: any }) {
                                             idAutor={json.id_usuario}
                                             idPost={json.id_publicacao}
                                             idLogado={dados[0].id_usuario}
+                                            key={json.id_publicacao}
                                         />
                                 )
                             }
