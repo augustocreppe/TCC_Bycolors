@@ -99,6 +99,7 @@ export function Grupo({ route }: { route: any }) {
                                         idAutor={json.id_usuario}
                                         idPost={json.id_publicacao}
                                         idLogado={dadosUser[0]}
+                                        key={json.id_publicacao}
                                     />
                                 :
                                     <Post
@@ -112,6 +113,7 @@ export function Grupo({ route }: { route: any }) {
                                         idAutor={json.id_usuario}
                                         idPost={json.id_publicacao}
                                         idLogado={dadosUser[0]}
+                                        key={json.id_publicacao}
                                     />
                             )
                         }

@@ -162,6 +162,7 @@ export function Comunidade() {
                                                         idAutor={json.id_usuario}
                                                         idPost={json.id_publicacao}
                                                         idLogado={dadosUser[0]}
+                                                        key={json.id_publicacao}
                                                     />
                                                 :
                                                     <Post
@@ -175,6 +176,7 @@ export function Comunidade() {
                                                         idAutor={json.id_usuario}
                                                         idPost={json.id_publicacao}
                                                         idLogado={dadosUser[0]}
+                                                        key={json.id_publicacao}
                                                     />
                                             )
                                         }

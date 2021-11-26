@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { SafeAreaView, StyleSheet, View, TouchableOpacity, ScrollView, TextInput, Alert, RefreshControl } from 'react-native';
+import { SafeAreaView, StyleSheet, View, TouchableOpacity, ScrollView, TextInput, Alert, RefreshControl, FlatList } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { colors, cores } from '../styles/colors';
 import { Feather } from '@expo/vector-icons';
@@ -11,6 +11,7 @@ import { constants } from '../config/app.config';
 import { loadLogado } from '../libs/storage';
 
 export function Chat({ route }: { route: any }) {
+    let listRef: any;
     const idMes = route.params.idMes;
     const navigation = useNavigation();
     const [ready, setReady] = useState(false);
@@ -32,12 +33,45 @@ export function Chat({ route }: { route: any }) {
         async function loadData() {
             setDadosUser(await loadLogado());
             await carregaMensagens();
-
+            
             setReady(true);
         }
 
         loadData();
     }, [ready]);
+
+    useEffect(() => {
+        handleForceScroll();
+    }, [conteudoIsFocused]);
+
+    useEffect(() => {
+        handleForceScroll();
+    }, [conteudo]);
+
+    const renderItem = (listItem: any) => {
+        if (dadosUser[0] == listItem.item.id_usuario) {
+            return <MyMessage 
+                idMes={idMes} 
+                conteudo={listItem.item.conteudo_msg} 
+                data={new Date(listItem.item.data).toLocaleTimeString()}
+            />
+        } else {
+            return <Message 
+                idMes={idMes} 
+                nome={listItem.item.usuario.nome_usuario} 
+                conteudo={listItem.item.conteudo_msg} 
+                data={new Date(listItem.item.data).toLocaleTimeString()}
+            />
+        }
+    }
+
+    function handleForceScroll() {
+        if(listRef != undefined)
+            listRef.scrollToOffset({
+                offset: 1000000,
+                animated: true,
+            });
+    }
 
     async function carregaMensagens() {
         fetch(`${constants.API_URL}/mensagem/id_doenca=${idMes}`, {
@@ -90,8 +124,9 @@ export function Chat({ route }: { route: any }) {
                     data: new Date()
                 }
 
-                setMensagens((mensagens: any) => [...mensagens, novaMensagem])
+                setMensagens((mensagens: any) => [...mensagens, novaMensagem]);
                 setConteudo(undefined);
+                handleForceScroll();
             })
             .catch((error) => {
                 Alert.alert('Erro ao enviar mensagem!', error);
@@ -117,6 +152,7 @@ export function Chat({ route }: { route: any }) {
             else
                 setCanSend(false);
         }
+        handleForceScroll();
     }
 
     const styles = StyleSheet.create({
@@ -130,17 +166,28 @@ export function Chat({ route }: { route: any }) {
             height: 150,
             backgroundColor: colors.background,
         },
+        container3: {
+            flexDirection: 'row',
+        },
         scrollViewOut: {
-            height: 650,
+            height: 750,
         },
         scrollView: {
             marginTop: -15,
             marginBottom: 5,
+            paddingTop: 10,
         },
         buttonMenu: {
             justifyContent: 'center',
             alignItems: 'center',
             marginLeft: 15,
+            height: 56,
+            width: 56,
+        },
+        buttonMenu2: {
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginLeft: 270,
             height: 56,
             width: 56,
         },
@@ -172,7 +219,7 @@ export function Chat({ route }: { route: any }) {
             marginLeft: 3,
             justifyContent: 'center',
             alignItems: 'center',
-            marginVertical: 13,
+            marginVertical: 18,
         },
         buttonIcon: {
             fontSize: 25,
@@ -182,7 +229,7 @@ export function Chat({ route }: { route: any }) {
         buttonMenuIcon: {
             fontSize: 40,
             color: colors.body_dark,
-        },
+        }
     });
 
     return (
@@ -192,9 +239,14 @@ export function Chat({ route }: { route: any }) {
 
                 <SafeAreaView style={styles.container}>
                     <View style={styles.container2}>
-                        <TouchableOpacity onPress={handleGoBack} style={styles.buttonMenu}>
-                            <Feather name="arrow-left" style={styles.buttonMenuIcon}/>
-                        </TouchableOpacity>
+                        <View style={styles.container3}>
+                            <TouchableOpacity onPress={handleGoBack} style={styles.buttonMenu}>
+                                <Feather name="arrow-left" style={styles.buttonMenuIcon}/>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={handleForceScroll} style={styles.buttonMenu2}>
+                                <Feather name="chevron-down" style={styles.buttonMenuIcon}/>
+                            </TouchableOpacity>
+                        </View>
 
                         <TituloComunidade idMes={idMes} text={months[idMes][0]}/>
                     </View>
@@ -211,25 +263,34 @@ export function Chat({ route }: { route: any }) {
                             (!conteudoIsFocused) &&
                             { height: 585 },
                         ]}>
-                        <ScrollView refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>}>
-                            {
-                                (mensagens != undefined) &&
-
-                                mensagens.map((json: any) =>
-
-                                    (dadosUser[0] == json.id_usuario) ? 
-                                        <MyMessage idMes={idMes} conteudo={json.conteudo_msg} data={new Date(json.data).toLocaleTimeString()}/>
-                                    :
-                                        <Message idMes={idMes} nome={json.usuario.nome_usuario} conteudo={json.conteudo_msg} data={new Date(json.data).toLocaleTimeString()}/>
-                                )
-                            }
-                        </ScrollView>
+                        { (mensagens != undefined) &&
+                            <FlatList 
+                                data={mensagens} 
+                                renderItem={renderItem} 
+                                keyExtractor={item => item.id}
+                                ref = {(ref) => {
+                                    listRef = ref;
+                                }}
+                                style={styles.scrollView}
+                                refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>}
+                                contentContainerStyle={{ paddingBottom: 10 }}
+                                showsVerticalScrollIndicator={false}
+                            />
+                        }
                         </View>
                         
                         <View style={styles.sendView}>
-                            <TextInput style={styles.input} placeholder="Digite sua mensagem" multiline={true} numberOfLines={6} value={conteudo} onChangeText={handleConteudoChange} onFocus={handleConteudoFocus} onBlur={handleConteudoBlur}/>
+                            <TextInput 
+                                style={styles.input} 
+                                placeholder="Digite sua mensagem" 
+                                multiline={true} 
+                                numberOfLines={3}
+                                value={conteudo} 
+                                onChangeText={handleConteudoChange} 
+                                onFocus={handleConteudoFocus} 
+                                onBlur={handleConteudoBlur}/>
                             <TouchableOpacity
-                                onPress={handleSend} 
+                                onPress={handleSend}
                                 style={styles.buttonSend}
                                 disabled={!canSend}>
                                 <Feather name="send" style={styles.buttonIcon}/>
