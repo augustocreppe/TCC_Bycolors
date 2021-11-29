@@ -420,6 +420,12 @@ export const outras6 =
         'https://www.amigosdohc.org.br/2020/06/02/junho-vermelho-mes-da-doacao-de-sangue/?gclid=Cj0KCQiA4b2MBhD2ARIsAIrcB-RkHQDPQJix0HnyT4lGxA4X5d1h5TfKEOiiALCNqa3dEp_HHAk3YW8aAskXEALw_wcB',
     ],
     [
+        'Junho Violeta',
+        'Prevenção ao Ceratocone',
+        '#8a00cf',
+        'https://imo.com.br/campanha-junho-violeta-ceratocone/',
+    ],
+    [
         'Junho Verde',
         'Conscientização sobre a Escoliose',
         '#00c914',
@@ -430,6 +436,12 @@ export const outras6 =
         'Prevenção ao Melanoma',
         '#212121',
         'https://www.terra.com.br/noticias/dino/junho-preto-mes-e-destinado-a-luta-contra-o-cancer-de-pele,d312992ed5f87e72e06dd770bae067532kbyt3jr.html',
+    ],
+    [
+        'Junho Violeta',
+        'Prevenção à violência à pessoa idosa',
+        '#8a00cf',
+        'https://idoso.mppr.mp.br/2021/06/126/Junho-Violeta-mes-de-conscientizacao-e-prevencao-contra-a-violencia-a-pessoa-idosa.html#:~:text=23%2F06%2F2021-,Junho%20Violeta%20%2D%20m%C3%AAs%20de%20conscientiza%C3%A7%C3%A3o%20e%20preven%C3%A7%C3%A3o%20contra%20a%20viol%C3%AAncia,%2C%20denominado%20%E2%80%9CJunho%20Violeta%E2%80%9D.',
     ],
 ]
 
